@@ -5,7 +5,6 @@ var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
 
-
 router.post("/register", async (req, res) => {
  try {
   let { email, password, name, location, tracked, favorite } = req.body;
