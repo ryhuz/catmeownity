@@ -5,7 +5,7 @@ var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
 
-
+/* Register */
 router.post("/register", async (req, res) => {
     try {
         let { email, password, name } = req.body;
@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
-
+/* Login */
 router.post('/login', async (req, res, next) => {
     passport.authenticate("login", async (err, user, info) => {
         try {

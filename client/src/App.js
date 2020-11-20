@@ -6,6 +6,8 @@ import CatProfile from './CatProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import Search from './landings/Search/Search';
+import Login from './landings/Login';
+import Register from './landings/Register';
 
 
 function App() {
@@ -48,8 +50,8 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Button variant="outline-dark" className="mr-3 my-1">Log In</Button>
-            <Button variant="outline-dark" className="mr-3 my-1">Register</Button>
+            <Button variant="outline-dark" className="mr-3 my-1" href="/login">Log In</Button>
+            <Button variant="outline-dark" className="mr-3 my-1" href="/register">Register</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -75,10 +77,10 @@ function App() {
           <CatProfile />
         </Route>
         <Route path='/login'>
-          {/* LOGIN PAGE HERE */}
+          <Login />
         </Route>
         <Route path='/register'>
-          {/* REGISTER PAGE HERE */}
+          <Register />
         </Route>
       </Switch>
     </BrowserRouter>

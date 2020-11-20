@@ -1,7 +1,5 @@
 import React from 'react';
 import { Button, Card, Col, Container, Form, Image, Row } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
-
 
 const Login = () => {
 return (
@@ -17,7 +15,7 @@ return (
           <Form.Group controlId="formBasicPassword">
               <Form.Control type="password" name="password" placeholder="Password" />
           </Form.Group>
-              <Button variant="primary" name="password" block>
+              <Button variant="dark" name="password" block>
               Login
               </Button>
         <Row>
@@ -40,4 +38,4 @@ return (
   )
 }
 
-export default Login
+export default Login;
