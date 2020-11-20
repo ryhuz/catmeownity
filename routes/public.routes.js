@@ -3,15 +3,15 @@ const router = require("express").Router();
 const Cat = require("../models/cats.model.js");
 const District = require("../models/district.model");
 const Location = require("../models/location.model.js");
+const mongoose = require('mongoose')
 
 /* get cat data */
 router.get('/cats/:location', async (req, res) => {
     try {
         let locationID = req.params.location;
         let locationName = await Location.findById(locationID);
-        //there is an error here. Cat.locations is an array. how to find from there?
-        let cats = await Cat.find({ 'location.mongoose.Types.ObjectId': locationID });
-        console.log(cats);
+        let cats = await Cat.find({ locations: locationID });
+        
         return res.status(200).json({
             location: locationName.street,
             cats,
