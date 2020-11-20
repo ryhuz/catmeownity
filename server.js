@@ -10,19 +10,19 @@ Cats
 ----------
 ID
 Names []
-Locations [{ District(Model), Street Name, remarks}] ----Street Name : xxxxxxxxx St/Dr/Ave xxxx
+Locations [{ Location(model), remarks}] ----
 Breed
 Colour
 Descriptions(reviews) [] -
 Missing - boolean
-Fed [ latest first - {Time, fed by}]
+Fed [ latest first - {Time, fed by: User(model)}]
 Photos []
+Potential Duplicate {Boolean, Cat(Model)}
 
 District
 ----------
 Name
 Locality: nsew (enum)
-Estates: model
 
 Users
 ----------
@@ -33,3 +33,10 @@ Primary location
 Tracked locations
 Favourite cats
 Admin?
+
+Location
+----------
+District (model)
+Block []:
+Street Name : xxxxxxxxx St/Dr/Ave xxxx (important one)
+Cats[]
