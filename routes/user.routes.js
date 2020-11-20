@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
   let { email, password, name, location, tracked, favorite } = req.body;
   let hashedPassword = await bcrpyt.hash(password, 10);
   let user = new User(
-   {
+   { 
     email,
     password: hashedPassword,
     name,
