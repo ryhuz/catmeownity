@@ -1,32 +1,22 @@
 import React from 'react'
-import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
-import Home from './Home';
-import { Button } from '@material-ui/core'
 
 function App() {
 
-  function checkLoggedIn() {
+  function checkLoggedIn(){
     return false;
   }
 
-  function navLoggedIn() {
+  function navLoggedIn(){
 
   }
-  function navNotLoggedIn() {
-    return
+  function navNotLoggedIn(){
+    
   }
 
   return (
-    <BrowserRouter>
-      {checkLoggedIn() ? navLoggedIn() : navNotLoggedIn()}
-      <Button variant="contained">Default</Button>
-
-      <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <div>
+      
+    </div>
   )
 }
 
