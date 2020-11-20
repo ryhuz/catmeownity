@@ -1,10 +1,10 @@
 // view cats, view location
 const router = require("express").Router();
-const Cat = require("../models/cat.model.js");
+const Cat = require("../models/cats.model.js");
 const District = require("../models/district.model");
 
 /* get cat data */
-router.get('/', async (req, res) => {
+router.get('/cats', async (req, res) => {
     try {
         let cat = await Cat.find(req.params);
         return res.status(200).json({
@@ -16,11 +16,15 @@ router.get('/', async (req, res) => {
 });
 
 /* get district data */
-router.get('/district', async (req, res) => {
+router.get('/district/:area', async (req, res) => {
     try {
-        let district = District.find(req.params)
+        let area = req.params.area;
+        area = area[0].toUpperCase() + area.slice(1);
+        console.log(area);
+        let districts = await District.find({ locality: area });
+        console.log(districts);
         return res.status(200).json({
-            district,
+            districts,
             message: "Successfully fetched district"
         })
     } catch (error) {
