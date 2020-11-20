@@ -26,6 +26,18 @@ function AreaResult() {
     function showDistricts() {
         if (districts.found) {
             if (districts.districts.length > 0) {
+                /* sorting the districts by name */
+                districts.districts.sort(function (a, b) {
+                    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                });
+                /* display each district */
                 return (
                     <>
                         {districts.districts.map(district => (
@@ -47,11 +59,12 @@ function AreaResult() {
             <hr />
             <Row>
                 <Col md={6}>
+                    <h3>Districts</h3>
                     {showDistricts()}
                 </Col>
                 <Col md={6}>
                     {selectedDistrict !== "" &&
-                        <LocationResult district={selectedDistrict}/>
+                        <LocationResult district={selectedDistrict} />
                     }
                 </Col>
             </Row>

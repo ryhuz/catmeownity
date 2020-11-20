@@ -10,7 +10,6 @@ function LocationResult({ district }) {
         async function fetchLocation() {
             try {
                 let resp = await Axios.get(`http://localhost:2000/public/location/${district}`);
-                console.log(resp.data)
                 setLocations({ locations: resp.data.locations, found: true });
             } catch (e) {
                 // setError(e.response.data.message);
@@ -25,6 +24,18 @@ function LocationResult({ district }) {
     function showLocations() {
         if (locations.found) {
             if (locations.locations.length > 0) {
+                /* sorting the districts by name */
+                locations.locations.sort(function (a, b) {
+                    var nameA = a.street.toUpperCase(); // ignore upper and lowercase
+                    var nameB = b.street.toUpperCase(); // ignore upper and lowercase
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                });
+                /* display each location or street */
                 return (
                     <>
                         {locations.locations.map(location => (
@@ -32,10 +43,10 @@ function LocationResult({ district }) {
                         ))}
                     </>
                 )
-            }else{
+            } else {
                 return (
                     <>
-                    No areas here with cats yet. Would you like to add one?
+                        No areas here with cats yet. Would you like to add one?
                     </>
                 )
             }
