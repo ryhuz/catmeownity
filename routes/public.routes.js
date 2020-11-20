@@ -5,26 +5,27 @@ const District = require("../models/district.model");
 
 /* get cat data */
 router.get('/', async (req, res) => {
- try {
-  let cat = await Cat.find(req.params);
-  return res.status(200).json({
-   message: "Successfully fetched cats!",
-  })
- } catch (error) { 
-  res.status(400).json({ message: "Problem fetching cats data!"})
- }
+    try {
+        let cat = await Cat.find(req.params);
+        return res.status(200).json({
+            message: "Successfully fetched cats!",
+        })
+    } catch (error) {
+        res.status(400).json({ message: "Problem fetching cats data!" })
+    }
 });
 
 /* get district data */
 router.get('/district', async (req, res) => {
- try {
-  let district = District.find(req.params)
-  return res.status(200).json({
-   message: "Successfully fetched district"
-  })
- } catch (error) {
-  res.status(400).json({ message: "Problem fetching district data!"})
- }
+    try {
+        let district = District.find(req.params)
+        return res.status(200).json({
+            district,
+            message: "Successfully fetched district"
+        })
+    } catch (error) {
+        res.status(400).json({ message: "Problem fetching district data!" })
+    }
 })
 
 module.exports = router;
