@@ -3,7 +3,7 @@ const router = require("express").Router();
 const User = require("../models/user.model");
 var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
-const bcrpyt = require("bcrypt");
+const bcrpyt = require("bcrypt"); 
 
 router.post("/register", async (req, res) => {
  try {
