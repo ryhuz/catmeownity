@@ -15,8 +15,9 @@ Breed
 Colour
 Descriptions(reviews) [] -
 Missing - boolean
-Fed [ latest first - {Time, fed by}]
+Fed [ latest first - {Time, fed by: User(model)}]
 Photos []
+Potential Duplicate {Boolean, Cat(Model)}
 
 District
 ----------
