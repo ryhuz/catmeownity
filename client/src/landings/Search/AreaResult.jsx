@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Axios from 'axios'
+import { Col, Row } from 'react-bootstrap'
+import LocationResult from './LocationResult'
 
 function AreaResult() {
     const [districts, setDistricts] = useState({ districts: [], found: false })
+    const [selectedDistrict, setSelectedDistrict] = useState("")
     let { area } = useParams();
 
     useEffect(() => {
+        setSelectedDistrict("");
         async function fetchDistrict() {
             try {
                 let resp = await Axios.get(`http://localhost:2000/public/district/${area}`);
@@ -17,7 +21,7 @@ function AreaResult() {
             }
         }
         fetchDistrict()
-    }, [])
+    }, [area])
 
     function showDistricts() {
         if (districts.found) {
@@ -25,7 +29,11 @@ function AreaResult() {
                 return (
                     <>
                         {districts.districts.map(district => (
-                        <li key={district._id}>{district.name}</li>
+                            <li key={district._id} className='d-flex'>
+                                <div className='nav-link' onClick={() => { setSelectedDistrict(district._id) }}>
+                                    {district.name}
+                                </div>
+                            </li>
                         ))}
                     </>
                 )
@@ -36,7 +44,18 @@ function AreaResult() {
     return (
         <div>
             <h1>{area}</h1>
-            {showDistricts()}
+            <hr />
+            <Row>
+                <Col md={6}>
+                    {showDistricts()}
+                </Col>
+                <Col md={6}>
+                    {selectedDistrict !== "" &&
+                        <LocationResult district={selectedDistrict}/>
+                    }
+                </Col>
+            </Row>
+
         </div>
     )
 }
