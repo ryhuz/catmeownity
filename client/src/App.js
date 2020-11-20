@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom'
+import CatProfile from './CatProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import Search from './landings/Search/Search';
@@ -68,6 +69,10 @@ function App() {
         </Route>
         <Route path='/search/:area'>
           <AreaResult />
+        </Route>
+        <Route path='/cat'>
+          {/* NEED TO ADD SLUG */}
+          <CatProfile />
         </Route>
         <Route path='/login'>
           {/* LOGIN PAGE HERE */}
