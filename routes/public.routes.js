@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
   res.status(400).json({ message: "Problem fetching cats data!"})
  }
 });
+
 /* get district data */
 router.get('/district', async (req, res) => {
  try {
