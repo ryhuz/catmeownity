@@ -23,7 +23,7 @@ const Register = () => {
           <Form.Group controlId="formBasicFirst">
               <Form.Control type="text" name="location" placeholder="Location" />
           </Form.Group>
-            <Button variant="primary" name="password" block>
+            <Button variant="dark" name="password" block>
               Sign Up
             </Button>
           </Form>
