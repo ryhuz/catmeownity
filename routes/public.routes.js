@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
   return res.status(200).json({
    message: "Successfully fetched cats!",
   })
-
  } catch (error) { 
   res.status(400).json({ message: "Problem fetching cats data!"})
  }
@@ -27,3 +26,5 @@ router.get('/district', async (req, res) => {
   res.status(400).json({ message: "Problem fetching district data!"})
  }
 })
+
+module.exports = router;
