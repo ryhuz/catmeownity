@@ -15,7 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+<<<<<<< HEAD
+    "express": "^4.17.1"
+=======
     "express": "^4.17.1",
     "mongoose": "^5.10.15"
+>>>>>>> e7546e45d63e80a61c0cf6cf5f69b90318ffc0f2
   }
 }
