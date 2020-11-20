@@ -6,8 +6,8 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     name: { type: String, required: true },
     location: { type: Schema.Types.ObjectId, ref: 'Location' },
-    tracked: [{ type: Schema.Types.ObjectId, ref: 'Location', required: true }],
-    favorite: [{ type: Schema.Types.ObjectId, ref: 'Cat', required: true }]
+    tracked: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
+    favorite: [{ type: Schema.Types.ObjectId, ref: 'Cat' }]
     // userType: 
 });
 
