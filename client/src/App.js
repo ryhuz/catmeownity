@@ -6,6 +6,7 @@ import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import Search from './landings/Search/Search';
 
+
 function App() {
 
   function checkLoggedIn() {
