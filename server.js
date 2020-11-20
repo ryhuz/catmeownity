@@ -10,7 +10,7 @@ Cats
 ----------
 ID
 Names []
-Locations [{ District(Model), Street Name, remarks}] ----Street Name : xxxxxxxxx St/Dr/Ave xxxx
+Locations [{ Location(model), remarks}] ----
 Breed
 Colour
 Descriptions(reviews) [] -
@@ -23,7 +23,6 @@ District
 ----------
 Name
 Locality: nsew (enum)
-Estates: model
 
 Users
 ----------
@@ -34,3 +33,10 @@ Primary location
 Tracked locations
 Favourite cats
 Admin?
+
+Location
+----------
+District (model)
+Block []:
+Street Name : xxxxxxxxx St/Dr/Ave xxxx (important one)
+Cats[]
