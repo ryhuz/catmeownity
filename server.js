@@ -3,16 +3,14 @@ ROUTES
 /user            -- login, register
 /auth/cats       -- create, update, delete, mark fed, mark potential duplicate
 /auth/locations  -- create, update, delete
-/auth/user       -- edit user,
-
-
+/auth/user       -- edit user, add tracked locations
 
 SCHEMA
 Cats
 ----------
 ID
 Names []
-Locations [{model, remarks}]
+Locations [{ District(Model), Street Name, remarks}] ----Street Name : xxxxxxxxx St/Dr/Ave xxxx
 Breed
 Colour
 Descriptions(reviews) [] -
@@ -20,17 +18,11 @@ Missing - boolean
 Fed [ latest first - {Time, fed by}]
 Photos []
 
-Towns
+District
 ----------
 Name
 Locality: nsew (enum)
 Estates: model
-
-Estates
-----------
-Street Name : xxxxxxxxx St/Dr/Ave xxxx
-Blocks []
-Cats []
 
 Users
 ----------
