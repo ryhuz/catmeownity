@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
+import Home from './Home';
+import { Button } from '@material-ui/core'
 
 function App() {
+
+  function checkLoggedIn() {
+    return false;
+  }
+
+  function navLoggedIn() {
+
+  }
+  function navNotLoggedIn() {
+    return
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      {checkLoggedIn() ? navLoggedIn() : navNotLoggedIn()}
+      <Button variant="contained">Default</Button>
+
+      <Switch>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
