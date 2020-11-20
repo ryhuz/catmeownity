@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Axios from 'axios'
-import { Col, Row } from 'react-bootstrap'
 
 function LocationResult({ district }) {
     const [locations, setLocations] = useState({ locations: [], found: false })
@@ -39,7 +38,11 @@ function LocationResult({ district }) {
                 return (
                     <>
                         {locations.locations.map(location => (
-                            <li key={location._id}>{location.street}</li>
+                            <li key={location._id} className='d-flex'>
+                                <NavLink to={`/location/${location._id}`}>
+                                    {location.street}
+                                </NavLink>
+                            </li>
                         ))}
                     </>
                 )

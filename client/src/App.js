@@ -4,6 +4,7 @@ import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom'
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
+import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
 
 
@@ -68,6 +69,9 @@ function App() {
         </Route>
         <Route path='/search/:area'>
           <AreaResult />
+        </Route>
+        <Route path='/location/:locationID'>
+          <CatResults />
         </Route>
         <Route path='/login'>
           {/* LOGIN PAGE HERE */}
