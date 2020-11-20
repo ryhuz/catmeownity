@@ -25,3 +25,5 @@ router.get('/district', async (req, res) => {
   res.status(400).json({ message: "Problem fetching district data!"})
  }
 })
+
+module.exports = router;
