@@ -2,33 +2,52 @@
 const router = require("express").Router();
 const Cat = require("../models/cats.model.js");
 const District = require("../models/district.model");
+const Location = require("../models/location.model.js");
 
 /* get cat data */
-router.get('/cats', async (req, res) => {
+router.get('/cats/:location', async (req, res) => {
     try {
-        let cat = await Cat.find(req.params);
+        let locationID = req.params.location;
+        let locationName = await Location.findById(locationID);
+        //there is an error here. Cat.locations is an array. how to find from there?
+        let cats = await Cat.find({ 'location.mongoose.Types.ObjectId': locationID });
+        console.log(cats);
         return res.status(200).json({
+            location: locationName.street,
+            cats,
             message: "Successfully fetched cats!",
         })
     } catch (error) {
+        console.log(error)
         res.status(400).json({ message: "Problem fetching cats data!" })
     }
 });
 
-/* get district data */
+/* get district data from NSEW*/
 router.get('/district/:area', async (req, res) => {
     try {
         let area = req.params.area;
         area = area[0].toUpperCase() + area.slice(1);
-        console.log(area);
         let districts = await District.find({ locality: area });
-        console.log(districts);
         return res.status(200).json({
             districts,
             message: "Successfully fetched district"
         })
     } catch (error) {
         res.status(400).json({ message: "Problem fetching district data!" })
+    }
+})
+/* get locations in a district */
+router.get('/location/:area', async (req, res) => {
+    try {
+        let district = req.params.area;
+        let locations = await Location.find({ district });
+        return res.status(200).json({
+            locations,
+            message: "Successfully fetched district"
+        })
+    } catch (error) {
+        res.status(400).json({ message: "Problem fetching location data" })
     }
 })
 

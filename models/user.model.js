@@ -7,7 +7,7 @@ const userSchema = new Schema({
     name: { type: String, required: true },
     location: { type: Schema.Types.ObjectId, ref: 'Location' },
     tracked: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
-    favorite: [{ type: Schema.Types.ObjectId, ref: 'Cat' }]
+    favorites: [{ type: Schema.Types.ObjectId, ref: 'Cat' }]
     // userType: 
 });
 
