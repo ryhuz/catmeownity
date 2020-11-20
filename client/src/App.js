@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Register from './Register';
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
 
   return (
     <div>
-      
+      <Register/>
     </div>
   )
 }
