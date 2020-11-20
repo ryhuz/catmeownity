@@ -2,10 +2,13 @@ import React from 'react'
 import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom'
+import CatProfile from './CatProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
+import Login from './landings/Login';
+import Register from './landings/Register';
 
 
 function App() {
@@ -48,8 +51,8 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Button variant="outline-dark" className="mr-3 my-1">Log In</Button>
-            <Button variant="outline-dark" className="mr-3 my-1">Register</Button>
+            <Button variant="outline-dark" className="mr-3 my-1" href="/login">Log In</Button>
+            <Button variant="outline-dark" className="mr-3 my-1" href="/register">Register</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -73,11 +76,15 @@ function App() {
         <Route path='/location/:locationID'>
           <CatResults />
         </Route>
+        <Route path='/cat'>
+          {/* NEED TO ADD SLUG */}
+          <CatProfile />
+        </Route>
         <Route path='/login'>
-          {/* LOGIN PAGE HERE */}
+          <Login />
         </Route>
         <Route path='/register'>
-          {/* REGISTER PAGE HERE */}
+          <Register />
         </Route>
       </Switch>
     </BrowserRouter>
