@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-let area = ['North', 'South', 'East', 'West',]
+let area = ['North', 'South', 'East', 'West', 'North-East', 'Central']
 
 const districtSchema = new Schema({
     name: { type: String, required: true, unique: true },
