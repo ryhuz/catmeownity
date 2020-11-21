@@ -30,9 +30,10 @@ function LocationResult({ district }) {
                     if (nameA < nameB) {
                         return -1;
                     }
-                    if (nameA > nameB) {
+                    if (nameA >= nameB) {
                         return 1;
                     }
+                    return null
                 });
                 /* display each location or street */
                 return (

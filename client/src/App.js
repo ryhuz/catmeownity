@@ -3,13 +3,13 @@ import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-boots
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
+import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
-import Login from './landings/Login';
-import Register from './landings/Register';
-
+import Login from './landings/account/Login';
+import RegisterContainer from './landings/account/RegisterContainer';
 
 function App() { 
 
@@ -99,11 +99,15 @@ function App() {
           {/* NEED TO ADD SLUG */}
           <CatProfile />
         </Route>
+        <Route path='/profile'>
+          {/* NEED TO ADD SLUG */}
+          <UserProfile />
+        </Route>
         <Route path='/login'>
           <Login setValid={setValid}/>
         </Route>
         <Route path='/register'>
-          <Register setValid={setValid}/>
+          <RegisterContainer setValid={setValid}/>
         </Route>
       </Switch>
     </BrowserRouter>
