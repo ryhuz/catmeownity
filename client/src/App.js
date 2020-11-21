@@ -10,7 +10,7 @@ import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
 import Login from './landings/account/Login';
 import RegisterContainer from './landings/account/RegisterContainer';
-import Dashboard from './landings/Dashboard';
+import Dashboard from './landings/dashboard/Dashboard';
 
 function App() { 
 
@@ -108,6 +108,9 @@ function App() {
         <Route path='/register'>
           <RegisterContainer setValid={setValid}/>
         </Route>
+
+        {/* THESE ROUTES SHOULD BE PRIVATE */}
+
         <Route path='/dashboard'>
           <Dashboard />
         </Route>
