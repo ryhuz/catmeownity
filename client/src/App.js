@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom'
-import CatProfile from './CatProfile';
+import CatProfile from './profiles/CatProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import CatResults from './landings/Search/CatResults';
@@ -14,7 +14,7 @@ import Register from './landings/Register';
 function App() {
 
   function checkLoggedIn() {
-    return false;
+    return false;       // to implement log in check in future
   }
 
   /* show this navbar when logged in */
