@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Switch from 'react-bootstrap/esm/Switch';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
@@ -30,7 +30,10 @@ function App() {
   function logout() {
     localStorage.removeItem('token');
     setValid(false);
+    return <Redirect to="/" />
   }
+
+  
 
   /* show this navbar when logged in */
   function navLoggedIn() {

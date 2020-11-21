@@ -15,7 +15,7 @@ const Login = ({ setValid }) => {
   async function login() {
     try {
       //register user
-      let resp = await Axios.post("http://localhost:8080/user/login", form);
+      let resp = await Axios.post("http://localhost:2000/user/login", form);
       //store token in local storage
       localStorage.setItem('token', resp.data.token);
       setValid(true);

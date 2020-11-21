@@ -8,9 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'react-banner/dist/style.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App />,
   document.getElementById('root')
 );
 
