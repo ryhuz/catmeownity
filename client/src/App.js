@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom'
@@ -11,10 +11,25 @@ import Login from './landings/Login';
 import Register from './landings/Register';
 
 
-function App() {
+function App() { 
+
+  const [valid, setValid] = useState(false);
+
+  useEffect(() => {
+    checkLoggedIn()
+  }, [valid])
 
   function checkLoggedIn() {
-    return false;       // to implement log in check in future
+    if (localStorage.getItem('token') != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    setValid(false);
   }
 
   /* show this navbar when logged in */
@@ -22,6 +37,7 @@ function App() {
     return (
       <Navbar bg="light" expand="lg">
         <NavLink className="navbar-brand" to="/">CatMeownity</NavLink>
+        <button className="badge badge-pill badge-secondary" onClick={logout}>Logout</button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -81,10 +97,10 @@ function App() {
           <CatProfile />
         </Route>
         <Route path='/login'>
-          <Login />
+          <Login setValid={setValid}/>
         </Route>
         <Route path='/register'>
-          <Register />
+          <Register setValid={setValid}/>
         </Route>
       </Switch>
     </BrowserRouter>
