@@ -1,6 +1,32 @@
 const router = require("express").Router();
 const Cat = require("../models/cats.model");
 const User = require("../models/user.model");
+const Location = require("../models/location.model");
+const District = require("../models/district.model");
+
+
+// get cat info
+router.get("/:catID", async (req, res) => {
+    try {
+        let cat = await Cat.findById(req.params.catID).populate(
+            {
+                path: 'locations',
+                model: 'Location',
+                select: 'street block',
+                populate: {
+                    path: 'district',
+                    select: 'name locality',
+                }
+            }
+        )
+        return res.status(200).json({
+            cat,
+            message: "Successfully fetched cat!"
+        });
+    } catch (error) {
+        res.status(400).json({ message: "Problem fetching data!" });
+    }
+})
 
 // add new cat
 router.post("/", async (req, res) => {
@@ -85,8 +111,5 @@ router.put("/:catID/missing", async (req, res) => {
         res.status(400).json({ message: "Trouble finding cat data" });
     }
 })
-
-
-
 
 module.exports = router;
