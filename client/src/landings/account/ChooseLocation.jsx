@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Badge, Button, Card, Col, Row } from 'react-bootstrap'
 import Axios from 'axios'
 
-function ChooseLocation({ form, setForm }) {
+function ChooseLocation({ form, setForm, nextSection, prevSection }) {
     const [selected, setSelected] = useState("");
     const [area, setArea] = useState("");
     const [districts, setDistricts] = useState({ districts: [], found: false });
@@ -23,12 +23,11 @@ function ChooseLocation({ form, setForm }) {
     function setAreaToForm(id) {
         setForm({ ...form, location: id });
     }
-
     function showAreaButtons() {
         return (
-            <Row>
+            <Row sm={4} xs={3}>
                 {locality.map((l, index) => (
-                    <Col key={index}>
+                    <Col key={index} className="my-1">
                         <div className={`btn ${area === l ? 'btn-dark' : 'btn-outline-dark'} btn-block`}
                             onClick={() => (setArea(l))}>
                             {l}
@@ -59,7 +58,10 @@ function ChooseLocation({ form, setForm }) {
             )
         }
     }
-
+    function skip() {
+        setAreaToForm("");
+        nextSection();
+    }
     return (
         <Card className="p-3 mx-auto mt-5">
             <Card.Body>
@@ -69,23 +71,27 @@ function ChooseLocation({ form, setForm }) {
                 <Card className="p-3 mx-auto mt-3">
                     {showDistrictsByArea()}
                 </Card>
-                <Row className="justify-content-around mt-3">
-                    <Col sm={4}>
-                        <Button block variant='outline-dark'>
-                            Back
-                    </Button>
-                    </Col>
-                    <Col sm={4}>
-                        <Button block variant='dark'>
-                            Next
-                    </Button>
-                    </Col>
-                </Row>
-                <Row className="justify-content-center mt-2">
-                    <Col sm={10}>
-                        <Button block variant='danger' onClick={()=>(setAreaToForm(""))}>
-                            Skip this step
-                        </Button>
+                <Row className='justify-content-center'>
+                    <Col sm={8}>
+                        <Row className="justify-content-around mt-3">
+                            <Col sm={6}>
+                                <Button block variant='outline-dark' onClick={()=>prevSection(false)}>
+                                    Back
+                                </Button>
+                            </Col>
+                            <Col sm={6}>
+                                <Button block variant='dark' onClick={()=>nextSection(true)}>
+                                    Next
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Row className="justify-content-center mt-2">
+                            <Col>
+                                <Button block variant='danger' onClick={skip}>
+                                    Skip this step
+                                </Button>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
             </Card.Body>
