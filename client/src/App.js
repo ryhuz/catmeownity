@@ -3,6 +3,7 @@ import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-boots
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter, NavLink, Route } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
+import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import CatResults from './landings/Search/CatResults';
@@ -95,6 +96,10 @@ function App() {
         <Route path='/cat'>
           {/* NEED TO ADD SLUG */}
           <CatProfile />
+        </Route>
+        <Route path='/profile'>
+          {/* NEED TO ADD SLUG */}
+          <UserProfile />
         </Route>
         <Route path='/login'>
           <Login setValid={setValid}/>
