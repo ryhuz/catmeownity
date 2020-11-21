@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.profile-image-upload img {
+  max-width: 60%;
+  max-height: 60vh;
+}

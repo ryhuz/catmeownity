@@ -48,7 +48,7 @@ const Login = ({ setValid }) => {
               <Col className="mt-4" xs={12}>
                 <Row end="xs">
                   <Col xs={10} />
-              Don't have an account?
+                  Don't have an account?
             </Row>
               </Col>
             </Row>

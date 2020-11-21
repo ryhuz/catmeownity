@@ -11,7 +11,7 @@ router.get('/cats/:location', async (req, res) => {
         let locationID = req.params.location;
         let locationName = await Location.findById(locationID);
         let cats = await Cat.find({ locations: locationID });
-        
+
         return res.status(200).json({
             location: locationName.street,
             cats,
@@ -27,12 +27,21 @@ router.get('/cats/:location', async (req, res) => {
 router.get('/district/:area', async (req, res) => {
     try {
         let area = req.params.area;
-        area = area[0].toUpperCase() + area.slice(1);
-        let districts = await District.find({ locality: area });
-        return res.status(200).json({
-            districts,
-            message: "Successfully fetched district"
-        })
+        if (area === "all") {
+            let districts = await District.find();
+            return res.status(200).json({
+                districts,
+                message: "Successfully fetched all districts"
+            })
+        } else {
+            area = area[0].toUpperCase() + area.slice(1);
+            let districts = await District.find({ locality: area });
+            return res.status(200).json({
+                districts,
+                message: "Successfully fetched district"
+            })
+        }
+
     } catch (error) {
         res.status(400).json({ message: "Problem fetching district data!" })
     }
