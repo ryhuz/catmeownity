@@ -18,11 +18,26 @@ const RegisterContainer = ({ setValid }) => {
 
     async function register() {
         try {
+            //include image
+            let userData = { ...form };
+            if (imageFile) {
+                const formData = new FormData();
+                formData.append('image', imageFile.file);
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                };
+
+                let img = await Axios.post("http://localhost:8080/user/profilepic", formData, config);
+                userData.imageID = img.data.imageID;
+            }
             //register user
-            console.log(form)
-            let resp = await Axios.post("http://localhost:8080/user/register", form);
-            //store token in local storage
+            let resp = await Axios.post("http://localhost:8080/user/register", userData);
+            // store token in local storage
             localStorage.setItem('token', resp.data.token);
+
+            setErrMsg("");
             setValid(true);
             setHome(true);
         } catch (error) {

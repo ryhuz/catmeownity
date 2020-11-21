@@ -12,23 +12,20 @@ function Register({ setValid, changeHandler, errMsg }) {
           <hr />
           <Row className="justify-content-center">
             <Col sm={8}>
-              <Form.Group controlId="formBasicName">
-                <Form.Control type="text" name="name" placeholder="Name" onChange={changeHandler} />
+            <Form.Group controlId="formBasicEmail">
+                <Form.Control type="text" name="email" placeholder="Email (you will use this to log in)" onChange={changeHandler} />
                 {errMsg !== "" &&
                   <Form.Text>
                     <div className="text-danger">{errMsg}</div>
                   </Form.Text>
                 }
               </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Control type="text" name="email" placeholder="Email" onChange={changeHandler} />
+              <Form.Group controlId="formBasicName">
+                <Form.Control type="text" name="name" placeholder="Name" onChange={changeHandler} />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} />
               </Form.Group>
-              {/* <Form.Group controlId="formBasicFirst">
-              <Form.Control type="text" name="location" placeholder="Location" onChange={changeHandler} />
-            </Form.Group> */}
             </Col>
           </Row>
         </Form>
