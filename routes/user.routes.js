@@ -4,11 +4,15 @@ const User = require("../models/user.model");
 var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
+const uploadController = require('../lib/upload')
+
+/* Image Upload */
+router.post("/profilepic", uploadController.uploadFile);
 
 /* Register */
 router.post("/register", async (req, res) => {
     try {
-        let { email, password, name, location } = req.body;
+        let { email, password, name, location, imageID } = req.body;
         let hashedPassword = await bcrpyt.hash(password, 10);
         let user = new User(
             {
@@ -17,9 +21,13 @@ router.post("/register", async (req, res) => {
                 name,
             }
         );
-        if (location !== ""){
+        if (location !== ""){           // if there is a location included
             user.location = location;
         }
+        if (imageID !== ""){            // if there is an image included
+            user.imageID = imageID;
+        }
+
         await user.save();
         // give token to user upon successful registration
         const body = { _id: user._id };
@@ -28,8 +36,9 @@ router.post("/register", async (req, res) => {
     } catch (error) {
         if (error.code === 11000){
             res.status(400).json({ message: "This email address has already been registered" })
+        }else{
+            res.status(400).json({ message: "Error here!" })
         }
-        res.status(400).json({ message: "Error here!" })
     }
 });
 

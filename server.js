@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const passport = require("./lib/passportConfig");
+ 
 
 require('./lib/connection');
 
@@ -10,7 +11,7 @@ require('./lib/connection');
 app.use(passport.initialize());
 app.use(express.json());
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+
 
 /* routes */
 app.use("/public", require("./routes/public.routes"));
