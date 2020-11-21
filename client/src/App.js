@@ -34,8 +34,6 @@ function App() {
     return <Redirect to="/" />
   }
 
-  
-
   /* show this navbar when logged in */
   function navLoggedIn() {
     return (
@@ -96,7 +94,7 @@ function App() {
         <Route path='/location/:locationID'>
           <CatResults />
         </Route>
-        <Route path='/cat'>
+        <Route path='/cat/:id'>
           {/* NEED TO ADD SLUG */}
           <CatProfile />
         </Route>
