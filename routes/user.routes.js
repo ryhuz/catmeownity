@@ -8,7 +8,7 @@ const bcrpyt = require("bcrypt");
 /* Register */
 router.post("/register", async (req, res) => {
     try {
-        let { email, password, name } = req.body;
+        let { email, password, name, location } = req.body;
         let hashedPassword = await bcrpyt.hash(password, 10);
         let user = new User(
             {
@@ -17,12 +17,18 @@ router.post("/register", async (req, res) => {
                 name,
             }
         );
+        if (location !== ""){
+            user.location = location;
+        }
         await user.save();
         // give token to user upon successful registration
         const body = { _id: user._id };
         const token = jwt.sign({ user: body }, process.env.TOP_SECRET);
-        return res.json({ token });
+        return res.status(200).json({ token });
     } catch (error) {
+        if (error.code === 11000){
+            res.status(400).json({ message: "This email address has already been registered" })
+        }
         res.status(400).json({ message: "Error here!" })
     }
 });

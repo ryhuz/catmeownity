@@ -7,9 +7,8 @@ import Home from './landings/Home'
 import AreaResult from './landings/Search/AreaResult';
 import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
-import Login from './landings/Login';
-import Register from './landings/Register';
-
+import Login from './landings/account/Login';
+import RegisterContainer from './landings/account/RegisterContainer';
 
 function App() { 
 
@@ -100,7 +99,7 @@ function App() {
           <Login setValid={setValid}/>
         </Route>
         <Route path='/register'>
-          <Register setValid={setValid}/>
+          <RegisterContainer setValid={setValid}/>
         </Route>
       </Switch>
     </BrowserRouter>
