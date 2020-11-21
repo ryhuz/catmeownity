@@ -100,7 +100,7 @@ function App() {
           {/* NEED TO ADD SLUG */}
           <CatProfile />
         </Route>
-        <Route path='/profile'>
+        <Route path='/profile/:id'>
           {/* NEED TO ADD SLUG */}
           <UserProfile />
         </Route>

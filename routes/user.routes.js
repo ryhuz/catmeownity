@@ -21,10 +21,10 @@ router.post("/register", async (req, res) => {
                 name,
             }
         );
-        if (location !== ""){           // if there is a location included
+        if (location !== "") {           // if there is a location included
             user.location = location;
         }
-        if (imageID !== ""){            // if there is an image included
+        if (imageID !== "") {            // if there is an image included
             user.imageID = imageID;
         }
 
@@ -34,9 +34,9 @@ router.post("/register", async (req, res) => {
         const token = jwt.sign({ user: body }, process.env.TOP_SECRET);
         return res.status(200).json({ token });
     } catch (error) {
-        if (error.code === 11000){
+        if (error.code === 11000) {
             res.status(400).json({ message: "This email address has already been registered" })
-        }else{
+        } else {
             res.status(400).json({ message: "Error here!" })
         }
     }
@@ -72,4 +72,18 @@ router.post('/login', async (req, res, next) => {
     })(req, res, next);
 });
 
+/* Get user profile */
+router.get('/user/:id', async (req, res) => {
+    try {
+        let user = await User.findById(req.params.id).populate('location');
+
+        if(user){
+            return res.status(200).json({ user });
+        }else{
+            res.status(400).json({ user: false })
+        }
+    } catch (e) {
+        res.status(400).json({ message: 'error fetching user' })
+    }
+})
 module.exports = router;
