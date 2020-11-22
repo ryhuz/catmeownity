@@ -5,7 +5,7 @@ import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
-import AreaResult from './landings/Search/AreaResult';
+// import AreaResult from './landings/Search/AreaResult';
 import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
 import Login from './landings/account/Login';
