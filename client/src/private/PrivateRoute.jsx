@@ -1,10 +1,15 @@
 import React from 'react'
+import { Redirect, Route } from 'react-router-dom'
 
-function PrivateRoute() {
+function PrivateRoute({ component: Component, valid, ...rest }) {
     return (
-        <div>
-            
-        </div>
+        <Route {...rest} render={props => (
+            valid.valid ?
+                <Component {...props} /> :
+                !valid.refreshed &&
+                < Redirect to='/' />
+
+        )} />
     )
 }
 

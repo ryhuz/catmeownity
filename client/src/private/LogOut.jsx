@@ -4,7 +4,10 @@ import { Redirect } from 'react-router-dom';
 function LogOut({ setValid }) {
     function logout() {
         localStorage.removeItem('token');
-        setValid(false);
+        setValid({
+            valid: false,
+            refreshed: false,
+          });
     }
     logout()
     return (

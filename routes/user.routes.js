@@ -69,32 +69,13 @@ router.post('/login', async (req, res, next) => {
 });
 
 /* Get user profile */
-router.get('/user/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         let user = await User.findById(req.params.id).populate(
             {
                 path: 'favorites',
                 model: 'Cat',
             },
-        ).populate(
-            {
-                path: 'location',
-                model: 'Location',
-                populate: {
-                    path: 'district',
-                    select: 'name locality',
-                }
-            }
-        ).populate(
-            {
-                path: 'tracked',
-                model: 'Location',
-                select: 'street block',
-                populate: {
-                    path: 'district',
-                    select: 'name locality',
-                }
-            }
         )
 
         if (user) {

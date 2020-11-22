@@ -9,27 +9,36 @@ import Login from './landings/account/Login';
 import RegisterContainer from './landings/account/RegisterContainer';
 import Dashboard from './landings/dashboard/Dashboard';
 import CatResults from './landings/Search/CatResults';
-import { decode } from "jsonwebtoken";
+import PrivateRoute from './private/PrivateRoute';
 import LogOut from './private/LogOut';
+import { decode } from "jsonwebtoken";
 
 function App() {
-  const [valid, setValid] = useState(false);
+  const [valid, setValid] = useState({
+    valid: false,
+    refreshed: true,
+  });
 
   useEffect(() => {
-    checkLoggedIn()
-  }, [valid])
+    function checkLoggedIn() {
+      let token = localStorage.getItem('token');
 
-  function checkLoggedIn() {
-    let token = localStorage.getItem('token');
-
-    if (token !== null) {
-      let user = decode(token);
-      if (user.user) {
-        return true;
+      if (token !== null) {
+        let user = decode(token);
+        if (user.user) {
+          return setValid({
+            valid: true,
+            refreshed: false,
+          });
+        }
       }
+      return setValid({
+        valid: false,
+        refreshed: false,
+      });
     }
-    return false;
-  }
+    checkLoggedIn()
+  }, [])
 
   /* show this navbar when logged in */
   function navLoggedIn() {
@@ -65,7 +74,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {valid ? navLoggedIn() : navNotLoggedIn()}
+      {valid.valid ? navLoggedIn() : navNotLoggedIn()}
 
       <Switch>
         <Route exact path='/'>
@@ -95,10 +104,7 @@ function App() {
         </Route>
 
         {/* THESE ROUTES SHOULD BE PRIVATE */}
-
-        <Route path='/dashboard'>
-          <Dashboard />
-        </Route>
+        <PrivateRoute path='/dashboard' component={Dashboard} valid={valid}/>
       </Switch>
     </BrowserRouter>
   )

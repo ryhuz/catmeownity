@@ -50,7 +50,10 @@ const RegisterContainer = ({ setValid }) => {
             localStorage.setItem('token', resp.data.token);
 
             setErrMsg("");
-            setValid(true);
+            setValid({
+                valid: true,
+                refreshed: false,
+              });
             setHome(true);
         } catch (error) {
             setErrMsg(error.response.data.message);

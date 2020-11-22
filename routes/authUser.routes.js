@@ -11,6 +11,10 @@ router.get("/:userID", async (req, res) => {
             {
                 path: 'favorites',
                 model: 'Cat',
+                populate: {
+                    path: 'locations',
+                    model: 'Location',
+                }
             },
         ).populate(
             {

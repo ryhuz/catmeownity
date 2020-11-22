@@ -18,6 +18,7 @@ function CatProfile() {
     const [favourites, setFavourites] = useState([]);
     const [needToLogIn, setNeedToLogIn] = useState(false);
 
+    /* get list of favourites */
     useEffect(() => {
         async function fetchFavourites() {
             try {
@@ -34,7 +35,7 @@ function CatProfile() {
         }
         fetchFavourites()
     }, [])
-
+    /* get cat data */
     useEffect(() => {
         async function fetchCat() {
             try {
@@ -108,7 +109,7 @@ function CatProfile() {
         }
     }
     async function followUnfollow() {
-        if(!user){
+        if (!user) {
             setNeedToLogIn(true);
             return;
         }
@@ -140,8 +141,8 @@ function CatProfile() {
     return (
         <>{cat.found &&
             <>
-                <Modal show={needToLogIn} onHide={()=>(setNeedToLogIn(false))}>
-                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn}/>
+                <Modal show={needToLogIn} onHide={() => (setNeedToLogIn(false))}>
+                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
                 </Modal>
                 <Jumbotron>
                     <Container>
@@ -204,12 +205,7 @@ function CatProfile() {
                 </Jumbotron>
                 <Container className="border border-dark">
                     <Row>
-                        <Col md={5}>
-                            <div className="text-center my-2">
-                                <Badge className="badge badge-pill badge-danger mx-5">Missing</Badge>
 
-                            </div>
-                        </Col>
                         <Col md={7} className="border">
                             <Table borderless size="lg">
                                 <tbody>
@@ -217,11 +213,6 @@ function CatProfile() {
                                     <tr>
                                         <td>Last fed:</td>
                                         <td className="align-middle">{displayEatingTimes()}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Description:</td>
-                                        <td>{cat.cat.desc}</td>
                                     </tr>
                                     <tr>
                                         <td>Residing:</td>

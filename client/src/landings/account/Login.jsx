@@ -26,7 +26,10 @@ const Login = ({ setValid }) => {
       //store token in local storage
       localStorage.setItem('token', resp.data.token);
       setErr({})
-      setValid(true);
+      setValid({
+        valid: true,
+        refreshed: false,
+      });
       setHome(true);
     } catch (error) {
       console.log(error.response)
