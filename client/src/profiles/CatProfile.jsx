@@ -10,6 +10,7 @@ import NotLoggedIn from '../private/NotLoggedIn';
 function CatProfile() {
     let token = localStorage.getItem('token')
     let user = decode(token);
+    Axios.defaults.headers.common['x-auth-token'] = token;
     let { id } = useParams()
     const [cat, setCat] = useState({
         cat: null,
@@ -22,11 +23,7 @@ function CatProfile() {
     useEffect(() => {
         async function fetchFavourites() {
             try {
-                let resp = await Axios.get(`http://localhost:8080/auth/user/get-favourites/${user.user._id}`, {
-                    headers: {
-                        "x-auth-token": token,
-                    },
-                });
+                let resp = await Axios.get(`http://localhost:8080/auth/user/get-favourites/${user.user._id}`);
                 setFavourites(resp.data.favourites);
             } catch (e) {
                 // setError(e.response.data.message);
@@ -114,29 +111,21 @@ function CatProfile() {
             return;
         }
         if (favourites.includes(id)) {
-            await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`, {
-                headers: {
-                    "x-auth-token": token,
-                },
-            });
-
+            await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`);
             let temp = [...favourites];
             temp.splice(temp.indexOf(id), 1);
             setFavourites(temp);
         } else {
             try {
-                await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/favourite/${id}`, {
-                    headers: {
-                        "x-auth-token": token,
-                    },
-                });
-
+                await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/favourite/${id}`);
                 setFavourites([...favourites, id])
             } catch (e) {
-                console.log(e)
+                console.log("here");
+                console.log(e.response)
             }
         }
     }
+    
     return (
         <>{cat.found &&
             <>

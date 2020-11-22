@@ -21,7 +21,6 @@ app.use("/auth/cats", passport.authenticate('jwt', { session: false }), require(
 app.use("/auth/user", passport.authenticate('jwt', { session: false }), require("./routes/authUser.routes"));
 app.use("/auth/location", passport.authenticate('jwt', { session: false}), require("./routes/authLocation.routes"));
 
-
 app.get("*", (req, res) => {
     res.status(404).json({ message: "Server route not found" });
 });

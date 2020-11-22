@@ -9,7 +9,6 @@ import Search from './landings/Search/Search';
 import Login from './landings/account/Login';
 import RegisterContainer from './landings/account/RegisterContainer';
 import Dashboard from './landings/dashboard/Dashboard';
-import CatResults from './landings/Search/CatResults';
 import PrivateRoute from './private/PrivateRoute';
 import LogOut from './private/LogOut';
 import { decode } from "jsonwebtoken";
