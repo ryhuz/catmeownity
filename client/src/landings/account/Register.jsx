@@ -2,6 +2,12 @@ import React from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 
 function Register({ changeHandler, errMsg, nextSection }) {
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      nextSection(true)
+    }
+  }
+  
   return (
     <Card className="p-3 mx-auto mt-5">
       <Card.Body>
@@ -13,7 +19,7 @@ function Register({ changeHandler, errMsg, nextSection }) {
           <Row className="justify-content-center">
             <Col sm={8}>
               <Form.Group controlId="formBasicEmail">
-                <Form.Control type="text" name="email" placeholder="Email (you will use this to log in)" onChange={changeHandler} />
+                <Form.Control type="text" name="email" placeholder="Email (you will use this to log in)" onChange={changeHandler} onKeyDown={handleEnter}/>
                 {errMsg !== "" &&
                   <Form.Text>
                     <div className="text-danger">{errMsg}</div>
@@ -21,10 +27,10 @@ function Register({ changeHandler, errMsg, nextSection }) {
                 }
               </Form.Group>
               <Form.Group controlId="formBasicName">
-                <Form.Control type="text" name="name" placeholder="Name" onChange={changeHandler} />
+                <Form.Control type="text" name="name" placeholder="Name" onChange={changeHandler} onKeyDown={handleEnter}/>
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
-                <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} />
+                <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} onKeyDown={handleEnter}/>
               </Form.Group>
             </Col>
           </Row>
