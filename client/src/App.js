@@ -88,14 +88,10 @@ function App() {
         <Route path='/search'>
           <Search />
         </Route>
-        <Route path='/search/:area'>
-          <AreaResult />
-        </Route>
         <Route path='/location/:locationID'>
           <CatResults />
         </Route>
         <Route path='/cat/:id'>
-          {/* NEED TO ADD SLUG */}
           <CatProfile />
         </Route>
         <Route path='/profile/:id'>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Badge, Table, Accordion, Card, Button } from 'react-bootstrap'
+import { Container, Row, Col, Badge, Table, Accordion, Card, Button, Jumbotron, Carousel } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
+import CatBio from './CatBio';
 
 
 function CatProfile() {
@@ -25,16 +26,6 @@ function CatProfile() {
         fetchCat()
     }, [id])
 
-    function displayOtherNames() {
-        let other = cat.cat.names.slice(1);
-        return (
-            <>
-                {other.map((name, index) => (
-                    <span key={index} className="font-italic">{name}</span>
-                ))}
-            </>
-        )
-    }
     function displayEatingTimes() {
         let times = cat.cat.fed;
         if (times.length > 0) {
@@ -72,78 +63,140 @@ function CatProfile() {
             )
         }
     }
-    console.log(cat)
+    function followed() {
+        /* check user token, fetch followed, and check if this cat is in the array */
+        return false;
+    }
+    function missing() {
+        let miss = true;
+        if (miss) {
+            return (
+                <Container className="bg-danger">
+                    <Row>
+                        <Col sm={5}>
+                            <h5 className="mt-4 text-right">Missing Cat
+                            </h5>
+                        </Col>
+                        <Col>
+                            <h6 className="p-3">This cat hasn't been seen in a while.<br />Please contact us if you know of its whereabouts
+                            </h6>
+                        </Col>
+                    </Row>
+                </Container>
+            );
+        }
+    }
     return (
         <>{cat.found &&
-            <Container className="border border-dark">
-                <h4 className="text-center my-2">{cat.cat.names[0]}</h4>
-                <Row>
-                    <Col md={5}>
+            <>
+                <Jumbotron>
+                    <Container>
+                        <Row>
+                            {/* Cat main picture and follow button */}
+                            <Col>
+                                <img src="http://placekitten.com/200/300" className="rounded thumbnail img-responsive mx-auto d-block " width="250px" />
+                                <div className="text-center h4 mt-3">
+                                    {followed() ?
+                                        <>
+                                            <Button variant="outline-danger">
+                                                <i class="fas fa-heart mx-2"></i> Following this cat
+                                            </Button>
+                                        </> :
+                                        <>
+                                            <Button variant="secondary">
+                                                <i class="fas fa-cat mx-2"></i> Follow this cat
+                                            </Button>
+                                        </>
+                                    }
+                                </div>
+                            </Col>
+                            {/* Cat profile */}
+                            <CatBio cat={cat}/>
+                        </Row>
+                    </Container>
+                    {missing()}
+                    {/* Description Carousel */}
+                    <Container className='mt-4'>
+                        <Carousel>
+                            <Carousel.Item>
+                                <Card className="text-light bg-dark mx-5 px-5">
+                                    <Container>
+                                        <Card.Body>
+                                            <blockquote class="blockquote">
+                                                {cat.cat.desc}
+                                            </blockquote>
+                                            <h3>Said by user</h3>
+                                        </Card.Body>
+                                    </Container>
+                                </Card>
+                            </Carousel.Item>
+                        </Carousel>
+                        {/* {cat.cat.desc.map((desc, index) => {
+                                <Carousel.Item key={index}>
+                                    <Card className="text-light bg-dark mx-5 px-5">
+                                        <Container>
+                                            <Card.Body>
+                                                <blockquote class="blockquote">
+                                                    {desc}
+                                                </blockquote>
+                                                <h3>Said by user</h3>
+                                            </Card.Body>
+                                        </Container>
+                                    </Card>
+                                </Carousel.Item>
+                            })
+                            } */}
+                    </Container>
+                </Jumbotron>
+                <Container className="border border-dark">
+                    <Row>
+                        <Col md={5}>
+                            <div className="text-center my-2">
+                                <Badge className="badge badge-pill badge-danger mx-5">Missing</Badge>
 
-                        <div>
-                            <img src="http://placekitten.com/200/300" className="rounded thumbnail img-responsive mx-auto d-block " width="250px" />
-                        </div>
-                        <div className="text-center my-2">
-                            <Badge className="badge badge-pill badge-danger mx-5">Missing</Badge>
-                            <i class="far fa-heart mx-5"></i>
-                        </div>
-                    </Col>
-                    <Col md={7} className="border">
-                        <Table borderless size="lg">
-                            <tbody>
-                                {cat.cat.names.length > 1 &&
+                            </div>
+                        </Col>
+                        <Col md={7} className="border">
+                            <Table borderless size="lg">
+                                <tbody>
+
                                     <tr>
-                                        <td width="25%">Other names:</td>
-                                        <td>{displayOtherNames()}</td>
+                                        <td>Last fed:</td>
+                                        <td className="align-middle">{displayEatingTimes()}</td>
                                     </tr>
-                                }
-                                <tr>
-                                    <td>Gender:</td>
-                                    <td>{cat.cat.gender}</td>
-                                </tr>
-                                <tr>
-                                    <td>Last fed:</td>
-                                    <td className="align-middle">{displayEatingTimes()}</td>
-                                </tr>
-                                <tr>
-                                    <td>Breed:</td>
-                                    <td>{cat.cat.breed}</td>
-                                </tr>
-                                <tr>
-                                    <td>Color:</td>
-                                    <td>{cat.cat.colour}</td>
-                                </tr>
-                                <tr>
-                                    <td>Description:</td>
-                                    <td>{cat.cat.desc}</td>
-                                </tr>
-                                <tr>
-                                    <td>Residing:</td>
-                                    <td>{displayLocations()}</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Col>
-                    <Col md={12}>
-                        <Accordion defaultActiveKey="0">
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                        More photos
+
+                                    <tr>
+                                        <td>Description:</td>
+                                        <td>{cat.cat.desc}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residing:</td>
+                                        <td>{displayLocations()}</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </Col>
+                        <Col md={12}>
+                            <Accordion defaultActiveKey="0">
+                                <Card>
+                                    <Card.Header>
+                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                            More photos
                                     </Accordion.Toggle>
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="0">
-                                    <Card.Body className="mx-auto">
-                                        <img src="http://placekitten.com/200/320" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                        <img src="http://placekitten.com/200/310" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                        <img src="http://placekitten.com/200/330" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                        </Accordion>
-                    </Col>
-                </Row>
-            </Container>
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="0">
+                                        <Card.Body className="mx-auto">
+                                            <img src="http://placekitten.com/200/320" className="rounded thumbnail img-responsive mx-5" width="250px" />
+                                            <img src="http://placekitten.com/200/310" className="rounded thumbnail img-responsive mx-5" width="250px" />
+                                            <img src="http://placekitten.com/200/330" className="rounded thumbnail img-responsive mx-5" width="250px" />
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>
+                        </Col>
+                    </Row>
+                </Container>
+            </>
         }
         </>
     )

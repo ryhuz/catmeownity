@@ -1,3 +1,12 @@
+* {
+  box-sizing: border-box;
+  /* border: red 1px solid; */
+}
+
+.custom-switch.custom-control {
+  padding: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

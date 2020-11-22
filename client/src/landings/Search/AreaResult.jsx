@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Axios from 'axios'
-import { Col, Row } from 'react-bootstrap'
+import { Card, Col, Container, Row } from 'react-bootstrap'
 import LocationResult from './LocationResult'
 
-function AreaResult() {
+function AreaResult({ area }) {
     const [districts, setDistricts] = useState({ districts: [], found: false })
     const [selectedDistrict, setSelectedDistrict] = useState("")
-    let { area } = useParams();
 
     useEffect(() => {
         setSelectedDistrict("");
         async function fetchDistrict() {
             try {
-                let resp = await Axios.get(`http://localhost:2000/public/district/${area}`);
+                let resp = await Axios.get(`http://localhost:8080/public/district/${area}`);
                 setDistricts({ districts: resp.data.districts, found: true });
             } catch (e) {
                 // setError(e.response.data.message);
@@ -54,13 +53,17 @@ function AreaResult() {
     }
 
     return (
-        <div>
+        <Container>
             <h1>{area}</h1>
             <hr />
-            <Row>
+            <Row className="justify-content-center">
                 <Col md={6}>
-                    <h3>Districts</h3>
-                    {showDistricts()}
+                    <Card>
+                        <Card.Header>
+                            <h3>Districts</h3>
+                        </Card.Header>
+                        {showDistricts()}
+                    </Card>
                 </Col>
                 <Col md={6}>
                     {selectedDistrict !== "" &&
@@ -69,7 +72,7 @@ function AreaResult() {
                 </Col>
             </Row>
 
-        </div>
+        </Container>
     )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import Axios from 'axios'
+import { Card } from 'react-bootstrap'
 
 function LocationResult({ district }) {
     const [locations, setLocations] = useState({ locations: [], found: false })
@@ -8,7 +9,7 @@ function LocationResult({ district }) {
     useEffect(() => {
         async function fetchLocation() {
             try {
-                let resp = await Axios.get(`http://localhost:2000/public/location/${district}`);
+                let resp = await Axios.get(`http://localhost:8080/public/location/${district}`);
                 setLocations({ locations: resp.data.locations, found: true });
             } catch (e) {
                 // setError(e.response.data.message);
@@ -39,18 +40,12 @@ function LocationResult({ district }) {
                 return (
                     <>
                         {locations.locations.map(location => (
-                            <li key={location._id} className='d-flex'>
-                                <NavLink to={`/location/${location._id}`}>
+                            <li className='d-flex'>
+                                <NavLink to={`/location/${location._id}`} key={location._id} className='nav-link'>
                                     {location.street}
                                 </NavLink>
                             </li>
                         ))}
-                    </>
-                )
-            } else {
-                return (
-                    <>
-                        No areas here with cats yet. Would you like to add one?
                     </>
                 )
             }
@@ -58,10 +53,21 @@ function LocationResult({ district }) {
     }
 
     return (
-        <div>
-            <h3>Location</h3>
+        <Card>
+            <Card.Header>
+                <h3>Location</h3>
+            </Card.Header>
             {showLocations()}
-        </div>
+            <hr/>
+            <li className='d-flex flex-column nav-link'>
+                <p>
+                    Do we not have the location you're looking for?
+                </p>
+                <p>
+                    <div className='btn btn-secondary'>Add it here!</div>
+                </p>
+            </li>
+        </Card>
     )
 }
 
