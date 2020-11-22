@@ -22,7 +22,6 @@ function Search() {
             </Row>
         )
     }
-    console.log(area)
     return (
         <>
             <Jumbotron className='bg-secondary'>

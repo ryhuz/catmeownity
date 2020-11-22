@@ -41,8 +41,8 @@ const RegisterContainer = ({ setValid }) => {
                     }
                 };
 
-                let img = await Axios.post("http://localhost:8080/user/profilepic", formData, config);
-                userData.imageID = img.data.imageID;
+                // let img = await Axios.post("http://localhost:8080/user/profilepic", formData, config);
+                // userData.imageID = img.data.imageID;
             }
             //register user
             let resp = await Axios.post("http://localhost:8080/user/register", userData);

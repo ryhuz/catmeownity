@@ -11,7 +11,6 @@ router.get("/:userID", async (req, res) => {
             {
                 path: 'favorites',
                 model: 'Cat',
-                select: 'names'
             },
         ).populate(
             {
@@ -69,15 +68,44 @@ router.put("/:userID/tracked/:locationID", async (req, res) => {
     }
 })
 
-//add favorites
-router.put("/:userID/favorite/:catID", async (req, res) => {
+/* get favorites from user */
+router.get("/get-favourites/:userID", async (req, res) => {
+    try {
+        let user = await User.findById(req.params.userID);
+        return res.status(200).json({
+            favourites: user.favorites,
+            message: "Successfully fetched user favourites!"
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: "Problem fetching data!" });
+    }
+})
+
+/* add favorites */
+router.put("/:userID/favourite/:catID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
                 favorites: req.params.catID
             }
         })
-        res.status(200).json({ message: "Successfully added cat to favorites" });
+        res.status(200).json({ 
+            message: "Successfully added cat to favorites"
+        });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding user" });
+    }
+})
+/* remove favorites */
+router.put("/:userID/unfavourite/:catID", async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.userID, {
+            $pull: {
+                favorites: req.params.catID
+            }
+        })
+        res.status(200).json({ message: "Successfully removed cat from favorites" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
     }

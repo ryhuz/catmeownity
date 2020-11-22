@@ -40,8 +40,8 @@ function LocationResult({ district }) {
                 return (
                     <>
                         {locations.locations.map(location => (
-                            <li className='d-flex'>
-                                <NavLink to={`/location/${location._id}`} key={location._id} className='nav-link'>
+                            <li className='d-flex' key={location._id}>
+                                <NavLink to={`/location/${location._id}`} className='nav-link'>
                                     {location.street}
                                 </NavLink>
                             </li>
@@ -64,7 +64,7 @@ function LocationResult({ district }) {
                     Do we not have the location you're looking for?
                 </p>
                 <p>
-                    <div className='btn btn-secondary'>Add it here!</div>
+                    <span className='btn btn-secondary'>Add it here!</span>
                 </p>
             </li>
         </Card>

@@ -1,23 +1,46 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Badge, Table, Accordion, Card, Button, Jumbotron, Carousel } from 'react-bootstrap'
+import { Container, Row, Col, Badge, Table, Accordion, Card, Button, Jumbotron, Carousel, Modal } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 import CatBio from './CatBio';
+import { decode } from "jsonwebtoken";
+import NotLoggedIn from '../private/NotLoggedIn';
 
 
 function CatProfile() {
+    let token = localStorage.getItem('token')
+    let user = decode(token);
     let { id } = useParams()
     const [cat, setCat] = useState({
         cat: null,
         found: false,
     });
+    const [favourites, setFavourites] = useState([]);
+    const [needToLogIn, setNeedToLogIn] = useState(false);
+
+    useEffect(() => {
+        async function fetchFavourites() {
+            try {
+                let resp = await Axios.get(`http://localhost:8080/auth/user/get-favourites/${user.user._id}`, {
+                    headers: {
+                        "x-auth-token": token,
+                    },
+                });
+                setFavourites(resp.data.favourites);
+            } catch (e) {
+                // setError(e.response.data.message);
+                console.log(e.response)
+            }
+        }
+        fetchFavourites()
+    }, [])
 
     useEffect(() => {
         async function fetchCat() {
             try {
                 let resp = await Axios.get(`http://localhost:8080/public/cat/${id}`);
                 setCat({ cat: resp.data.cat, found: true });
-                /* REDIRECT IF USER NOT FOUND */
+                /* REDIRECT TO ERROR PAGE IF CAT NOT FOUND */
             } catch (e) {
                 // setError(e.response.data.message);
                 console.log(e.response)
@@ -43,7 +66,6 @@ function CatProfile() {
                 </>
             )
         }
-
     }
     function displayLocations() {
         let places = cat.cat.locations;
@@ -64,8 +86,7 @@ function CatProfile() {
         }
     }
     function followed() {
-        /* check user token, fetch followed, and check if this cat is in the array */
-        return false;
+        return favourites.includes(id);
     }
     function missing() {
         let miss = true;
@@ -86,9 +107,42 @@ function CatProfile() {
             );
         }
     }
+    async function followUnfollow() {
+        if(!user){
+            setNeedToLogIn(true);
+            return;
+        }
+        console.log('test')
+        if (favourites.includes(id)) {
+            await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`, {
+                headers: {
+                    "x-auth-token": token,
+                },
+            });
+
+            let temp = [...favourites];
+            temp.splice(temp.indexOf(id), 1);
+            setFavourites(temp);
+        } else {
+            try {
+                await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/favourite/${id}`, {
+                    headers: {
+                        "x-auth-token": token,
+                    },
+                });
+
+                setFavourites([...favourites, id])
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
     return (
         <>{cat.found &&
             <>
+                <Modal show={needToLogIn} onHide={()=>(setNeedToLogIn(false))}>
+                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn}/>
+                </Modal>
                 <Jumbotron>
                     <Container>
                         <Row>
@@ -98,20 +152,20 @@ function CatProfile() {
                                 <div className="text-center h4 mt-3">
                                     {followed() ?
                                         <>
-                                            <Button variant="outline-danger">
-                                                <i class="fas fa-heart mx-2"></i> Following this cat
+                                            <Button variant="outline-danger" onClick={followUnfollow}>
+                                                <i className="fas fa-heart mx-2"></i> Following this cat
                                             </Button>
                                         </> :
                                         <>
-                                            <Button variant="secondary">
-                                                <i class="fas fa-cat mx-2"></i> Follow this cat
+                                            <Button variant="secondary" onClick={followUnfollow}>
+                                                <i className="fas fa-cat mx-2"></i> Follow this cat
                                             </Button>
                                         </>
                                     }
                                 </div>
                             </Col>
                             {/* Cat profile */}
-                            <CatBio cat={cat}/>
+                            <CatBio cat={cat} />
                         </Row>
                     </Container>
                     {missing()}
@@ -122,7 +176,7 @@ function CatProfile() {
                                 <Card className="text-light bg-dark mx-5 px-5">
                                     <Container>
                                         <Card.Body>
-                                            <blockquote class="blockquote">
+                                            <blockquote className="blockquote">
                                                 {cat.cat.desc}
                                             </blockquote>
                                             <h3>Said by user</h3>

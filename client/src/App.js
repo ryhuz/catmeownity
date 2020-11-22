@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import Switch from 'react-bootstrap/esm/Switch';
-import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom'
+import { Button, Nav, Navbar } from 'react-bootstrap'
+import { BrowserRouter, NavLink, Route, Redirect, Switch, useLocation } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
-import AreaResult from './landings/Search/AreaResult';
-import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
 import Login from './landings/account/Login';
 import RegisterContainer from './landings/account/RegisterContainer';
 import Dashboard from './landings/dashboard/Dashboard';
+import CatResults from './landings/Search/CatResults';
+import { decode } from "jsonwebtoken";
+import LogOut from './private/LogOut';
 
-function App() { 
-
+function App() {
   const [valid, setValid] = useState(false);
 
   useEffect(() => {
@@ -21,17 +20,15 @@ function App() {
   }, [valid])
 
   function checkLoggedIn() {
-    if (localStorage.getItem('token') != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+    let token = localStorage.getItem('token');
 
-  function logout() {
-    localStorage.removeItem('token');
-    setValid(false);
-    return <Redirect to="/" />
+    if (token !== null) {
+      let user = decode(token);
+      if (user.user) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /* show this navbar when logged in */
@@ -39,24 +36,13 @@ function App() {
     return (
       <Navbar bg="light" expand="lg">
         <NavLink className="navbar-brand" to="/">CatMeownity</NavLink>
-        <button className="badge badge-pill badge-secondary" onClick={logout}>Logout</button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown>
+            <NavLink to="/dashboard" className="btn btn-success mx-2">Dashboard</NavLink>
+            <NavLink to="/search" className="btn btn-outline-success mx-2">Search</NavLink>
+            <NavLink to="/logout" className='btn btn-warning mx-2'>Log Out</NavLink>
           </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
-          </Form>
         </Navbar.Collapse>
       </Navbar>
     )
@@ -79,7 +65,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {checkLoggedIn() ? navLoggedIn() : navNotLoggedIn()}
+      {valid ? navLoggedIn() : navNotLoggedIn()}
 
       <Switch>
         <Route exact path='/'>
@@ -99,10 +85,13 @@ function App() {
           <UserProfile />
         </Route>
         <Route path='/login'>
-          <Login setValid={setValid}/>
+          <Login setValid={setValid} />
+        </Route>
+        <Route path='/logout'>
+          <LogOut setValid={setValid} />
         </Route>
         <Route path='/register'>
-          <RegisterContainer setValid={setValid}/>
+          <RegisterContainer setValid={setValid} />
         </Route>
 
         {/* THESE ROUTES SHOULD BE PRIVATE */}
