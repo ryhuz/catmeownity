@@ -25,7 +25,7 @@ const Login = ({ setValid }) => {
     }
   }
 
-  if (home) return <Redirect to="/" />
+  if (home) return <Redirect to="/dashboard" />
 
 
   return (
