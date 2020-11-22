@@ -4,6 +4,7 @@ import { BrowserRouter, NavLink, Route, Redirect, Switch, useLocation } from 're
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
+import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
 import Login from './landings/account/Login';
 import RegisterContainer from './landings/account/RegisterContainer';
