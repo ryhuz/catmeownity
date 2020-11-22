@@ -47,7 +47,7 @@ router.post('/login', async (req, res, next) => {
                 return next(error);
             }
             if (!user) {
-                return res.status(400).json({ message: 'user not found' })
+                return res.status(400).json({ msg: 'Invalid email or password' })
             }
 
             req.login(
