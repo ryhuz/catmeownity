@@ -10,7 +10,7 @@ import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
 import Login from './landings/account/Login';
 import RegisterContainer from './landings/account/RegisterContainer';
-import Dashboard from './landings/Dashboard';
+import Dashboard from './landings/dashboard/Dashboard';
 
 function App() { 
 
@@ -33,8 +33,6 @@ function App() {
     setValid(false);
     return <Redirect to="/" />
   }
-
-  
 
   /* show this navbar when logged in */
   function navLoggedIn() {
@@ -96,11 +94,11 @@ function App() {
         <Route path='/location/:locationID'>
           <CatResults />
         </Route>
-        <Route path='/cat'>
+        <Route path='/cat/:id'>
           {/* NEED TO ADD SLUG */}
           <CatProfile />
         </Route>
-        <Route path='/profile'>
+        <Route path='/profile/:id'>
           {/* NEED TO ADD SLUG */}
           <UserProfile />
         </Route>
@@ -110,6 +108,9 @@ function App() {
         <Route path='/register'>
           <RegisterContainer setValid={setValid}/>
         </Route>
+
+        {/* THESE ROUTES SHOULD BE PRIVATE */}
+
         <Route path='/dashboard'>
           <Dashboard />
         </Route>

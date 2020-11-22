@@ -11,7 +11,19 @@ const RegisterContainer = ({ setValid }) => {
     const [form, setForm] = useState({});
     const [home, setHome] = useState(false);
     const [errMsg, setErrMsg] = useState("");
+    const [showSection, setShowSection] = useState({
+        register: true,
+        location: false,
+        pic: false,
+    });
 
+    function nextSectionLocation(bool){
+        setShowSection({...showSection, location: bool})
+    }
+    function nextSectionPic(bool){
+        setShowSection({...showSection, pic: bool})
+    }
+    
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
@@ -52,9 +64,15 @@ const RegisterContainer = ({ setValid }) => {
     return (
         <Container>
             <h1>Register page</h1>
-            <Register setValid={setValid} changeHandler={changeHandler} errMsg={errMsg} />
-            <ChooseLocation form={form} setForm={setForm} />
-            <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} />
+            {showSection.register &&
+                <Register setValid={setValid} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation}/>
+            }
+            {showSection.location &&
+                <ChooseLocation form={form} setForm={setForm} nextSection={nextSectionPic} prevSection={nextSectionLocation}/>
+            }
+            {showSection.pic &&
+                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={nextSectionPic} />
+            }
         </Container>
     )
 }

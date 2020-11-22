@@ -34,34 +34,38 @@ const Login = ({ setValid }) => {
       <Card className="p-3 mx-auto mt-5">
         <Image className="mx-auto" width="20%" src="https://unsplash.it/200/200" roundedCircle />
         <Card.Body>
-          <Form>
-            <Form.Group controlId="formBasicUsername">
-              <Form.Control type="text" name="email" placeholder="Email" onChange={changeHandler} />
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} />
-            </Form.Group>
-            <Button variant="dark" name="password" block onClick={login}>
-              Login
+          <Row className="justify-content-center">
+            <Col sm={8}>
+              <Form>
+                <Form.Group controlId="formBasicUsername">
+                  <Form.Control type="text" name="email" placeholder="Email" onChange={changeHandler} />
+                </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} />
+                </Form.Group>
+                <Button variant="dark" name="password" block onClick={login}>
+                  Login
               </Button>
-            <Row>
-              <Col className="mt-4" xs={12}>
-                <Row end="xs">
-                  <Col xs={10} />
-                  Don't have an account?
-            </Row>
-              </Col>
-            </Row>
-            <Row bottom="xs">
-              <Col xs={10} />
-              <a href="/register">Sign up here</a>
-              <Col xs={6} />
-            </Row>
-          </Form>
+                <Row className='justify-content-end mt-3'>
+                  <Col />
+                  <Col sm='auto'>
+                    Don't have an account?
+                    </Col>
+                </Row>
+                <Row bottom="xs">
+                  <Col />
+                  <Col sm='auto'>
+                    <a href="/register">Sign up here</a>
+                  </Col>
+                </Row>
+              </Form>
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
     </Container>
   )
 }
 
-export default Login;
+export default Login;/* 
+ */

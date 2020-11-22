@@ -5,7 +5,7 @@ const District = require("../models/district.model");
 const Location = require("../models/location.model.js");
 const mongoose = require('mongoose')
 
-/* get cat data */
+/* get cat data from location*/
 router.get('/cats/:location', async (req, res) => {
     try {
         let locationID = req.params.location;
@@ -22,7 +22,28 @@ router.get('/cats/:location', async (req, res) => {
         res.status(400).json({ message: "Problem fetching cats data!" })
     }
 });
-
+/* get single cat data */
+router.get("/cat/:catID", async (req, res) => {
+    try {
+        let cat = await Cat.findById(req.params.catID).populate(
+            {
+                path: 'locations',
+                model: 'Location',
+                select: 'street block',
+                populate: {
+                    path: 'district',
+                    select: 'name locality',
+                }
+            }
+        )
+        return res.status(200).json({
+            cat,
+            message: "Successfully fetched cat!"
+        });
+    } catch (error) {
+        res.status(400).json({ message: "Problem fetching data!" });
+    }
+})
 /* get district data from NSEW*/
 router.get('/district/:area', async (req, res) => {
     try {

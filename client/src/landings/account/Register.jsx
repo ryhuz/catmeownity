@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 
-function Register({ setValid, changeHandler, errMsg }) {
+function Register({ changeHandler, errMsg, nextSection }) {
   return (
     <Card className="p-3 mx-auto mt-5">
       <Card.Body>
@@ -12,7 +12,7 @@ function Register({ setValid, changeHandler, errMsg }) {
           <hr />
           <Row className="justify-content-center">
             <Col sm={8}>
-            <Form.Group controlId="formBasicEmail">
+              <Form.Group controlId="formBasicEmail">
                 <Form.Control type="text" name="email" placeholder="Email (you will use this to log in)" onChange={changeHandler} />
                 {errMsg !== "" &&
                   <Form.Text>
@@ -30,10 +30,22 @@ function Register({ setValid, changeHandler, errMsg }) {
           </Row>
         </Form>
         <Row className="justify-content-center">
-          <Col sm={5}>
-            <Button variant="dark" block>
+          <Col sm={8}>
+            <Button variant="dark" block onClick={()=>nextSection(true)}>
               Next Step
-              </Button>
+            </Button>
+            <Row className='justify-content-end mt-3'>
+              <Col />
+              <Col sm='auto'>
+                Have an account?
+                    </Col>
+            </Row>
+            <Row bottom="xs">
+              <Col/>
+              <Col sm='auto'>
+                <a href="/login">Log in here</a>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Card.Body>
