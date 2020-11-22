@@ -113,7 +113,6 @@ function CatProfile() {
             setNeedToLogIn(true);
             return;
         }
-        console.log('test')
         if (favourites.includes(id)) {
             await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`, {
                 headers: {
