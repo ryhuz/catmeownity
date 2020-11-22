@@ -9,6 +9,7 @@ require('./lib/connection');
 
 /* middleware */
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 app.use(cors());
 

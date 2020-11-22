@@ -15,7 +15,7 @@ const UserProfile = () => {
   useEffect(() => {
     async function fetchUser() {
       try {
-        let resp = await Axios.get(`http://localhost:8080/user/user/${id}`);
+        let resp = await Axios.get(`http://localhost:8080/user/${id}`);
         setUser({ user: resp.data.user, found: true });
         /* REDIRECT IF USER NOT FOUND */
       } catch (e) {

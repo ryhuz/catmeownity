@@ -7,26 +7,37 @@ const Login = ({ setValid }) => {
 
   const [form, setForm] = useState({});
   const [home, setHome] = useState(false);
+  const [err, setErr] = useState({ msg: '' });
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      login();
+    }
+  }
+
   async function login() {
     try {
       //register user
-      let resp = await Axios.post("http://localhost:2000/user/login", form);
+      let resp = await Axios.post("http://localhost:8080/user/login", form);
       //store token in local storage
       localStorage.setItem('token', resp.data.token);
-      setValid(true);
+      setErr({})
+      setValid({
+        valid: true,
+        refreshed: false,
+      });
       setHome(true);
     } catch (error) {
       console.log(error.response)
+      setErr(error.response.data)
     }
   }
 
   if (home) return <Redirect to="/dashboard" />
-
 
   return (
     <Container>
@@ -38,10 +49,13 @@ const Login = ({ setValid }) => {
             <Col sm={8}>
               <Form>
                 <Form.Group controlId="formBasicUsername">
-                  <Form.Control type="text" name="email" placeholder="Email" onChange={changeHandler} />
+                  <Form.Label className="my-0 ml-1">
+                    {err.msg && <small className="text-danger">{err.msg}</small>}
+                  </Form.Label>
+                  <Form.Control type="text" name="email" placeholder="Email" onChange={changeHandler} onKeyDown={handleEnter}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
-                  <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} />
+                  <Form.Control type="password" name="password" placeholder="Password" onChange={changeHandler} onKeyDown={handleEnter}/>
                 </Form.Group>
                 <Button variant="dark" name="password" block onClick={login}>
                   Login

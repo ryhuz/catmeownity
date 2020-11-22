@@ -24,14 +24,10 @@ router.post("/register", async (req, res) => {
         if (location !== "") {           // if there is a location included
             user.location = location;
         }
-        if (imageID !== "") {            // if there is an image included
-            user.imageID = imageID;
-        }
-
         await user.save();
         // give token to user upon successful registration
         const body = { _id: user._id };
-        const token = jwt.sign({ user: body }, process.env.TOP_SECRET);
+        const token = jwt.sign({ user: body }, process.env.TOP_SECRET, { expiresIn: 84600000 });
         return res.status(200).json({ token });
     } catch (error) {
         if (error.code === 11000) {
@@ -51,7 +47,7 @@ router.post('/login', async (req, res, next) => {
                 return next(error);
             }
             if (!user) {
-                return res.status(400).json({ message: 'user not found' })
+                return res.status(400).json({ msg: 'Invalid email or password' })
             }
 
             req.login(
@@ -61,9 +57,9 @@ router.post('/login', async (req, res, next) => {
                     if (error) return next(error);
 
                     const body = { _id: user._id };
-                    const token = jwt.sign({ user: body }, process.env.TOP_SECRET);
+                    const token = jwt.sign({ user: body }, process.env.TOP_SECRET, { expiresIn: 84600000 });
 
-                    return res.json({ token });
+                    return res.status(200).json({ token });
                 }
             );
         } catch (error) {
@@ -73,13 +69,18 @@ router.post('/login', async (req, res, next) => {
 });
 
 /* Get user profile */
-router.get('/user/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        let user = await User.findById(req.params.id).populate('location');
+        let user = await User.findById(req.params.id).populate(
+            {
+                path: 'favorites',
+                model: 'Cat',
+            },
+        )
 
-        if(user){
+        if (user) {
             return res.status(200).json({ user });
-        }else{
+        } else {
             res.status(400).json({ user: false })
         }
     } catch (e) {
