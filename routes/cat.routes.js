@@ -21,11 +21,11 @@ router.post("/", async (req, res) => {
     }
 })
 
-// edit cat --> use cat ID
+// edit cat for profile modal --> use cat ID
 router.put("/:catID", async (req, res) => {
     try {
-        let { names, breed, gender, colour, desc, locations, photos, sterilised, missing, duplicate } = req.body;
-        await Cat.findByIdAndUpdate(req.params.catID, { names, breed, gender, colour, desc, locations, photos, sterilised, missing, duplicate });
+        let { names, breed, gender, colour } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, { names, breed, gender, colour });
         res.status(200).json({ message: "Successfully updated cat profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding cat data" });
