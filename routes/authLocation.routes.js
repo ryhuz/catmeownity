@@ -29,15 +29,24 @@ router.get("/:locationID", async (req, res) => {
 // create location by district
 router.post("/:districtID", async (req, res) => {
     try {
-        let { block, street } = req.body;
+        let { street } = req.body;
+        let temp = ""
+        street.split(' ').forEach(x => {
+            temp += (x[0].toUpperCase() + x.slice(1) + ' ')
+        })
+        let check = await Location.find({ street: temp.trim() })
+
+        console.log(check)
+        if (check.length > 0) {
+            res.status(400).json({ exists: true, message: "Location already exists" })
+        }
+
         let location = new Location(
             {
-                block,
-                street,
+                street: temp.trim(),
                 district: req.params.districtID,
             }
         );
-
         await location.save();
 
         res.status(201).json({ message: "Location has been added" });

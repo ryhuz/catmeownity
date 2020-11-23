@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, CardGroup, Col, Form, Image, Modal, Row } from 'react-bootstrap';
+import { Button, Card, CardGroup, Col, Container, Form, Image, Jumbotron, Modal, Row } from 'react-bootstrap';
 import { decode } from "jsonwebtoken";
 import Axios from 'axios'
 import { NavLink } from 'react-router-dom';
@@ -11,12 +11,19 @@ const Dashboard = () => {
   Axios.defaults.headers.common['x-auth-token'] = token;
 
   const [confirmUnfollow, setConfirmUnfollow] = useState(false);
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({
+    profile: {},
+    found: false
+  });
+  /* getting user data */
   useEffect(() => {
     async function fetchProfile() {
       try {
         let resp = await Axios.get(`http://localhost:8080/auth/user/${user.user._id}`);
-        setProfile(resp.data.user);
+        setProfile({
+          profile: resp.data.user,
+          found: true
+        });
       } catch (e) {
         // setError(e.response.data.message);
         console.log(e.response)
@@ -26,14 +33,14 @@ const Dashboard = () => {
   }, [])
 
   function showFavouriteCats() {
-    if (profile.favorites.length > 0) {
+    if (profile.profile.favorites.length > 0) {
       return (
         <>
           {profile.favorites.map(cat => (
-            <Col key={cat._id}>
+            <Col className="" key={cat._id}>
               <Card>
                 {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
-                <Image src="http://placehold.it/200x200" width="100%" className="img-thumbnail" />
+                <Image src="http://placekitten.com/200/300" width="100%" className="img-thumbnail" />
                 <Card.Header className='h5'>
                   <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
@@ -53,6 +60,19 @@ const Dashboard = () => {
           ))}
         </>
       )
+    } else {
+      return (
+        <Col>
+          <Card>
+            <Card.Title>
+              You haven't followed any cats :(
+            </Card.Title>
+            <Card.Body>
+              Search for one now!
+            </Card.Body>
+          </Card>
+        </Col>
+      )
     }
   }
 
@@ -62,7 +82,7 @@ const Dashboard = () => {
         "x-auth-token": token,
       },
     });
-    
+
     setConfirmUnfollow(false);
     let temp = profile.favorites;
     temp.splice(temp.indexOf(x => x._id === id), 1);
@@ -71,56 +91,60 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Card bg="dark text-white" className="text-center mr-4">
-        <Card.Body className="m-4">
-          <Card.Title>Welcome Back!</Card.Title>
-          <Card.Text className="p-4">
-            With supporting text below as a natural lead-in to additional content.
-            <br />
-            “Every cat is my best friend.” – Unknown
-          </Card.Text>
-          <Button variant="outline-warning">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-
-      <CardGroup className="mx-5">
-        <Card className="mb-3 mx-5">
-          <Card.Body>
-            <Card.Title>Your favourite cats</Card.Title>
-            <Row sm={2} md={3}>
-              {profile.favorites && showFavouriteCats()}
-            </Row>
-            <Button variant="dark" block>Go somewhere</Button>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-        {/* ---------- middle ------------ */}
-        <Card className="text-center mb-3 mx-5">
-          <Card.Img src="https://picsum.photos/1200/600" />
-          <Card.Body>
-            <Card.Title>Your tracked locations</Card.Title>
-            <ul>
-              <li>Locations list</li>
-              <li>Open up to cats in each location</li>
-            </ul>
-            <Button variant="dark" block>Go somewhere</Button>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-      </CardGroup>
-      <Card className="bg-dark text-white p-3 mx-auto">
-        <Card.Body>
-          <Form className="text-center">
-            <Form.Label>
-              <Card.Title className="text-center h-5">Kitty stuff</Card.Title>
-            </Form.Label>
-          </Form>
-        </Card.Body>
-      </Card>
+      {profile.found &&
+        <>
+          {/* Header */}
+          <Jumbotron className='bg-dark'>
+            <Card.Title className="text-white mb-auto jumbotitledown">Welcome back, {profile.profile.name}!</Card.Title>
+          </Jumbotron>
+          {/* Profile Preview */}
+          <Row className="mx-5 p-3 justify-content-center">
+            <Col sm={3}>
+              <Image src={profile.profile.image} width="100%" />
+            </Col>
+            <Col sm={3}>
+              <NavLink to={`/profile/${profile.profile._id}`} className='btn'>
+                View full profile
+              </NavLink>
+            </Col>
+          </Row>
+          <div className="bg-dark">
+            {/* Favourite Cats */}
+            <CardGroup className="mx-5 py-4">
+              <Card className="mb-3 mx-5">
+                <Card.Body>
+                  <Card.Title>Your favourite cats</Card.Title>
+                  <Row sm={2} md={3}>
+                    {showFavouriteCats()}
+                  </Row>
+                  <Button variant="dark" block>Go somewhere</Button>
+                </Card.Body>
+              </Card>
+              {/* Tracked locations */}
+              <Card className="text-center mb-3 mx-5">
+                <Card.Img src="https://picsum.photos/1200/600" />
+                <Card.Body>
+                  <Card.Title>Your tracked locations</Card.Title>
+                  <ul>
+                    <li>Locations list</li>
+                    <li>Open up to cats in each location</li>
+                  </ul>
+                  <Button variant="dark" block>Go somewhere</Button>
+                </Card.Body>
+              </Card>
+            </CardGroup>
+          </div>
+          <Card className="bg-dark text-white p-3 mx-auto">
+            <Card.Body>
+              <Form className="text-center">
+                <Form.Label>
+                  <Card.Title className="text-center h-5">Kitty stuff</Card.Title>
+                </Form.Label>
+              </Form>
+            </Card.Body>
+          </Card>
+        </>
+      }
     </div>
   )
 }

@@ -4,8 +4,7 @@ const { Schema } = mongoose;
 const locationSchema = new Schema({
     district: { type: Schema.Types.ObjectId, ref: 'District', required: true },
     cats: { type: Schema.Types.ObjectId, ref: 'Cat'},
-    block: [String],
-    street: { type: String, required: true },
+    street: { type: String, required: true, unique: true },
 });
 
 const Location = mongoose.model("Location", locationSchema);

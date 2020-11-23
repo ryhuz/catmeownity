@@ -5,10 +5,9 @@ function PrivateRoute({ component: Component, valid, ...rest }) {
     return (
         <Route {...rest} render={props => (
             valid.valid ?
-                <Component {...props} /> :
+                <Component {...props}{...rest} valid={valid} /> :
                 !valid.refreshed &&
                 < Redirect to='/' />
-
         )} />
     )
 }
