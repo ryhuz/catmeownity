@@ -15,11 +15,15 @@ function Register({ changeHandler, nextSection, email }) {
   async function blur() {
     setLoading(true);
     if (email !== "") {
-      let exists = await Axios.get(`http://localhost:8080/user/check/${email}`);
-      if (exists) {
-        setErrMsg("This email is already registered")
-      } else {
-        setErrMsg("")
+      try {
+        let exists = await Axios.get(`http://localhost:8080/user/check/${email}`);
+        if (exists) {
+          setErrMsg("This email is already registered")
+        } else {
+          setErrMsg("")
+        }
+      }catch(e){
+        
       }
     } else {
       setErrMsg("")

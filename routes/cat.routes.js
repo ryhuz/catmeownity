@@ -5,7 +5,7 @@ const Location = require("../models/location.model");
 const District = require("../models/district.model");
 
 // add new cat
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
     try {
         let { namesArr, breed, gender, colourArr, desc, locations, photos, sterilised } = req.body;
         let colour = colourArr.split(","); // not sure how the forms will be so I just put a split between commas for the array (temporary)
@@ -87,5 +87,33 @@ router.put("/:catID/missing", async (req, res) => {
         res.status(400).json({ message: "Trouble finding cat data" });
     }
 })
+
+/* Add cat photo */
+router.put('/addphoto/:catID', async (req, res) => {
+    try {
+        let { image } = req.body;
+        
+        let photo = {
+            image,
+            isDefault: false,
+        }
+
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $push: {
+                photos: photo
+            }
+        })
+
+        res.status(200).json({ message: "successfully added photo to cat" });
+    } catch (error) {
+        if (error.code === 11000) {
+            res.status(400).json({ message: "This email address has already been registered" })
+        } else {
+            res.status(400).json({ message: "Error here!" })
+        }
+    }
+})
+
+
 
 module.exports = router;

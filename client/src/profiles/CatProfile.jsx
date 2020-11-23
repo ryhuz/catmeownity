@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
-
+import pic from '../nocatpic.png'
 
 function CatProfile() {
     let token = localStorage.getItem('token')
@@ -14,6 +14,7 @@ function CatProfile() {
     let { id } = useParams()
     const [cat, setCat] = useState({
         cat: null,
+        defaultPhoto: null,
         found: false,
     });
     const [favourites, setFavourites] = useState([]);
@@ -37,7 +38,11 @@ function CatProfile() {
         async function fetchCat() {
             try {
                 let resp = await Axios.get(`http://localhost:8080/public/cat/${id}`);
-                setCat({ cat: resp.data.cat, found: true });
+                let tempPhoto;
+                if (resp.data.cat.photos.length > 0) {
+                    tempPhoto = resp.data.cat.photos.find(photo => photo.isDefault)
+                }
+                setCat({ cat: resp.data.cat, defaultPhoto: tempPhoto, found: true });
                 /* REDIRECT TO ERROR PAGE IF CAT NOT FOUND */
             } catch (e) {
                 // setError(e.response.data.message);
@@ -87,7 +92,7 @@ function CatProfile() {
         return favourites.includes(id);
     }
     function missing() {
-        let miss = true;
+        let miss = cat.missing;
         if (miss) {
             return (
                 <Container className="bg-danger">
@@ -125,7 +130,7 @@ function CatProfile() {
             }
         }
     }
-    
+
     return (
         <>{cat.found &&
             <>
@@ -137,7 +142,18 @@ function CatProfile() {
                         <Row>
                             {/* Cat main picture and follow button */}
                             <Col>
-                                <img src="http://placekitten.com/200/300" className="rounded thumbnail img-responsive mx-auto d-block " width="250px" />
+                                <img src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
+                                {!cat.defaultPhoto &&
+                                    <Row xs={1}>
+                                        <Col className='text-center py-2'>
+                                            {cat.cat.names[0]} doesn't have a picture yet.
+                                        </Col>
+                                        <Col className='text-center'>
+                                            <div className='btn btn-success'>
+                                                Add their first photo!
+                                            </div>
+                                        </Col>
+                                    </Row>}
                                 <div className="text-center h4 mt-3">
                                     {followed() ?
                                         <>
