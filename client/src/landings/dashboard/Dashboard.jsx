@@ -37,10 +37,10 @@ const Dashboard = () => {
       return (
         <>
           {profile.favorites.map(cat => (
-            <Col key={cat._id}>
+            <Col className="" key={cat._id}>
               <Card>
                 {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
-                <Image src="http://placehold.it/200x200" width="100%" className="img-thumbnail" />
+                <Image src="http://placekitten.com/200/300" width="100%" className="img-thumbnail" />
                 <Card.Header className='h5'>
                   <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
@@ -109,6 +109,7 @@ const Dashboard = () => {
             </Col>
           </Row>
           <div className="bg-dark">
+            {/* Favourite Cats */}
             <CardGroup className="mx-5 py-4">
               <Card className="mb-3 mx-5">
                 <Card.Body>
@@ -118,11 +119,8 @@ const Dashboard = () => {
                   </Row>
                   <Button variant="dark" block>Go somewhere</Button>
                 </Card.Body>
-                <Card.Footer>
-                  <small className="text-muted">Last updated 3 mins ago</small>
-                </Card.Footer>
               </Card>
-              {/* ---------- middle ------------ */}
+              {/* Tracked locations */}
               <Card className="text-center mb-3 mx-5">
                 <Card.Img src="https://picsum.photos/1200/600" />
                 <Card.Body>
@@ -133,9 +131,6 @@ const Dashboard = () => {
                   </ul>
                   <Button variant="dark" block>Go somewhere</Button>
                 </Card.Body>
-                <Card.Footer>
-                  <small className="text-muted">Last updated 3 mins ago</small>
-                </Card.Footer>
               </Card>
             </CardGroup>
           </div>
