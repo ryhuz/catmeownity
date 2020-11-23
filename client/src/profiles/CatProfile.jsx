@@ -87,8 +87,7 @@ function CatProfile() {
         return favourites.includes(id);
     }
     function missing() {
-        let miss = true;
-        if (miss) {
+        if (cat.cat.missing) {
             return (
                 <Container className="bg-danger">
                     <Row>
@@ -154,7 +153,7 @@ function CatProfile() {
                                 </div>
                             </Col>
                             {/* Cat profile */}
-                            <CatBio cat={cat} setCat={setCat} />
+                            <CatBio cat={cat} setCat={setCat} user={user} />
                         </Row>
                     </Container>
                     {missing()}

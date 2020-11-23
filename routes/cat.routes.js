@@ -108,4 +108,16 @@ router.put("/:catID/missing", async (req, res) => {
     }
 })
 
+// mark cat found --> use cat ID
+router.put("/:catID/found", async (req, res) => {
+    try {
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            missing: false,
+        })
+        res.status(200).json({ message: "Successfully marked" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
 module.exports = router;

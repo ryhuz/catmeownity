@@ -4,7 +4,7 @@ import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 
 
-function CatBio({ cat, setCat }) {
+function CatBio({ cat, setCat, user }) {
 
     let token = localStorage.getItem('token');
     let { id } = useParams();
@@ -14,7 +14,7 @@ function CatBio({ cat, setCat }) {
         setCat(cat)
     }, [])
 
-    const [showEditCat, setShowEditCat] = useState();
+    const [showEditCat, setShowEditCat] = useState(false);
     const [form, setForm] = useState({
         names: cat.cat.names,
         breed: cat.cat.breed,
@@ -33,16 +33,16 @@ function CatBio({ cat, setCat }) {
 
     async function editCat() {
         try {
-            if(cat.cat.names.length > 1){
+            if (cat.cat.names.length > 1) {
                 cat.cat.names.shift();
                 cat.cat.names.unshift(addName);
                 await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
-                    names: cat.cat.names, 
+                    names: cat.cat.names,
                     gender: form.gender,
                     breed: form.breed,
                     colour: form.colour,
                 });
-            } else{
+            } else {
                 await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
             }
             setShowEditCat(false)
@@ -74,8 +74,26 @@ function CatBio({ cat, setCat }) {
         }
     }
 
+    async function missing() {
+        try {
+            await Axios.put(`http://localhost:8080/auth/cats/${id}/missing`);
+            window.location.reload() //not the best option but will do for now
+        } catch (error) {
+            console.log(error)
+        }
 
-    // console.log(addName)
+    }
+
+    async function found() {
+        try {
+            await Axios.put(`http://localhost:8080/auth/cats/${id}/found`);
+            window.location.reload() //not the best option but will do for now
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     console.log(cat)
     return (
         <Col>
@@ -151,7 +169,8 @@ function CatBio({ cat, setCat }) {
                             {cat.cat.colour}
                         </div>
                     </p>
-                    <Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>
+                    {/* Check if user is logged in then display edit button and if cat missing display missing button */}
+                    {user ? <div><Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>{!cat.cat.missing ? <Button className="mx-2" variant="outline-danger" onClick={missing}>Haven't seen this kitty lately?</Button> : <Button className="mx-2" variant="outline-success" onClick={found}>Saw this kitty somewhere?</Button>}</div> : <div></div>}
                 </div>}
         </Col>
     )
