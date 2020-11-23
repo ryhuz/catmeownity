@@ -57,8 +57,22 @@ function CatBio({ cat, setCat, user }) {
         return (
             <>
                 {other.map((name, index) => (
-                    <span key={index} className="font-italic h5">{name}{index < other.length - 1 && ', '}</span>
-                ))}
+                    <span key={index} className="font-italic h5 badge badge-pill badge-secondary">
+                        {name}{index < other.length - 1 && ', '}
+                        <button type="button" className="close" aria-label="Close" onClick={() => {
+                            (async () => {
+                                let delName = cat.cat.names[index + 1];
+                                await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
+                                    names: delName
+                                });
+                                window.location.reload();
+                            })();
+                        }}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </span>
+                ))
+                }
             </>
         )
     }

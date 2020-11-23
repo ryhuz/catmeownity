@@ -52,6 +52,21 @@ router.put("/name/:catID", async (req, res) => {
     }
 })
 
+// delete name for cat
+router.put("/delname/:catID", async (req, res) => {
+    try {
+        let { names } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $pull: {
+                names
+            }
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
 // delete cat --> use cat ID
 router.delete("/:catID", async (req, res) => {
     try {
