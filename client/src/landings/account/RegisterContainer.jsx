@@ -57,9 +57,7 @@ const RegisterContainer = ({ setValid }) => {
               });
             setHome(true);
         } catch (error) {
-            setErrMsg(error.response.data.message);
             console.log(error.response)
-
         }
     }
 
@@ -69,7 +67,7 @@ const RegisterContainer = ({ setValid }) => {
         <Container>
             <h1>Register page</h1>
             {showSection.register &&
-                <Register setValid={setValid} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation} />
+                <Register setValid={setValid} email={form.email} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation} />
             }
             {showSection.location &&
                 <ChooseLocation form={form} setForm={setForm} nextSection={nextSectionPic} prevSection={nextSectionLocation} />

@@ -85,4 +85,21 @@ router.get('/:id', async (req, res) => {
         res.status(400).json({ message: 'error fetching user' })
     }
 })
+
+/* Check if email exists */
+router.get('/check/:email', async (req, res) => {
+    try {
+        let user = await User.find({ email: req.params.id })
+
+        if (user) {
+            return res.status(200).json({ found: true });
+        } else {
+            res.status(200).json({ found: false })
+        }
+    } catch (e) {
+        res.status(400).json({ message: 'error searching' })
+        console.log(e)
+    }
+})
+
 module.exports = router;

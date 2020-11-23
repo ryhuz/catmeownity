@@ -5,7 +5,7 @@ import loading from './loading.gif'
 function Loading() {
     return (
         <Container className="text-center pt-5">
-            <Image src={loading} />
+            <Image src={loading} width="100%"/>
         </Container>
     )
 }
