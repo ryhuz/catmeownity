@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import React, { useState } from 'react';
-import { Button, Card, Col, Container, Form, Image, Jumbotron, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Jumbotron, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 
 const Login = ({ setValid }) => {
