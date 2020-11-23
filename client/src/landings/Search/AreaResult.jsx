@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import Axios from 'axios'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import LocationResult from './LocationResult'

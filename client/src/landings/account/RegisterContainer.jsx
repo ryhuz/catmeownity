@@ -8,21 +8,14 @@ import Register from './Register';
 
 const RegisterContainer = ({ setValid }) => {
     const [imageFile, setImageFile] = useState({ file: null, url: null });
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        email: "",
+        name: "",
+        password: "",
+    });
     const [home, setHome] = useState(false);
     const [errMsg, setErrMsg] = useState("");
-    const [showSection, setShowSection] = useState({
-        register: true,
-        location: false,
-        pic: false,
-    });
-
-    function nextSectionLocation(bool) {
-        setShowSection({ ...showSection, location: bool })
-    }
-    function nextSectionPic(bool) {
-        setShowSection({ ...showSection, pic: bool })
-    }
+    const [showSection, setSection] = useState(1);
 
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -54,7 +47,7 @@ const RegisterContainer = ({ setValid }) => {
             setValid({
                 valid: true,
                 refreshed: false,
-              });
+            });
             setHome(true);
         } catch (error) {
             console.log(error.response)
@@ -66,14 +59,14 @@ const RegisterContainer = ({ setValid }) => {
     return (
         <Container>
             <h1>Register page</h1>
-            {showSection.register &&
-                <Register setValid={setValid} email={form.email} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation} />
+            {showSection === 1 &&
+                <Register setValid={setValid} form={form} changeHandler={changeHandler} errMsg={errMsg} nextSection={() => setSection(2)} />
             }
-            {showSection.location &&
-                <ChooseLocation form={form} setForm={setForm} nextSection={nextSectionPic} prevSection={nextSectionLocation} />
+            {showSection === 2 &&
+                <ChooseLocation form={form} setForm={setForm} nextSection={() => setSection(3)} prevSection={() => setSection(1)} />
             }
-            {showSection.pic &&
-                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={nextSectionPic} />
+            {showSection === 3 &&
+                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(2)} />
             }
         </Container>
     )
