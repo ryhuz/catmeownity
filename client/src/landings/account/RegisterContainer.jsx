@@ -17,13 +17,13 @@ const RegisterContainer = ({ setValid }) => {
         pic: false,
     });
 
-    function nextSectionLocation(bool){
-        setShowSection({...showSection, location: bool})
+    function nextSectionLocation(bool) {
+        setShowSection({ ...showSection, location: bool })
     }
-    function nextSectionPic(bool){
-        setShowSection({...showSection, pic: bool})
+    function nextSectionPic(bool) {
+        setShowSection({ ...showSection, pic: bool })
     }
-    
+
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
@@ -32,20 +32,21 @@ const RegisterContainer = ({ setValid }) => {
         try {
             //include image
             let userData = { ...form };
-            if (imageFile) {
+            if (imageFile.file) {
                 const formData = new FormData();
-                formData.append('image', imageFile.file);
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                };
+                formData.append('file', imageFile.file);
+                formData.append('upload_preset', 'catmeownity');
 
-                // let img = await Axios.post("http://localhost:8080/user/profilepic", formData, config);
-                // userData.imageID = img.data.imageID;
+                const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
+
+                let img = await Axios.post(cloudinary, formData);
+                let imageURL = img.data.secure_url;
+
+                userData.image = imageURL;
             }
             //register user
             let resp = await Axios.post("http://localhost:8080/user/register", userData);
+            console.log(resp.data.user)
             // store token in local storage
             localStorage.setItem('token', resp.data.token);
 
@@ -68,10 +69,10 @@ const RegisterContainer = ({ setValid }) => {
         <Container>
             <h1>Register page</h1>
             {showSection.register &&
-                <Register setValid={setValid} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation}/>
+                <Register setValid={setValid} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation} />
             }
             {showSection.location &&
-                <ChooseLocation form={form} setForm={setForm} nextSection={nextSectionPic} prevSection={nextSectionLocation}/>
+                <ChooseLocation form={form} setForm={setForm} nextSection={nextSectionPic} prevSection={nextSectionLocation} />
             }
             {showSection.pic &&
                 <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={nextSectionPic} />

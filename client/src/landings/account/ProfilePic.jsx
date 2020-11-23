@@ -4,7 +4,6 @@ import Axios from 'axios'
 
 function ProfilePic({ setImageFile, imageFile, register, prevSection }) {
     function imageSelect(e) {
-        console.log(e.target)
         if (e.target.files[0]) {
             setImageFile({
                 file: e.target.files[0],
