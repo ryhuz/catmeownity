@@ -134,7 +134,6 @@ function CatProfile() {
     function addPhoto() {
         fetchCat();
     }
-console.log(cat)
     return (
         <>{cat.found &&
             <>
