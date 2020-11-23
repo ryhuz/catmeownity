@@ -19,7 +19,8 @@ const catSchema = new Schema({
     fed: [feedingSchema],
     photos: [{
         image: String,
-        isDefault: Boolean
+        isDefault: { type: Boolean, default: false },
+        desc: String,
     }],
     missing: { type: Boolean, default: false },
     duplicate: { type: Boolean, default: false },

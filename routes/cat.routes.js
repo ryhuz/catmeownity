@@ -91,13 +91,13 @@ router.put("/:catID/missing", async (req, res) => {
 /* Add cat photo */
 router.put('/addphoto/:catID', async (req, res) => {
     try {
-        let { image } = req.body;
+        let { image, isDefault, desc } = req.body;
         
         let photo = {
             image,
-            isDefault: false,
+            desc,
+            isDefault,
         }
-
         await Cat.findByIdAndUpdate(req.params.catID, {
             $push: {
                 photos: photo

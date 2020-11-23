@@ -39,7 +39,6 @@ const RegisterContainer = ({ setValid }) => {
             }
             //register user
             let resp = await Axios.post("http://localhost:8080/user/register", userData);
-            console.log(resp.data.user)
             // store token in local storage
             localStorage.setItem('token', resp.data.token);
 

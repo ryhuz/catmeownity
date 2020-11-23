@@ -15,9 +15,8 @@ function Register({ changeHandler, nextSection, form }) {
       nextSection(true)
     }
   }
-  async function blur(e) {
+  async function blur() {
     setLoading(true);
-console.log(e.target)
     if (form.email !== "") {
       try {
         let exists = await Axios.get(`http://localhost:8080/user/check/${form.email}`);
