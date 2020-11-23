@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Col, Container, Image, Nav, Row, Table } from 'react-bootstrap';
+import { Button, Card, Col, Container, Image, Nav, Row, Table } from 'react-bootstrap';
 import { NavLink, useParams } from 'react-router-dom';
 import Axios from 'axios'
 
@@ -26,6 +26,9 @@ const UserProfile = () => {
     fetchUser()
   }, [id])
 
+  const [showEditProfile, setShowEditProfile] = useState(false);
+
+
   return (
     <>
       {user.found &&
@@ -39,9 +42,12 @@ const UserProfile = () => {
               <NavLink to='/'><span className="btn btn-dark btn-block">Edit Profile</span></NavLink>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div className="p-4">
+          <Row className="mt-4">
+            <Col className="m-4">
+              <div>
+              <div className="m-2 p-1">
+                <h3>My Profile</h3>
+              </div>
                 <Table borderless size="lg">
                   <tbody>
                     <tr>
@@ -56,14 +62,14 @@ const UserProfile = () => {
                       <td><strong>Home Location: </strong></td>
                       <td> {user.user.location.street}  </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <td><strong>Other tracked locations: </strong></td>
                       <td> This can be at the bottom  </td>
                     </tr>
                     <tr>
                       <td><strong>Fave cats: </strong></td>
                       <td> This can be at the bottom </td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </Table>
               </div>
@@ -71,25 +77,30 @@ const UserProfile = () => {
           </Row>
         </Container>
       }
-        <Container className="d-flex flex-row border border-dark mt-4">
-          <Row className="p-3">
-            <Col>
-                <Table>
-                  <tbody>
-                    <tr>
-                      <td><strong>Tracked locations: </strong></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td><strong>Fave Cats: </strong></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </Table>
-            </Col>
-          </Row>
-        </Container>
-
+      <Container className="d-flex flex-row border border-dark mt-4">
+        <Row className="p-3">
+          <Col>
+            <Table borderless>
+              <tbody>
+                <tr>
+                  <td><strong>Tracked locations: </strong></td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><strong>Favorite Cats: </strong></td>
+                  <td>Hmm... Looks like you haven't favorited any cats yet.</td>
+                </tr>
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </Container>
+      <Container className="d-flex flex-row border border-dark mt-4">
+        <Row className="p-3">
+          <Col>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }
