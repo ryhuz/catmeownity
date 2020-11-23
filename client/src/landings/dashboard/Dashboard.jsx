@@ -30,10 +30,10 @@ const Dashboard = () => {
       return (
         <>
           {profile.favorites.map(cat => (
-            <Col key={cat._id}>
+            <Col className="" key={cat._id}>
               <Card>
                 {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
-                <Image src="http://placehold.it/200x200" width="100%" className="img-thumbnail" />
+                <Image src="http://placekitten.com/200/300" width="100%" className="img-thumbnail" />
                 <Card.Header className='h5'>
                   <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
@@ -71,7 +71,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Card bg="dark text-white" className="text-center mr-4">
+      <Card bg="dark text-white" className="text-center">
         <Card.Body className="m-4">
           <Card.Title>Welcome Back!</Card.Title>
           <Card.Text className="p-4">
@@ -84,33 +84,37 @@ const Dashboard = () => {
       </Card>
 
       <CardGroup className="mx-5">
-        <Card className="mb-3 mx-5">
+      <Col className="m-4 mx-auto">
+        <Card className="text-center mb-3 w-100">
           <Card.Body>
             <Card.Title>Your favourite cats</Card.Title>
             <Row sm={2} md={3}>
               {profile.favorites && showFavouriteCats()}
             </Row>
-            <Button variant="dark" block>Go somewhere</Button>
+            {/* <Button variant="dark" block>Go somewhere</Button> */}
           </Card.Body>
           <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
+            {/* <small className="text-muted">Last updated 3 mins ago</small> */}
           </Card.Footer>
         </Card>
+        </Col>
         {/* ---------- middle ------------ */}
-        <Card className="text-center mb-3 mx-5">
-          <Card.Img src="https://picsum.photos/1200/600" />
+        <Col className="m-4 mx-auto">
+        <Card className="text-center mb-3 w-100">
           <Card.Body>
             <Card.Title>Your tracked locations</Card.Title>
-            <ul>
+          <Card.Img src="https://picsum.photos/1600/660" />
+            <ul >
               <li>Locations list</li>
               <li>Open up to cats in each location</li>
             </ul>
-            <Button variant="dark" block>Go somewhere</Button>
+            {/* <Button variant="dark" block>Go somewhere</Button> */}
           </Card.Body>
           <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
+            {/* <small className="text-muted">Last updated 3 mins ago</small> */}
           </Card.Footer>
         </Card>
+        </Col>
       </CardGroup>
       <Card className="bg-dark text-white p-3 mx-auto">
         <Card.Body>
