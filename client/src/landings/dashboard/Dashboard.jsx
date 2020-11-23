@@ -8,17 +8,14 @@ import ConfirmUnfollow from './ConfirmUnfollow';
 const Dashboard = () => {
   let token = localStorage.getItem('token')
   let user = decode(token);
+  Axios.defaults.headers.common['x-auth-token'] = token;
 
   const [confirmUnfollow, setConfirmUnfollow] = useState(false);
   const [profile, setProfile] = useState({});
   useEffect(() => {
     async function fetchProfile() {
       try {
-        let resp = await Axios.get(`http://localhost:8080/auth/user/${user.user._id}`, {
-          headers: {
-            "x-auth-token": token,
-          },
-        });
+        let resp = await Axios.get(`http://localhost:8080/auth/user/${user.user._id}`);
         setProfile(resp.data.user);
       } catch (e) {
         // setError(e.response.data.message);
