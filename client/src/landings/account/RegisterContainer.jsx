@@ -8,41 +8,37 @@ import Register from './Register';
 
 const RegisterContainer = ({ setValid }) => {
     const [imageFile, setImageFile] = useState({ file: null, url: null });
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        email: "",
+        name: "",
+        password: "",
+    });
     const [home, setHome] = useState(false);
     const [errMsg, setErrMsg] = useState("");
-    const [showSection, setShowSection] = useState({
-        register: true,
-        location: false,
-        pic: false,
-    });
+    const [showSection, setSection] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [lastErr, setLastErr] = useState(false);
 
-    function nextSectionLocation(bool){
-        setShowSection({...showSection, location: bool})
-    }
-    function nextSectionPic(bool){
-        setShowSection({...showSection, pic: bool})
-    }
-    
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     async function register() {
+        setLoading(true);
         try {
             //include image
             let userData = { ...form };
-            if (imageFile) {
+            if (imageFile.file) {
                 const formData = new FormData();
-                formData.append('image', imageFile.file);
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                };
+                formData.append('file', imageFile.file);
+                formData.append('upload_preset', 'catmeownity_user');
 
-                // let img = await Axios.post("http://localhost:8080/user/profilepic", formData, config);
-                // userData.imageID = img.data.imageID;
+                const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
+
+                let img = await Axios.post(cloudinary, formData);
+                let imageURL = img.data.secure_url;
+
+                userData.image = imageURL;
             }
             //register user
             let resp = await Axios.post("http://localhost:8080/user/register", userData);
@@ -50,15 +46,15 @@ const RegisterContainer = ({ setValid }) => {
             localStorage.setItem('token', resp.data.token);
 
             setErrMsg("");
+            setLoading(false);
             setValid({
                 valid: true,
                 refreshed: false,
-              });
+            });
             setHome(true);
         } catch (error) {
-            setErrMsg(error.response.data.message);
             console.log(error.response)
-
+            setLastErr(true)
         }
     }
 
@@ -67,14 +63,15 @@ const RegisterContainer = ({ setValid }) => {
     return (
         <Container>
             <h1>Register page</h1>
-            {showSection.register &&
-                <Register setValid={setValid} changeHandler={changeHandler} errMsg={errMsg} nextSection={nextSectionLocation}/>
+            {showSection === 1 &&
+                <Register setValid={setValid} form={form} changeHandler={changeHandler} errMsg={errMsg} nextSection={() => setSection(2)} />
             }
-            {showSection.location &&
-                <ChooseLocation form={form} setForm={setForm} nextSection={nextSectionPic} prevSection={nextSectionLocation}/>
+            {showSection === 2 &&
+                <ChooseLocation form={form} setForm={setForm} nextSection={() => setSection(3)} prevSection={() => setSection(1)} />
             }
-            {showSection.pic &&
-                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={nextSectionPic} />
+            {showSection === 3 &&
+                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(2)}
+                loading={loading} lastErr={lastErr} setLastErr={setLastErr} />
             }
         </Container>
     )

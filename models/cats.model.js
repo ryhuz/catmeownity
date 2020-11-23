@@ -17,7 +17,11 @@ const catSchema = new Schema({
     colour: [{ type: String }],
     desc: String,
     fed: [feedingSchema],
-    photos: [String],
+    photos: [{
+        image: String,
+        isDefault: { type: Boolean, default: false },
+        desc: String,
+    }],
     missing: { type: Boolean, default: false },
     duplicate: { type: Boolean, default: false },
 })
