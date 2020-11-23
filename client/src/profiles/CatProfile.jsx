@@ -6,7 +6,8 @@ import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
 import CatComments from '../profiles/CatComments';
-
+import pic from '../resources/nocatpic.png'
+import CatPhotoUpload from './CatPhotoUpload';
 
 function CatProfile() {
     let token = localStorage.getItem('token')
@@ -15,6 +16,7 @@ function CatProfile() {
     let { id } = useParams()
     const [cat, setCat] = useState({
         cat: null,
+        defaultPhoto: null,
         found: false,
     });
     const [favourites, setFavourites] = useState([]);
@@ -22,8 +24,9 @@ function CatProfile() {
     const [comment, setComment] = useState({
         reference: id
     })
+    const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
-    /* get list of favourites */
+    /* get curr user list of favourites */
     useEffect(() => {
         async function fetchFavourites() {
             try {
@@ -40,15 +43,18 @@ function CatProfile() {
     useEffect(() => {
         fetchCat()
     }, [id])
-
     async function fetchCat() {
         try {
             let resp = await Axios.get(`http://localhost:8080/public/cat/${id}`);
-            setCat({ cat: resp.data.cat, found: true });
+            let tempPhoto;
+            if (resp.data.cat.photos.length > 0) {
+                tempPhoto = resp.data.cat.photos.find(photo => photo.isDefault)
+            }
+            setCat({ cat: resp.data.cat, defaultPhoto: tempPhoto, found: true });
             /* REDIRECT TO ERROR PAGE IF CAT NOT FOUND */
         } catch (e) {
             // setError(e.response.data.message);
-            console.log(e)
+            console.log(e.response)
         }
     }
     function displayEatingTimes() {
@@ -140,19 +146,35 @@ function CatProfile() {
         setComment({ ...comment, [e.target.name]: e.target.value });
     }
 
-    console.log(cat);
+    function addPhoto() {
+        fetchCat();
+    }
     return (
         <>{cat.found &&
             <>
                 <Modal show={needToLogIn} onHide={() => (setNeedToLogIn(false))}>
                     <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
                 </Modal>
+                <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
+                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id}/>
+                </Modal>
                 <Jumbotron>
                     <Container>
                         <Row>
                             {/* Cat main picture and follow button */}
                             <Col>
-                                <img src="http://placekitten.com/200/300" className="rounded thumbnail img-responsive mx-auto d-block " width="250px" />
+                                <img src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
+                                {!cat.defaultPhoto &&
+                                    <Row xs={1}>
+                                        <Col className='text-center py-2'>
+                                            {cat.cat.names[0]} doesn't have a picture yet.
+                                        </Col>
+                                        <Col className='text-center'>
+                                            <div className='btn btn-success' onClick={()=>setUploadingPhoto(true)}>
+                                                Add their first photo!
+                                            </div>
+                                        </Col>
+                                    </Row>}
                                 <div className="text-center h4 mt-3">
                                     {followed() ?
                                         <>

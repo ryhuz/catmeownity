@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import Axios from 'axios'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import LocationResult from './LocationResult'
 
 function AreaResult({ area }) {
     const [districts, setDistricts] = useState({ districts: [], found: false })
-    const [selectedDistrict, setSelectedDistrict] = useState("")
+    const [selectedDistrict, setSelectedDistrict] = useState({
+        id: "",
+        name: ""
+    })
 
     useEffect(() => {
         setSelectedDistrict("");
@@ -40,11 +42,14 @@ function AreaResult({ area }) {
                 return (
                     <>
                         {districts.districts.map(district => (
-                            <li key={district._id} className='d-flex'>
-                                <div className='nav-link' onClick={() => { setSelectedDistrict(district._id) }}>
-                                    {district.name}
-                                </div>
-                            </li>
+                            <Row key={district._id}>
+                                <Col className="p-1" xs={8}>
+                                    <div className={`btn btn-block ${selectedDistrict === district._id ? 'btn-success' : 'btn-outline-success'}`}
+                                        onClick={() => { setSelectedDistrict({ id: district._id, name: district.name }) }}>
+                                        {district.name}
+                                    </div>
+                                </Col>
+                            </Row>
                         ))}
                     </>
                 )
@@ -57,15 +62,13 @@ function AreaResult({ area }) {
             <h1>{area}</h1>
             <hr />
             <Row className="justify-content-center">
-                <Col md={6}>
-                    <Card>
-                        <Card.Header>
-                            <h3>Districts</h3>
-                        </Card.Header>
-                        {showDistricts()}
-                    </Card>
+                <Col md={3}>
+                    <h3>Districts</h3>
+                    <hr />
+                    {showDistricts()}
+
                 </Col>
-                <Col md={6}>
+                <Col md={7}>
                     {selectedDistrict !== "" &&
                         <LocationResult district={selectedDistrict} />
                     }

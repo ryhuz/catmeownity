@@ -23,7 +23,11 @@ const catSchema = new Schema({
     colour: { type: String },
     desc: [{type: Schema.Types.ObjectId, ref: 'Desc'}],
     fed: [feedingSchema],
-    photos: [String],
+    photos: [{
+        image: String,
+        isDefault: { type: Boolean, default: false },
+        desc: String,
+    }],
     missing: { type: Boolean, default: false },
     duplicate: { type: Boolean, default: false },
 })

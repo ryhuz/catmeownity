@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Container, Jumbotron, Row, Col } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
 import AreaResult from './AreaResult';
 
 function Search() {

@@ -28,7 +28,7 @@ function ChooseLocation({ form, setForm, nextSection, prevSection }) {
             <Row sm={4} xs={3}>
                 {locality.map((l, index) => (
                     <Col key={index} className="my-1">
-                        <div className={`btn ${area === l ? 'btn-dark' : 'btn-outline-dark'} btn-block`}
+                        <div className={`btn ${area === l ? 'btn-info' : 'btn-outline-info'} btn-block`}
                             onClick={() => (setArea(l))}>
                             {l}
                         </div>
@@ -45,16 +45,16 @@ function ChooseLocation({ form, setForm, nextSection, prevSection }) {
         } else {
             let list = districts.districts.filter(d => d.locality === area);
             return (
-                <>
+                <Row sm={4} xs={3}>
                     {list.map(district => (
-                        <li key={district._id} onClick={() => (setAreaToForm(district._id))}>
-                            {district.name}
-                            {form.location === district._id &&
-                                <Badge variant="primary">Selected</Badge>
-                            }
-                        </li>
+                        <Col key={district._id} onClick={() => (setAreaToForm(district._id))} className="my-1">
+                            <div className={`btn ${selected === district.name ? 'btn-success' : 'btn-outline-success'} btn-block`}
+                                onClick={() => (setSelected(district.name))}>
+                                {district.name}
+                            </div>
+                        </Col>
                     ))}
-                </>
+                </Row>
             )
         }
     }
@@ -67,7 +67,9 @@ function ChooseLocation({ form, setForm, nextSection, prevSection }) {
             <Card.Body>
                 <h5>Next, tell us where you live so we can show you cats in that area!</h5>
                 <hr />
-                {showAreaButtons()}
+                <Card className="p-3 mx-auto mt-3">
+                    {showAreaButtons()}
+                </Card>
                 <Card className="p-3 mx-auto mt-3">
                     {showDistrictsByArea()}
                 </Card>
@@ -75,12 +77,12 @@ function ChooseLocation({ form, setForm, nextSection, prevSection }) {
                     <Col sm={8}>
                         <Row className="justify-content-around mt-3">
                             <Col sm={6}>
-                                <Button block variant='outline-dark' onClick={()=>prevSection(false)}>
+                                <Button block variant='outline-dark' onClick={() => prevSection(false)}>
                                     Back
                                 </Button>
                             </Col>
                             <Col sm={6}>
-                                <Button block variant='dark' onClick={()=>nextSection(true)}>
+                                <Button block variant='dark' onClick={() => nextSection(true)}>
                                     Next
                                 </Button>
                             </Col>

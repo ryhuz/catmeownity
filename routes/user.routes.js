@@ -4,31 +4,29 @@ const User = require("../models/user.model");
 var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
-const uploadController = require('../lib/upload')
-
-/* Image Upload */
-router.post("/profilepic", uploadController.uploadFile);
+const uploadController = require('../lib/upload');
+const Image = require("../models/image.model");
 
 /* Register */
 router.post("/register", async (req, res) => {
     try {
-        let { email, password, name, location, imageID } = req.body;
+        let { email, password, name, location, image } = req.body;
         let hashedPassword = await bcrpyt.hash(password, 10);
         let user = new User(
             {
                 email,
                 password: hashedPassword,
                 name,
+                image,
+                location
             }
         );
-        if (location !== "") {           // if there is a location included
-            user.location = location;
-        }
+        console.log(user)
         await user.save();
         // give token to user upon successful registration
         const body = { _id: user._id };
         const token = jwt.sign({ user: body }, process.env.TOP_SECRET, { expiresIn: 84600000 });
-        return res.status(200).json({ token });
+        return res.status(200).json({ user, token });
     } catch (error) {
         if (error.code === 11000) {
             res.status(400).json({ message: "This email address has already been registered" })
@@ -96,6 +94,21 @@ router.get('/:id', async (req, res) => {
         }
     } catch (e) {
         res.status(400).json({ message: 'error fetching user' })
+    }
+})
+
+/* Check if email exists */
+router.get('/check/:email', async (req, res) => {
+    try {
+        let user = await User.find({ email: req.params.email })
+        if (user.length) {
+            return res.status(200).json({ found: true });
+        } else {
+            res.status(200).json({ found: false })
+        }
+    } catch (e) {
+        res.status(400).json({ message: 'error searching' })
+        console.log(e)
     }
 })
 

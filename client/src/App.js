@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Nav, Navbar } from 'react-bootstrap'
-import { BrowserRouter, NavLink, Route, Redirect, Switch, useLocation } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
@@ -43,14 +43,14 @@ function App() {
   /* show this navbar when logged in */
   function navLoggedIn() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar fixed="top" expand="lg" className="topnav py-2">
         <NavLink className="navbar-brand" to="/">CatMeownity</NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <NavLink to="/dashboard" className="btn btn-success mx-2">Dashboard</NavLink>
-            <NavLink to="/search" className="btn btn-outline-success mx-2">Search</NavLink>
-            <NavLink to="/logout" className='btn btn-warning mx-2'>Log Out</NavLink>
+            <NavLink to="/dashboard" className="btn btn-warning mx-2">Dashboard</NavLink>
+            <NavLink to="/search" className="btn btn-success mx-2">Search</NavLink>
+            <NavLink to="/logout" className='btn btn-outline-danger mx-2'>Log Out</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -59,13 +59,13 @@ function App() {
   /* show this navbar when NOT logged in */
   function navNotLoggedIn() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg" className="topnav py-2">
         <NavLink className="navbar-brand" to="/">CatMeownity</NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Button variant="outline-dark" className="mr-3 my-1" href="/login">Log In</Button>
-            <Button variant="outline-dark" className="mr-3 my-1" href="/register">Register</Button>
+            <Button variant="dark" className="mr-3 my-1" href="/login">Log In</Button>
+            <Button variant="dark" className="mr-3 my-1" href="/register">Register</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -96,15 +96,13 @@ function App() {
         <Route path='/login'>
           <Login setValid={setValid} />
         </Route>
-        <Route path='/logout'>
-          <LogOut setValid={setValid} />
-        </Route>
         <Route path='/register'>
           <RegisterContainer setValid={setValid} />
         </Route>
 
         {/* THESE ROUTES SHOULD BE PRIVATE */}
         <PrivateRoute path='/dashboard' component={Dashboard} valid={valid}/>
+        <PrivateRoute path='/logout' component={LogOut} valid={valid} setValid={setValid}/>
       </Switch>
     </BrowserRouter>
   )
