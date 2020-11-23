@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Nav, Navbar } from 'react-bootstrap'
-import { BrowserRouter, NavLink, Route, Redirect, Switch, useLocation } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
@@ -96,15 +96,13 @@ function App() {
         <Route path='/login'>
           <Login setValid={setValid} />
         </Route>
-        <Route path='/logout'>
-          <LogOut setValid={setValid} />
-        </Route>
         <Route path='/register'>
           <RegisterContainer setValid={setValid} />
         </Route>
 
         {/* THESE ROUTES SHOULD BE PRIVATE */}
         <PrivateRoute path='/dashboard' component={Dashboard} valid={valid}/>
+        <PrivateRoute path='/logout' component={LogOut} valid={valid} setValid={setValid}/>
       </Switch>
     </BrowserRouter>
   )
