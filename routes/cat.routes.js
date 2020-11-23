@@ -25,7 +25,27 @@ router.post("/", async (req, res) => {
 router.put("/:catID", async (req, res) => {
     try {
         let { names, breed, gender, colour } = req.body;
-        await Cat.findByIdAndUpdate(req.params.catID, { names, breed, gender, colour });
+        await Cat.findByIdAndUpdate(req.params.catID, { 
+            names,
+            breed, 
+            gender, 
+            colour 
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
+// add another name for cat 
+router.put("/name/:catID", async (req, res) => {
+    try {
+        let { names } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $push: {
+                names
+            }
+        });
         res.status(200).json({ message: "Successfully updated cat profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding cat data" });
