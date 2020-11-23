@@ -54,7 +54,7 @@ const UserProfile = () => {
                     </tr>
                     <tr>
                       <td>Home Location: </td>
-                      <td> {user.user.location.street}  </td>
+                      <td> {user.user.location && user.user.location.street}  </td>
                     </tr>
                     <tr>
                       <td>Other tracked locations: </td>
