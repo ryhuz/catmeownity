@@ -25,7 +25,42 @@ router.post("/add", async (req, res) => {
 router.put("/:catID", async (req, res) => {
     try {
         let { names, breed, gender, colour } = req.body;
-        await Cat.findByIdAndUpdate(req.params.catID, { names, breed, gender, colour });
+        await Cat.findByIdAndUpdate(req.params.catID, { 
+            names,
+            breed, 
+            gender, 
+            colour 
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
+// add another name for cat 
+router.put("/name/:catID", async (req, res) => {
+    try {
+        let { names } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $push: {
+                names
+            }
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
+// delete name for cat
+router.put("/delname/:catID", async (req, res) => {
+    try {
+        let { names } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $pull: {
+                names
+            }
+        });
         res.status(200).json({ message: "Successfully updated cat profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding cat data" });
@@ -88,6 +123,18 @@ router.put("/:catID/missing", async (req, res) => {
     }
 })
 
+// mark cat found --> use cat ID
+router.put("/:catID/found", async (req, res) => {
+    try {
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            missing: false,
+        })
+        res.status(200).json({ message: "Successfully marked" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
 /* Add cat photo */
 router.put('/addphoto/:catID', async (req, res) => {
     try {
@@ -113,7 +160,5 @@ router.put('/addphoto/:catID', async (req, res) => {
         }
     }
 })
-
-
 
 module.exports = router;

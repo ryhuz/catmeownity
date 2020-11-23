@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Carousel, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
+import CatComments from '../profiles/CatComments';
 import pic from '../resources/nocatpic.png'
 import CatPhotoUpload from './CatPhotoUpload';
 
@@ -20,6 +21,9 @@ function CatProfile() {
     });
     const [favourites, setFavourites] = useState([]);
     const [needToLogIn, setNeedToLogIn] = useState(false);
+    const [comment, setComment] = useState({
+        reference: id
+    })
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
     /* get curr user list of favourites */
@@ -93,8 +97,7 @@ function CatProfile() {
         return favourites.includes(id);
     }
     function missing() {
-        let miss = cat.missing;
-        if (miss) {
+        if (cat.cat.missing) {
             return (
                 <Container className="bg-danger">
                     <Row>
@@ -131,6 +134,18 @@ function CatProfile() {
             }
         }
     }
+    async function postComment() {
+        try {
+            await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, comment)
+            fetchCat();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    function handleComment(e) {
+        setComment({ ...comment, [e.target.name]: e.target.value });
+    }
+
     function addPhoto() {
         fetchCat();
     }
@@ -176,27 +191,41 @@ function CatProfile() {
                                 </div>
                             </Col>
                             {/* Cat profile */}
-                            <CatBio cat={cat} />
+                            <CatBio cat={cat} setCat={setCat} user={user} />
                         </Row>
                     </Container>
                     {missing()}
-                    {/* Description Carousel */}
-                    <Container className='mt-4'>
-                        <Carousel>
-                            <Carousel.Item>
-                                <Card className="text-light bg-dark mx-5 px-5">
-                                    <Container>
-                                        <Card.Body>
-                                            <blockquote className="blockquote">
-                                                {cat.cat.desc}
-                                            </blockquote>
-                                            <h3>Said by user</h3>
-                                        </Card.Body>
-                                    </Container>
-                                </Card>
-                            </Carousel.Item>
-                        </Carousel>
-                        {/* {cat.cat.desc.map((desc, index) => {
+                </Jumbotron>
+                {/* Description Carousel */}
+                {/* <Carousel className="my-4"> */}
+                <Container>
+                    <Accordion defaultActiveKey="0">
+                        <Card>
+                            <Card.Header>
+                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    More Comments
+                                </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="1">
+                                <Card.Body>
+                                    <ListGroup>
+                                        {cat.cat.desc.map((el) => (
+                                            <CatComments desc={el} key={el._id} />
+                                        ))}
+                                    </ListGroup>
+                                    <InputGroup className="my-3">
+                                        <Form.Control type="text" placeholder="Enter your comment" name="comment" aria-describedby="basic-addon2" onChange={handleComment} />
+                                        <InputGroup.Append>
+                                            <Button variant="outline-secondary" onClick={postComment}>Add</Button>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
+                </Container>
+                {/* </Carousel> */}
+                {/* {cat.cat.desc.map((desc, index) => {
                                 <Carousel.Item key={index}>
                                     <Card className="text-light bg-dark mx-5 px-5">
                                         <Container>
@@ -211,15 +240,12 @@ function CatProfile() {
                                 </Carousel.Item>
                             })
                             } */}
-                    </Container>
-                </Jumbotron>
                 <Container className="border border-dark">
                     <Row>
 
                         <Col md={7} className="border">
                             <Table borderless size="lg">
                                 <tbody>
-
                                     <tr>
                                         <td>Last fed:</td>
                                         <td className="align-middle">{displayEatingTimes()}</td>

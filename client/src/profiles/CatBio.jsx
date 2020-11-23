@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Col, Button, Modal, Form, InputGroup, Label } from 'react-bootstrap'
+import { Col, Button, Form, InputGroup } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 
 
-function CatBio({ cat }) {
+function CatBio({ cat, setCat, user }) {
 
     let token = localStorage.getItem('token');
     let { id } = useParams();
     Axios.defaults.headers.common['x-auth-token'] = token;
+
+    useEffect(() => {
+        setCat(cat)
+    }, [])
 
     const [showEditCat, setShowEditCat] = useState(false);
     const [form, setForm] = useState({
@@ -24,11 +28,23 @@ function CatBio({ cat }) {
         if (e.target.name === "names") {
             setAddName(e.target.value)
         }
+
     }
 
     async function editCat() {
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
+            if (cat.cat.names.length > 1) {
+                cat.cat.names.shift();
+                cat.cat.names.unshift(addName);
+                await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
+                    names: cat.cat.names,
+                    gender: form.gender,
+                    breed: form.breed,
+                    colour: form.colour,
+                });
+            } else {
+                await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
+            }
             setShowEditCat(false)
             window.location.reload() //not the best option but will do for now
         } catch (e) {
@@ -41,101 +57,134 @@ function CatBio({ cat }) {
         return (
             <>
                 {other.map((name, index) => (
-                    <span key={index} className="font-italic h5">{name}{index < other.length - 1 && ', '}</span>
-                ))}
+                    <span key={index} className="font-italic h5 badge badge-pill badge-secondary">
+                        {name}{index < other.length - 1 && ', '}
+                        {user && showEditCat && <button type="button" className="close" aria-label="Close" onClick={() => {
+                            (async () => {
+                                let delName = cat.cat.names[index + 1];
+                                await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
+                                    names: delName
+                                });
+                                window.location.reload();
+                            })();
+                        }}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>}
+                    </span>
+                ))
+                }
             </>
         )
     }
 
     async function addButton() {
-        setForm({
-            names: cat.cat.names.push(addName)
-        })
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
+            await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
+                names: addName
+            });
+            window.location.reload() //not the best option but will do for now
         } catch (e) {
             console.log(e.response)
         }
     }
 
-    // console.log(addName)
-    // console.log(form.names)
+    async function missing() {
+        try {
+            await Axios.put(`http://localhost:8080/auth/cats/${id}/missing`);
+            window.location.reload() //not the best option but will do for now
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    async function found() {
+        try {
+            await Axios.put(`http://localhost:8080/auth/cats/${id}/found`);
+            window.location.reload() //not the best option but will do for now
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    console.log(cat)
     return (
         <Col>
-            <h1 className="my-2">{cat.cat.names[0]}</h1>
-            {cat.cat.names.length > 1 &&
+            {/* Check if edit button is pressed then show edit form and update button */}
+            {showEditCat ? <div>
+                <InputGroup>
+                    <Form.Control type="text" placeholder="Enter name of cat" defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
+                    <InputGroup.Append>
+                        <Button variant="outline-secondary" onClick={addButton}>Add</Button>
+                    </InputGroup.Append>
+                </InputGroup>
+                {cat.cat.names.length > 1 &&
+                    <p>
+                        <small>Also known as:</small>
+                        <div>
+                            {displayOtherNames()}
+                        </div>
+                    </p>
+                }
                 <p>
-                    <small>Also known as:</small>
-                    <div>
-                        {displayOtherNames()}
+                    <small>Gender:</small>
+                    <div className="h5">
+                        <Form.Control as="select" type="select" onChange={changeHandler} defaultValue={cat.cat.gender} name="gender">
+                            <option value="">Select One</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Not Sure">Not Sure</option>
+                        </Form.Control>
                     </div>
                 </p>
-            }
-            <p>
-                <small>Gender:</small>
-                <div className="h5">
-                    {cat.cat.gender}
+                <p>
+                    <small>Breed:</small>
+                    <div className="h5">
+                        <Form.Control type="text" placeholder="Enter breed of cat" onChange={changeHandler} defaultValue={cat.cat.breed} name="breed" />
+                    </div>
+                </p>
+                <p>
+                    <small>Colour:</small>
+                    <div className="h5">
+                        <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colour" />
+                    </div>
+                </p>
+                <div className="d-flex justify-content-between">
+                    <Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>
+                    <Button variant="outline-secondary" onClick={editCat}>Update</Button>
                 </div>
-            </p>
-            <p>
-                <small>Breed:</small>
-                <div className="h5">
-                    {cat.cat.breed}
-                </div>
-            </p>
-            <p>
-                <small>Colour:</small>
-                <div className="h5">
-                    {cat.cat.colour}
-                </div>
-            </p>
-            <button onClick={() => setShowEditCat(true)}>Edit</button>
-            <Modal
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                show={showEditCat}
-                onHide={() => setShowEditCat(false)}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Edit Cat information
-                </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Name</Form.Label>
-                            <InputGroup>
-                                <Form.Control type="text" placeholder="Enter name of cat" defaultValue={cat.cat.names} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
-                                <InputGroup.Append>
-                                    <Button variant="outline-secondary" onClick={addButton}>Add</Button>
-                                </InputGroup.Append>
-                            </InputGroup>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Gender</Form.Label>
-                            <Form.Control as="select" type="select" onChange={changeHandler} defaultValue={cat.cat.gender} name="gender">
-                                <option value="">Select One</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Not Sure">Not Sure</option>
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Breed</Form.Label>
-                            <Form.Control type="text" placeholder="Enter breed of cat" onChange={changeHandler} defaultValue={cat.cat.breed} name="breed" />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Colour</Form.Label>
-                            <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colour" />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-between">
-                    <Button onClick={editCat}>Update</Button>
-                </Modal.Footer>
-            </Modal>
+            </div> : <div>
+                    <h1 className="my-2">{cat.cat.names[0]}</h1>
+                    {cat.cat.names.length > 1 &&
+                        <p>
+                            <small>Also known as:</small>
+                            <div>
+                                {displayOtherNames()}
+                            </div>
+                        </p>
+                    }
+                    <p>
+                        <small>Gender:</small>
+                        <div className="h5">
+                            {cat.cat.gender}
+                        </div>
+                    </p>
+                    <p>
+                        <small>Breed:</small>
+                        <div className="h5">
+                            {cat.cat.breed}
+                        </div>
+                    </p>
+                    <p>
+                        <small>Colour:</small>
+                        <div className="h5">
+                            {cat.cat.colour}
+                        </div>
+                    </p>
+                    {/* Check if user is logged in then display edit button and if cat missing display missing button */}
+                    {user ? <div><Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>{!cat.cat.missing ? <Button className="mx-2" variant="outline-danger" onClick={missing}>Haven't seen this kitty lately?</Button> : <Button className="mx-2" variant="outline-success" onClick={found}>Saw this kitty somewhere?</Button>}</div> : <div></div>}
+                </div>}
         </Col>
     )
 }

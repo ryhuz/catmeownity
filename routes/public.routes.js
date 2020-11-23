@@ -10,7 +10,13 @@ router.get('/cats/:location', async (req, res) => {
     try {
         let locationID = req.params.location;
         let locationName = await Location.findById(locationID);
-        let cats = await Cat.find({ locations: locationID });
+        let cats = await Cat.find(
+            {
+                locations: {
+                    location: locationID
+                }
+            }
+        );
 
         return res.status(200).json({
             location: locationName.street,
@@ -33,6 +39,17 @@ router.get("/cat/:catID", async (req, res) => {
                 populate: {
                     path: 'district',
                     select: 'name locality',
+                }
+            }
+        ).populate(
+            {
+                path: 'desc',
+                model: 'Desc',
+                select: 'comment',
+                populate: {
+                    path: 'reference',
+                    model: 'User',
+                    select: 'name',
                 }
             }
         )
