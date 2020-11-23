@@ -154,7 +154,7 @@ function CatProfile() {
                                 </div>
                             </Col>
                             {/* Cat profile */}
-                            <CatBio cat={cat} />
+                            <CatBio cat={cat} setCat={setCat} />
                         </Row>
                     </Container>
                     {missing()}

@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Col, Button, Form, InputGroup } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 
 
-function CatBio({ cat }) {
+function CatBio({ cat, setCat }) {
 
     let token = localStorage.getItem('token');
     let { id } = useParams();
     Axios.defaults.headers.common['x-auth-token'] = token;
+
+    useEffect(() => {
+        setCat(cat)
+    }, [])
 
     const [showEditCat, setShowEditCat] = useState();
     const [form, setForm] = useState({
@@ -29,12 +33,18 @@ function CatBio({ cat }) {
 
     async function editCat() {
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
-                names: form.names,
-                breed: form.breed,
-                gender: form.gender,
-                colour: form.colour,
-            });
+            if(cat.cat.names.length > 1){
+                cat.cat.names.shift();
+                cat.cat.names.unshift(addName);
+                await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
+                    names: cat.cat.names, 
+                    gender: form.gender,
+                    breed: form.breed,
+                    colour: form.colour,
+                });
+            } else{
+                await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
+            }
             setShowEditCat(false)
             window.location.reload() //not the best option but will do for now
         } catch (e) {
