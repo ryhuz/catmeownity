@@ -41,6 +41,17 @@ router.get("/cat/:catID", async (req, res) => {
                     select: 'name locality',
                 }
             }
+        ).populate(
+            {
+                path: 'desc',
+                model: 'Desc',
+                select: 'comment',
+                populate: {
+                    path: 'reference',
+                    model: 'User',
+                    select: 'name',
+                }
+            }
         )
         return res.status(200).json({
             cat,

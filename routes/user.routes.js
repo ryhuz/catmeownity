@@ -76,6 +76,17 @@ router.get('/:id', async (req, res) => {
                 path: 'favorites',
                 model: 'Cat',
             },
+        ).populate(
+            {
+                path: 'desc',
+                model: 'Desc',
+                select: 'comment',
+                populate: {
+                    path: 'reference',
+                    model: 'Cat',
+                    select: 'names',
+                }
+            }
         )
 
         if (user) {
@@ -87,4 +98,5 @@ router.get('/:id', async (req, res) => {
         res.status(400).json({ message: 'error fetching user' })
     }
 })
+
 module.exports = router;

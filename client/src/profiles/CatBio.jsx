@@ -59,7 +59,7 @@ function CatBio({ cat, setCat, user }) {
                 {other.map((name, index) => (
                     <span key={index} className="font-italic h5 badge badge-pill badge-secondary">
                         {name}{index < other.length - 1 && ', '}
-                        <button type="button" className="close" aria-label="Close" onClick={() => {
+                        {user && showEditCat && <button type="button" className="close" aria-label="Close" onClick={() => {
                             (async () => {
                                 let delName = cat.cat.names[index + 1];
                                 await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
@@ -69,7 +69,7 @@ function CatBio({ cat, setCat, user }) {
                             })();
                         }}>
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button>}
                     </span>
                 ))
                 }
@@ -111,15 +111,14 @@ function CatBio({ cat, setCat, user }) {
     console.log(cat)
     return (
         <Col>
+            {/* Check if edit button is pressed then show edit form and update button */}
             {showEditCat ? <div>
-                {/* <h1 className="my-2"> */}
                 <InputGroup>
                     <Form.Control type="text" placeholder="Enter name of cat" defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={addButton}>Add</Button>
                     </InputGroup.Append>
                 </InputGroup>
-                {/* </h1> */}
                 {cat.cat.names.length > 1 &&
                     <p>
                         <small>Also known as:</small>
