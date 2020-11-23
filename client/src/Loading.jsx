@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Image } from 'react-bootstrap'
-import loading from './loading.gif'
+import loading from './resources/loading.gif'
 
 function Loading() {
     return (

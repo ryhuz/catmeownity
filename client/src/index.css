@@ -12,7 +12,7 @@ body {
 
 .profile-image-upload img {
   max-width: 60%;
-  max-height: 60vh;
+  max-height: 30vh;
 }
 #navpadding{
   background: none;
@@ -20,4 +20,7 @@ body {
 }
 .topnav{
   background-color: #ffdab9c2;
+}
+.jumbotitledown{
+  padding-top: 50px;
 }

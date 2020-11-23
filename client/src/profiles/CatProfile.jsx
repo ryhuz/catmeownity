@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
-import pic from '../nocatpic.png'
+import pic from '../resources/nocatpic.png'
 import CatPhotoUpload from './CatPhotoUpload';
 
 function CatProfile() {

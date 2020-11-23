@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import Axios from 'axios'
 import { Card, Col, Container, Image, Jumbotron, Row } from 'react-bootstrap'
+import pic from '../../resources/nocatpic.png'
 
 function CatResults() {
     const [info, setInfo] = useState({
@@ -24,6 +25,15 @@ function CatResults() {
         fetchCats()
     }, [locationID])
 
+    function getDefaultPic(cat) {
+        if (cat.photos.length === 0) {
+            return pic;
+        } else {
+            let final = cat.photos.find(photo => photo.isDefault)
+            return final.image
+        }
+    }
+
     function showCats() {
         if (info.found) {
             if (info.cats.length > 0) {
@@ -31,10 +41,10 @@ function CatResults() {
                 return (
                     <Row>
                         {info.cats.map(cat => (
-                            <Col sm={3} key={cat._id}>
+                            <Col sm={3} key={cat._id} className="mb-3">
                                 <NavLink to={`/cat/${cat._id}`} className="text-center">
                                     {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
-                                    <Image src="http://placehold.it/200x200" width="100%" className="img-thumbnail" />
+                                    <Image src={getDefaultPic(cat)} width="100%" className="img-thumbnail" />
                                 </NavLink>
                                 <Card>
                                     <Card.Header>

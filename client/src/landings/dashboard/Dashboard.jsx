@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, CardGroup, Col, Form, Image, Modal, Row } from 'react-bootstrap';
+import { Button, Card, CardGroup, Col, Container, Form, Image, Jumbotron, Modal, Row } from 'react-bootstrap';
 import { decode } from "jsonwebtoken";
 import Axios from 'axios'
 import { NavLink } from 'react-router-dom';
@@ -94,11 +94,9 @@ const Dashboard = () => {
       {profile.found &&
         <>
           {/* Header */}
-          <Card bg="dark text-white" className="text-center">
-            <Card.Body className="m-4">
-              <Card.Title>Welcome Back {profile.profile.name}!</Card.Title>
-            </Card.Body>
-          </Card>
+          <Jumbotron className='bg-dark'>
+            <Card.Title className="text-white mb-auto jumbotitledown">Welcome back, {profile.profile.name}!</Card.Title>
+          </Jumbotron>
           {/* Profile Preview */}
           <Row className="mx-5 p-3 justify-content-center">
             <Col sm={3}>

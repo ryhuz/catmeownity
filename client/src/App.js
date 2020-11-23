@@ -75,8 +75,7 @@ function App() {
   return (
     <BrowserRouter>
       {valid.valid ? navLoggedIn() : navNotLoggedIn()}
-      <Navbar id="navpadding">
-      </Navbar>
+
       <Switch>
         <Route exact path='/'>
           <Home />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Col, Form, Image, Row } from 'react-bootstrap'
 import Axios from 'axios'
-import load from '../../loading.gif'
+import load from '../../resources/loading.gif'
 
 function Register({ changeHandler, nextSection, form }) {
   const [loading, setLoading] = useState(false);

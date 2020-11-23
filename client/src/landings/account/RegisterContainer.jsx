@@ -16,19 +16,22 @@ const RegisterContainer = ({ setValid }) => {
     const [home, setHome] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [showSection, setSection] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [lastErr, setLastErr] = useState(false);
 
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     async function register() {
+        setLoading(true);
         try {
             //include image
             let userData = { ...form };
             if (imageFile.file) {
                 const formData = new FormData();
                 formData.append('file', imageFile.file);
-                formData.append('upload_preset', 'catmeownity');
+                formData.append('upload_preset', 'catmeownity_user');
 
                 const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
 
@@ -43,6 +46,7 @@ const RegisterContainer = ({ setValid }) => {
             localStorage.setItem('token', resp.data.token);
 
             setErrMsg("");
+            setLoading(false);
             setValid({
                 valid: true,
                 refreshed: false,
@@ -50,6 +54,7 @@ const RegisterContainer = ({ setValid }) => {
             setHome(true);
         } catch (error) {
             console.log(error.response)
+            setLastErr(true)
         }
     }
 
@@ -65,7 +70,8 @@ const RegisterContainer = ({ setValid }) => {
                 <ChooseLocation form={form} setForm={setForm} nextSection={() => setSection(3)} prevSection={() => setSection(1)} />
             }
             {showSection === 3 &&
-                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(2)} />
+                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(2)}
+                loading={loading} lastErr={lastErr} setLastErr={setLastErr} />
             }
         </Container>
     )

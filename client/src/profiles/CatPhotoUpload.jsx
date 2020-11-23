@@ -61,7 +61,7 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto }) {
         try {
             const formData = new FormData();
             formData.append('file', imageFile.file);
-            formData.append('upload_preset', 'catmeownity');
+            formData.append('upload_preset', 'catmeownity_cat');
 
             const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
             const instance = Axios.create();
