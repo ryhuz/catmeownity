@@ -64,18 +64,17 @@ async function editProfile() {
   }
 }
 
-// async function addButton() {
-//     try {
-//         await Axios.put(`http://localhost:8080/auth/user/name/${id}`, {
-//           name: addName
-//         });
-//         window.location.reload()
-//     } catch (e) {
-//         console.log(e.response)
-//     }
-// }
+const [uploadingPhoto, setUploadingPhoto] = useState(false);
+async function uploadPicture() {
+  try {
+    let tempPhoto;
+    
+  } catch (error) {
+    
+  }
 
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+}
+
 
   return (
     <>
