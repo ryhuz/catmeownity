@@ -33,10 +33,10 @@ const Dashboard = () => {
   }, [])
 
   function showFavouriteCats() {
-    if (profile.profile.favorites.length > 0) {
+    if (profile.profile.favourites.length > 0) {
       return (
         <>
-          {profile.profile.favorites.map(cat => (
+          {profile.profile.favourites.map(cat => (
             <Col className="" key={cat._id}>
               <Card>
                 {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
@@ -85,7 +85,7 @@ const Dashboard = () => {
     });
 
     setConfirmUnfollow(false);
-    let temp = profile.favorites;
+    let temp = profile.favourites;
     temp.splice(temp.indexOf(x => x._id === id), 1);
     setProfile({ ...profile, favourites: temp });
   }
