@@ -153,8 +153,7 @@ function CatProfile() {
         } else {
             return "1"
         }
-    })(eventKey);
-    console.log(cat)
+    })();
     return (
         <>{cat.found &&
             <>
@@ -219,28 +218,29 @@ function CatProfile() {
                                                     <div className="font-weight-bold p-2 bd-highlight">
                                                         {el.catDescription}
                                                     </div>
-                                                    <div className="text-muted ml-auto p-2 bd-highligh">
+                                                    <div className="text-muted ml-auto p-2 bd-highlight">
                                                         {moment(el.createdAt).fromNow()}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
                                         ))}
-                                        <InputGroup className="my-3">
+                                        {cat.cat.desc.length < 3 && <InputGroup className="my-3">
                                             <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
                                             <InputGroup.Append>
                                                 <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
                                             </InputGroup.Append>
-                                        </InputGroup>
+                                        </InputGroup>}
                                     </div></div>}
-                                    {cat.cat.desc.length > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                    {/* Check if cat description is more than 3 to display show all comments button */}
+                                    {cat.cat.desc.length > 2 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                         {eventKey ? 'close' : 'show all comments...'}
                                     </Accordion.Toggle>}
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="1">
                                     <Card.Body>
                                         <ListGroup>
-                                            {cat.cat.desc.reverse().map((el) => (
-                                                <CatComments desc={el} key={el._id} />
+                                            {cat.cat.desc.map((el) => (
+                                                <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                             ))}
                                         </ListGroup>
                                         <InputGroup className="my-3">
