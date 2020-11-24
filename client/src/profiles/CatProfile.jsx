@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, ListGroupItem } from 'react-bootstrap'
+import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, ListGroupItem, Image } from 'react-bootstrap'
 import Axios from 'axios'
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
@@ -149,6 +149,26 @@ function CatProfile() {
     function addPhoto() {
         fetchCat();
     }
+
+    function showCatPhotos() {
+        return (
+            <>
+                {cat.cat.photos.map(photo => (
+                    <Col>
+                        <Card>
+                            <Image thumbnail rounded src={photo.image} className="img-responsive" width="100%" />
+                            <Card.Body>
+                                {photo.desc}
+                                <div>-{photo.uploadedBy.name}</div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))
+                }
+            </>
+        )
+    }
+
     (async () => {
         if (eventKey) {
             return "0"
@@ -164,7 +184,7 @@ function CatProfile() {
                     <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
                 </Modal>
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user}/>
+                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
                 </Modal>
                 <Jumbotron>
                     <Container>
@@ -291,9 +311,18 @@ function CatProfile() {
                                         </Card.Header>
                                         <Accordion.Collapse eventKey="0">
                                             <Card.Body className="mx-auto">
-                                                <img src="http://placekitten.com/200/320" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                                <img src="http://placekitten.com/200/310" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                                <img src="http://placekitten.com/200/330" className="rounded thumbnail img-responsive mx-5" width="250px" />
+                                                <Row md={4} sm={3} className="mx-5">
+                                                    {user &&
+                                                        <Col>
+                                                            <Card onClick={() => setUploadingPhoto(true)}>
+                                                                <Image thumbnail rounded src={pic} className="img-responsive" width="100%" />
+                                                                <Card.Body>
+                                                                    <i className="fas fa-plus"></i> Add a new photo
+                                                                </Card.Body>
+                                                            </Card>
+                                                        </Col>}
+                                                    {showCatPhotos()}
+                                                </Row>
                                             </Card.Body>
                                         </Accordion.Collapse>
                                     </Card>

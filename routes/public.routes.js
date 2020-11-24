@@ -31,8 +31,15 @@ router.get("/cat/:catID", async (req, res) => {
             .populate({
                 path: 'desc',
                 populate: {
-                    path: 'reference',
+                    path: 'byUser',
                     model: 'User',
+                    select: 'name'
+                }
+            })
+            .populate({
+                path: 'photos',
+                populate: {
+                    path: 'uploadedBy',
                     select: 'name'
                 }
             })

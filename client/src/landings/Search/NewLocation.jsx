@@ -13,7 +13,11 @@ function NewLocation({ district, setNewLocation, fetchLocation }) {
     function changeHandler(e) {
         setInput({ street: e.target.value });
     }
-
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            newLocation();
+        }
+    }
     async function newLocation() {
         setLoading(true);
         try {
@@ -23,7 +27,7 @@ function NewLocation({ district, setNewLocation, fetchLocation }) {
             setNewLocation(false);
             fetchLocation();
         } catch (e) {
-            if(e.response.data.exists){
+            if (e.response.data.exists) {
                 setExists(true)
             }
             setLoading(false);
@@ -39,7 +43,7 @@ function NewLocation({ district, setNewLocation, fetchLocation }) {
             </Modal.Body>
             <Modal.Body>
                 <InputGroup className="mb-3">
-                    <FormControl placeholder="Street name or Location" name="street" onChange={changeHandler} />
+                    <FormControl placeholder="Street name or Location" name="street" onChange={changeHandler} onKeyDown={handleEnter}/>
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={newLocation}>Submit</Button>
                     </InputGroup.Append>
