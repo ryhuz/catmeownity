@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { decode } from "jsonwebtoken"
 import { ListGroupItem } from 'react-bootstrap'
+import { useState, useEffect } from 'react'
 
 function CatComments({ desc, fetchCat }) {
 
@@ -10,6 +11,7 @@ function CatComments({ desc, fetchCat }) {
     let user = decode(token);
     Axios.defaults.headers.common['x-auth-token'] = token;
     let { id } = useParams()
+    const [ownComment, setOwnComment] = useState(false);
 
     console.log(desc)
     var moment = require('moment')
@@ -21,6 +23,16 @@ function CatComments({ desc, fetchCat }) {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        if (user && user.user._id === desc.byUser._id) {
+            setOwnComment(true)
+        } else {
+            setOwnComment(false)
+        }
+    }, [])
+
+
     return (
         <div>
             <ListGroupItem>
@@ -35,11 +47,11 @@ function CatComments({ desc, fetchCat }) {
 
                         <div>{moment(desc.createdAt).fromNow()}</div>
                         <div className="mx-4">
-                            <div>
+                            {ownComment && <div>
                                 <button type="button" class="close" aria-label="Close" onClick={deleteCatDescription}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>

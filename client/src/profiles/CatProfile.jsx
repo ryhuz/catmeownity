@@ -134,6 +134,10 @@ function CatProfile() {
         }
     }
     async function postCatDescription() {
+        if (!user) {
+            setNeedToLogIn(true);
+            return;
+        }
         try {
             await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, catDescription)
             fetchCat();
@@ -210,19 +214,7 @@ function CatProfile() {
                                 <Card.Header>
                                     {eventKey === false && <div><div>
                                         {cat.cat.desc.reverse().slice(0, 3).map((el) => (
-                                            <ListGroupItem>
-                                                <div className="d-flex bd-highlight mb-3">
-                                                    <div className="font-weight-bold p-2 bd-highlight">
-                                                        {el.byUser.name}
-                                                    </div>
-                                                    <div className="font-weight-bold p-2 bd-highlight">
-                                                        {el.catDescription}
-                                                    </div>
-                                                    <div className="text-muted ml-auto p-2 bd-highlight">
-                                                        {moment(el.createdAt).fromNow()}
-                                                    </div>
-                                                </div>
-                                            </ListGroupItem>
+                                            <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                         ))}
                                         {cat.cat.desc.length < 3 && <InputGroup className="my-3">
                                             <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
