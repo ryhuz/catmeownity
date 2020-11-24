@@ -113,7 +113,7 @@ async function uploadPicture() {
                     <tr>
                       {console.log(user)}
                       <td><strong>Home Location: </strong></td>
-                      <td> {user.user.location.street}  </td>
+                      <td> {/* {user.user.homeLocation.street} */}  </td>
                     </tr>
                     {/* <tr>
                       <td><strong>Other tracked locations: </strong></td>

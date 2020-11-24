@@ -10,7 +10,7 @@ router.get('/cats/:location', async (req, res) => {
     try {
         let locationID = req.params.location;
         let locationName = await Location.findById(locationID);
-        let cats = await Cat.find({ locations: locationID }
+        let cats = await Cat.find({ location: locationID }
         );
 
         return res.status(200).json({
