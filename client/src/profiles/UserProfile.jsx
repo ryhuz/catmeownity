@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Card, Col, Container, Form, InputGroup, Image, Jumbotron, Modal, Nav, Row, Table } from 'react-bootstrap';
-import { NavLink, useParams } from 'react-router-dom';
+import { Button, Card, Col, Container, Form, InputGroup, Image, Jumbotron, Row, Table } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import Axios from 'axios'
 
 /* REDIRECT IF USER NOT FOUND */
@@ -63,7 +63,7 @@ async function editProfile() {
       user.user.name.unshift(addName);
       await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
-        email: user.user.name,
+        email: user.user.email,
       });
     } else {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
@@ -121,36 +121,33 @@ async function addButton() {
                     </tr>
                   </tbody>
                 </Table>
-          {/* Check if edit button is pressed then show edit form and update button */}
-          {showEditProfile ? <div>
-            <small>Name:</small>
-            <InputGroup>
-              <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
-                <InputGroup.Append>
-                  <Button variant="outline-secondary" onClick={addButton}>Add</Button>
-                </InputGroup.Append>
-            </InputGroup>
-            <div>
-              <small>Email:</small>
-              <div className="h5">
-                <Form.Control type="text" placeholder="Enter email" onChange={changeHandler} defaultValue={user.user.email} name="email" />
-              </div>
-            </div>
-            <div className="d-flex justify-content-between">
-                <Button className="btn btn-dark" onClick={() => setShowEditProfile(false)}>Cancel</Button>
-                <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button>
-                <Button variant="dark" onClick={editProfile}>Update</Button>
-            </div>
-            </div> : <div>
-          </div>}
+              {/* Check if edit button is pressed then show edit form and update button */}
+                {showEditProfile ? <div>
+                  <small>Name:</small>
+                  <InputGroup>
+                    <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
+                      <InputGroup.Append>
+                        <Button variant="outline-secondary" onClick={addButton}>Add</Button>
+                      </InputGroup.Append>
+                  </InputGroup>
+                  <div>
+                    <small>Email:</small>
+                    <div className="h5">
+                      <Form.Control type="text" placeholder="Enter email" onChange={changeHandler} defaultValue={user.user.email} name="email" />
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <Button variant="dark" onClick={() => setShowEditProfile(false)}>Cancel</Button>
+                    <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button>
+                    <Button variant="dark" onClick={editProfile}>Update</Button>
+                  </div>
+                  </div> : <div>
+                </div>}
               </div>
             </Col>
-
           </Row>
         </Container>
       }
-      {/* <Container className="d-flex flex-row border"> */}    
-      {/* </Container> */}
     {/* End of Profile */}
 
     {/* Start of Container with locations and favorite cats */}
@@ -162,13 +159,13 @@ async function addButton() {
                 <tr>
                   <td><strong>Tracked locations: </strong></td>
                   <td>One cat just leads to another...</td>
-                  <div className="btn m-2" size="sm" variant="outline-success">Track here!</div>
                 </tr>
+                  {/* <Button className="btn" size="sm" variant="outline-success">Track here!</Button> */}
                 <tr>
                   <td><strong>Favorite Cats: </strong></td>
                   <td>Hmm... Looks like you haven't favorited any cats yet.</td>
-                  <div className="btn m-2" size="sm" variant="outline-danger">Add now!</div>
                 </tr>
+                  {/* <div className="btn" size="sm" variant="outline-danger">Add now!</div> */}
               </tbody>
             </Table>
           </Col>
