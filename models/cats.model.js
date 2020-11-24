@@ -1,11 +1,6 @@
 let mongoose = require('mongoose');
 let { Schema } = mongoose;
 
-const feedingSchema = new Schema({
-    time: { type: Date, required: true },
-    byUser: { type: Schema.Types.ObjectId, required: true },
-})
-
 let gender = ['Male', 'Female', 'Not Sure'];
 let ster = ['Yes', 'No', 'Not Sure'];
 
@@ -17,7 +12,7 @@ const catSchema = new Schema({
     sterilised: { type: String, enum: ster, default: "Not Sure" },
     colours: [{ type: String }],
     desc: [{ type: Schema.Types.ObjectId, ref: 'Desc' }],
-    fed: [feedingSchema],
+    fed: [{ type: Schema.Types.ObjectId, ref: 'Fed' }],
     photos: [{
         image: String,
         isDefault: { type: Boolean, default: false },

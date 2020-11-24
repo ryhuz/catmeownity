@@ -4,6 +4,7 @@ const User = require("../models/user.model");
 const Location = require("../models/location.model");
 const District = require("../models/district.model");
 const Desc = require("../models/desc.model");
+const Fed = require("../models/feeding.model");
 
 // add new cat
 router.post("/add", async (req, res) => {
@@ -105,17 +106,24 @@ router.delete("/:catID", async (req, res) => {
 })
 
 // feed cat --> use user ID & cat ID
-router.put("/:userID/feed/:catID", async (req, res) => {
+router.post("/:userID/feed/:catID", async (req, res) => {
     try {
-        let cat = await Cat.findByIdAndUpdate(req.params.catID, {
-            $push: {
-                fed: {
-                    time: Date.now(),
-                    byUser: req.params.userID,
-                }
-            }
+        let { foodDescription } = req.body;
+        let user = await User.findById(req.params.userID);
+        let cat = await Cat.findById(req.params.catID);
+
+        let fed = new Fed({
+            foodDescription,
+            byUser: req.params.userID,
         })
 
+        await fed.save()
+
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $push: {
+                fed: fed._id,
+            }
+        })
         await cat.save();
 
         res.status(201).json({ message: "Successfully updated feeding records" })
@@ -185,6 +193,36 @@ router.put('/addphoto/:catID', async (req, res) => {
         } else {
             res.status(400).json({ message: "Error here!" })
         }
+    }
+})
+
+// add another colour for cat 
+router.put("/colour/:catID", async (req, res) => {
+    try {
+        let { colours } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $push: {
+                colours
+            }
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
+// delete colour for cat
+router.put("/delcolour/:catID", async (req, res) => {
+    try {
+        let { colours } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $pull: {
+                colours
+            }
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
     }
 })
 

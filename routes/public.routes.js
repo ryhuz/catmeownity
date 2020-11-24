@@ -27,11 +27,24 @@ router.get('/cats/:location', async (req, res) => {
 router.get("/cat/:catID", async (req, res) => {
     try {
         let cat = await Cat.findById(req.params.catID)
-            .populate('location')
+            .populate({
+                path: 'location',
+                populate: {
+                    path: 'district',
+                }
+            })
             .populate({
                 path: 'desc',
                 populate: {
-                    path: 'reference',
+                    path: 'byUser',
+                    model: 'User',
+                    select: 'name'
+                }
+            })
+            .populate({
+                path: 'fed',
+                populate: {
+                    path: 'byUser',
                     model: 'User',
                     select: 'name'
                 }

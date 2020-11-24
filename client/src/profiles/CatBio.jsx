@@ -22,6 +22,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
         colour: cat.cat.colour,
     });
     const [addName, setAddName] = useState("")
+    const [addColour, setAddColour] = useState("")
     const node = useRef()
 
     function changeHandler(e) {
@@ -29,6 +30,10 @@ function CatBio({ cat, setCat, user, fetchCat }) {
         if (e.target.name === "names") {
             if (e.target.value !== "") {
                 setAddName(e.target.value)
+            }
+        } else if (e.target.name === "colours") {
+            if (e.target.value !== "") {
+                setAddColour(e.target.value)
             }
         }
     }
@@ -62,6 +67,15 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                     breed: form.breed,
                     colour: form.colour,
                 });
+            } else if (cat.cat.colours.length > 1) {
+                cat.cat.colours.shift();
+                cat.cat.colours.unshift(addColour);
+                await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
+                    names: cat.cat.names,
+                    gender: form.gender,
+                    breed: form.breed,
+                    colour: cat.cat.colours,
+                });
             } else {
                 await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
             }
@@ -78,7 +92,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
             <>
                 {other.map((name, index) => (
                     <span key={index} className="font-italic h5 badge badge-pill badge-secondary">
-                        {name}{index < other.length - 1 && ', '}
+                        {name}
                         {user && showEditCat && <button type="button" className="close" aria-label="Close" onClick={() => {
                             (async () => {
                                 let delName = cat.cat.names[index + 1];
@@ -98,10 +112,48 @@ function CatBio({ cat, setCat, user, fetchCat }) {
         )
     }
 
-    async function addButton() {
+    function displayColours() {
+        let colour = cat.cat.colours;
+        return (
+            <>
+                {colour.map((colour, index) => (
+                    <span key={index} className="font-italic h5 badge badge-pill badge-secondary">
+                        {colour}
+                        {user && showEditCat && <button type="button" className="close" aria-label="Close" onClick={() => {
+                            (async () => {
+                                let delcolour = cat.cat.colours[index];
+                                await Axios.put(`http://localhost:8080/auth/cats/delcolour/${id}`, {
+                                    colours: delcolour
+                                });
+                                setShowEditCat(false)
+                                fetchCat();
+                            })();
+                        }}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>}
+                    </span>
+                ))
+                }
+            </>
+        )
+    }
+
+    async function addButtonName() {
         try {
             await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
                 names: addName
+            });
+            fetchCat();
+            setShowEditCat(false)
+        } catch (e) {
+            console.log(e.response)
+        }
+    }
+
+    async function addButtonColour() {
+        try {
+            await Axios.put(`http://localhost:8080/auth/cats/colour/${id}`, {
+                colours: addColour
             });
             fetchCat();
             setShowEditCat(false)
@@ -137,7 +189,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                 <InputGroup  >
                     <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
                     <InputGroup.Append>
-                        <Button variant="outline-secondary" onClick={addButton}>Add</Button>
+                        <Button variant="outline-secondary" onClick={addButtonName}>Add</Button>
                     </InputGroup.Append>
                 </InputGroup>
                 {cat.cat.names.length > 1 &&
@@ -168,7 +220,13 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                 <p>
                     <small>Colour:</small>
                     <div className="h5">
-                        <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colour" />
+                        <InputGroup  >
+                            <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colours" aria-describedby="basic-addon2" />
+                            <InputGroup.Append>
+                                <Button variant="outline-secondary" onClick={addButtonColour}>Add</Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                        {displayColours()}
                     </div>
                 </p>
                 <div className="d-flex justify-content-between">
@@ -199,7 +257,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                     <p>
                         <small>Colour:</small>
                         <div className="h5">
-                            {cat.cat.colour}
+                            {displayColours()}
                         </div>
                     </p>
                     {/* Check if user is logged in then display edit button and if cat missing display missing button */}
