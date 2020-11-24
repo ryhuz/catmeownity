@@ -49,6 +49,13 @@ router.get("/cat/:catID", async (req, res) => {
                     select: 'name'
                 }
             })
+            .populate({
+                path: 'photos',
+                populate: {
+                    path: 'uploadedBy',
+                    select: 'name'
+                }
+            })
 
         return res.status(200).json({
             cat,

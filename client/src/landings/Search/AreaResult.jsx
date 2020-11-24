@@ -68,7 +68,7 @@ function AreaResult({ area }) {
                     {showDistricts()}
 
                 </Col>
-                <Col md={7}>
+                <Col md={9}>
                     {selectedDistrict !== "" &&
                         <LocationResult district={selectedDistrict} />
                     }
