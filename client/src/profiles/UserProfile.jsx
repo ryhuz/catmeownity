@@ -137,7 +137,7 @@ async function addButton() {
               </div>
             </div>
             <div className="d-flex justify-content-between">
-                <Button className="btn btn-dark" onClick={() => setShowEditProfile(false)}>Back</Button>
+                <Button className="btn btn-dark" onClick={() => setShowEditProfile(false)}>Cancel</Button>
                 <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button>
                 <Button variant="dark" onClick={editProfile}>Update</Button>
             </div>
