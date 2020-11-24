@@ -50,7 +50,6 @@ router.post("/:districtID", async (req, res) => {
 
         res.status(201).json({ message: "Location has been added" });
     } catch (error) {
-        console.log(error);
         res.status(400).json({ message: "Could not add location" })
     }
 })
@@ -68,7 +67,6 @@ router.put("/:locationID/add/:catID", async (req, res) => {
 
         res.status(201).json({ message: "Successfully added cat" })
     } catch (error) {
-        console.log(error);
         res.status(400).json({ message: "Could not do this" });
     }
 })
@@ -76,9 +74,8 @@ router.put("/:locationID/add/:catID", async (req, res) => {
 //edit location
 router.put("/:locationID", async (req, res) => {
     try {
-        let { block, street } = req.body;
+        let { street } = req.body;
         let location = await Location.findByIdAndUpdate(req.params.locationID, {
-            block,
             street,
         })
 
@@ -86,7 +83,6 @@ router.put("/:locationID", async (req, res) => {
 
         res.status(201).json({ message: "Successfully updated location" })
     } catch (error) {
-        console.log(error);
         res.status(400).json({ message: "Could not do this" });
     }
 })
