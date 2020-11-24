@@ -9,18 +9,18 @@ router.get("/:userID", async (req, res) => {
     try {
         let user = await User.findById(req.params.userID).populate(
             {
-                path: 'favorites',
+                path: 'favourites',
                 model: 'Cat',
                 populate: {
-                    path: 'locations',
+                    path: 'location',
                     model: 'Location',
                 }
             },
         ).populate(
             {
-                path: 'location',
+                path: 'homeLocation',
                 model: 'Location',
-                select: 'street block',
+                select: 'street',
                 populate: {
                     path: 'district',
                     select: 'name locality',
@@ -28,9 +28,9 @@ router.get("/:userID", async (req, res) => {
             }
         ).populate(
             {
-                path: 'tracked',
+                path: 'trackedLocations',
                 model: 'Location',
-                select: 'street block',
+                select: 'street',
                 populate: {
                     path: 'district',
                     select: 'name locality',
@@ -50,8 +50,8 @@ router.get("/:userID", async (req, res) => {
 // edit user
 router.put("/:userID", async (req, res) => {
     try {
-        let { name, location, favorites, imageID } = req.body;
-        await User.findByIdAndUpdate(req.params.userID, { name, location, favorites, imageID });
+        let { name, homeLocation, favourites, image } = req.body;
+        await User.findByIdAndUpdate(req.params.userID, { name, homeLocation, favourites, image });
         res.status(200).json({ message: "Successfully updated user profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
@@ -63,7 +63,7 @@ router.put("/:userID/tracked/:locationID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
-                tracked: req.params.locationID
+                trackedLocations: req.params.locationID
             }
         })
         res.status(200).json({ message: "Successfully updated user profile" });
@@ -77,7 +77,7 @@ router.get("/get-favourites/:userID", async (req, res) => {
     try {
         let user = await User.findById(req.params.userID);
         return res.status(200).json({
-            favourites: user.favorites,
+            favourites: user.favourites,
             message: "Successfully fetched user favourites!"
         });
     } catch (error) {
@@ -91,7 +91,7 @@ router.put("/:userID/favourite/:catID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
-                favorites: req.params.catID
+                favourites: req.params.catID
             }
         })
         res.status(200).json({ 
@@ -106,7 +106,7 @@ router.put("/:userID/unfavourite/:catID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
             $pull: {
-                favorites: req.params.catID
+                favourites: req.params.catID
             }
         })
         res.status(200).json({ message: "Successfully removed cat from favorites" });
