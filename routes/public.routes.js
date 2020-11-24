@@ -109,14 +109,14 @@ router.post('/same/:id/', async (req, res) => {
             temp = name[0].toUpperCase() + name.slice(1);
         }
         let cat = await Cat.find({ names: temp })
-
         let found = false;
         let similarCats = [];
         cat.forEach(c => {
-            if (c.locations == req.params.id) {
+            console.log(c.colours)
+            /* if (c.locations.includes(req.params.id)) {
                 found = true;
                 similarCats.push(c);
-            }
+            } */
         })
         if (found) {
             return res.status(200).json({

@@ -80,10 +80,12 @@ function RegisterCatContainer() {
 
                 let exists = await Axios.post(`http://localhost:8080/public/same/${locationID}/`, data);
                 if (exists.data.found) {
+                    console.log('similar')
                     setSameName(exists.data.similarCats)
                     setLoading(false);
                     return;
                 } else {
+                    console.log('no similar')
                     setSameName([])
                     setLoading(false);
                     return;
@@ -144,21 +146,27 @@ function RegisterCatContainer() {
             userID: user.user._id,
             location: locationID,
         };
+        try {
+            //include image
+            if (imageFile.file) {
+                const formData = new FormData();
+                formData.append('file', imageFile.file);
+                formData.append('upload_preset', 'catmeownity_cat');
 
-        //include image
-        if (imageFile.file) {
-            const formData = new FormData();
-            formData.append('file', imageFile.file);
-            formData.append('upload_preset', 'catmeownity_cat');
+                const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
+                const instance = Axios.create();
+                instance.defaults.headers.common = {};
 
-            const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
+                let img = await instance.post(cloudinary, formData);
+                let imageURL = img.data.secure_url;
 
-            let img = await Axios.post(cloudinary, formData);
-            let imageURL = img.data.secure_url;
-
-            catData.image = imageURL;
+                catData.image = imageURL;
+            }
+            let resp = await Axios.post("http://localhost:8080/auth/cats/add", catData);
+            console.timeLog(resp.data)
+        }catch(e){
+            console.log(e.response)
         }
-        let resp = await Axios.post("http://localhost:8080/cats/add", catData);
     }
     return (
         <>
