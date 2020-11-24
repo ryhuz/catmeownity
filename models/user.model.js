@@ -7,7 +7,7 @@ const userSchema = new Schema({
     name: { type: String, required: true },
     homeLocation: { type: Schema.Types.ObjectId, ref: 'Location' },
     trackedLocations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
-    favorites: [{ type: Schema.Types.ObjectId, ref: 'Cat' }],
+    favourites: [{ type: Schema.Types.ObjectId, ref: 'Cat' }],
     descForCats: [{type: Schema.Types.ObjectId, ref: 'Desc'}],
     image: String,
     // userType: 
