@@ -81,7 +81,7 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto }) {
             setLoading(false);
             addPhoto();
         } catch (e) {
-
+            setLoading(false);
         }
     }
 
