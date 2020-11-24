@@ -163,7 +163,7 @@ function RegisterCatContainer() {
                 catData.image = imageURL;
             }
             let resp = await Axios.post("http://localhost:8080/auth/cats/add", catData);
-            console.timeLog(resp.data)
+            console.Log(resp.data)
         }catch(e){
             console.log(e.response)
         }

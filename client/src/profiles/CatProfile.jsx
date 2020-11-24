@@ -26,7 +26,7 @@ function CatProfile() {
     })
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [eventKey, setEventKey] = useState(false);
-    var moment = require('moment');
+    const moment = require('moment');
 
     /* get curr user list of favourites */
     useEffect(() => {

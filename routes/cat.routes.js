@@ -16,6 +16,7 @@ router.post("/add", async (req, res) => {
         let names = [name];
         let colours = colour.split(",");
         let photos = [];
+        let desc = [];
         if (image !== "") {
             let newPhoto = {
                 isDefault: true,
@@ -25,16 +26,16 @@ router.post("/add", async (req, res) => {
             }
             photos.push(newPhoto);
         }
+        console.log(photos)
         let cat = new Cat({
-            names, location, breed, gender, colours, sterilised, photos
+            names, location, breed, gender, colours, sterilised, desc, photos
         });
         let newDesc = new Desc({
             catDescription,
             byUser: userID,
             forCat: cat._id
         })
-        let desc = [newDesc];
-        cat.desc = desc;
+        cat.desc = [newDesc];
 
         await cat.save();
 
