@@ -188,4 +188,34 @@ router.put('/addphoto/:catID', async (req, res) => {
     }
 })
 
+// add another colour for cat 
+router.put("/colour/:catID", async (req, res) => {
+    try {
+        let { colours } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $push: {
+                colours
+            }
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
+// delete colour for cat
+router.put("/delcolour/:catID", async (req, res) => {
+    try {
+        let { colours } = req.body;
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $pull: {
+                colours
+            }
+        });
+        res.status(200).json({ message: "Successfully updated cat profile" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
 module.exports = router;

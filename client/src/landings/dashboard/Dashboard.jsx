@@ -46,7 +46,7 @@ const Dashboard = () => {
                 </Card.Header>
                 <Card.Body>
                   {console.log(cat)}
-                  <div>{cat.locations[0].street}</div>
+                  <div>{cat.location.street}</div>
                   <div>
                     <Button variant="outline-danger" block onClick={() => setConfirmUnfollow(true)}>
                       <i className="fas fa-cat mx-2"></i>Unfollow this cat
