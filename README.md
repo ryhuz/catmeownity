@@ -19,5 +19,7 @@ Add your community cats to the site to share the joy they bring with your neighb
 
 ## Acknowledgements
 To my team, Hafiz and Saiful, who helped built it to my vision - and very well.
+<br/>
 To Spondy, I still think of you (almost) everyday.
+<br/>
 And to all the furry friends that I will make.
