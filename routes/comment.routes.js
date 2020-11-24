@@ -41,9 +41,9 @@ router.post("/:catID/desc/:userID", async (req, res) => {
 })
 
 //delete comment
-router.delete("/:descID/:userID", async (req, res) => {
+router.delete("/:descID/:userID/:catID", async (req, res) => {
     try {
-        let curr = Desc.findById(req.params.descID);
+        let curr = await Desc.findById(req.params.descID);
         /* Remove from user */
         await User.findByIdAndUpdate(req.params.userID, {
             $pull: {
