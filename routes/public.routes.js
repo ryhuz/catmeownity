@@ -27,7 +27,7 @@ router.get('/cats/:location', async (req, res) => {
 router.get("/cat/:catID", async (req, res) => {
     try {
         let cat = await Cat.findById(req.params.catID)
-            .populate('locations')
+            .populate('location')
             .populate({
                 path: 'desc',
                 populate: {
