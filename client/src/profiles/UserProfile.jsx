@@ -110,6 +110,19 @@ async function uploadPicture() {
                       <td><strong>Email: </strong></td>
                       <td> {user.user.email}  </td>
                     </tr>
+                    <tr>
+                      {console.log(user)}
+                      <td><strong>Home Location: </strong></td>
+                      <td> {user.user.location.street}  </td>
+                    </tr>
+                    {/* <tr>
+                      <td><strong>Other tracked locations: </strong></td>
+                      <td> This can be at the bottom  </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Fave cats: </strong></td>
+                      <td> This can be at the bottom </td>
+                    </tr> */}
                   </tbody>
                 </Table>
           <Row>
