@@ -215,13 +215,13 @@ function CatProfile() {
                                         <ListGroupItem>
                                             <div className="d-flex bd-highlight mb-3">
                                                 <div className="font-weight-bold p-2 bd-highlight">
-                                                    {cat.cat.desc[0].reference.name}
+                                                    {cat.cat.desc[cat.cat.desc.length - 1].reference.name}
                                                 </div>
                                                 <div className="font-weight-bold p-2 bd-highlight">
-                                                    {cat.cat.desc[0].comment}
+                                                    {cat.cat.desc[cat.cat.desc.length - 1].comment}
                                                 </div>
                                                 <div className="text-muted ml-auto p-2 bd-highligh">
-                                                    {moment(cat.cat.desc[0].createdAt).fromNow()}
+                                                    {moment(cat.cat.desc[cat.cat.desc.length - 1].createdAt).fromNow()}
                                                 </div>
                                             </div>
                                         </ListGroupItem>
@@ -230,13 +230,13 @@ function CatProfile() {
                                             <ListGroupItem>
                                                 <div className="d-flex bd-highlight mb-3">
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[1].reference.name}
+                                                        {cat.cat.desc[cat.cat.desc.length - 2].reference.name}
                                                     </div>
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[1].comment}
+                                                        {cat.cat.desc[cat.cat.desc.length - 2].comment}
                                                     </div>
                                                     <div className="text-muted ml-auto p-2 bd-highligh">
-                                                        {moment(cat.cat.desc[1].createdAt).fromNow()}
+                                                        {moment(cat.cat.desc[cat.cat.desc.length - 2].createdAt).fromNow()}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
@@ -245,13 +245,13 @@ function CatProfile() {
                                             <ListGroupItem>
                                                 <div className="d-flex bd-highlight mb-3">
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[2].reference.name}
+                                                        {cat.cat.desc[cat.cat.desc.length - 3].reference.name}
                                                     </div>
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[2].comment}
+                                                        {cat.cat.desc[cat.cat.desc.length - 3].comment}
                                                     </div>
                                                     <div className="text-muted ml-auto p-2 bd-highligh">
-                                                        {moment(cat.cat.desc[2].createdAt).fromNow()}
+                                                        {moment(cat.cat.desc[cat.cat.desc.length - 3].createdAt).fromNow()}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
@@ -263,7 +263,7 @@ function CatProfile() {
                                 <Accordion.Collapse eventKey="1">
                                     <Card.Body>
                                         <ListGroup>
-                                            {cat.cat.desc.map((el) => (
+                                            {cat.cat.desc.reverse().map((el) => (
                                                 <CatComments desc={el} key={el._id} />
                                             ))}
                                         </ListGroup>

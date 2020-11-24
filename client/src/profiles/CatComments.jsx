@@ -3,7 +3,6 @@ import { ListGroupItem } from 'react-bootstrap'
 
 function CatComments({ desc }) {
     var moment = require('moment')
-    console.log(desc)
     return (
         <div>
             <ListGroupItem>
