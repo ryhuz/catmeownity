@@ -33,6 +33,7 @@ function UserProfile() {
   }, [id])
   
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [showEditPicture, setShowEditPicture] = useState(false)
   const [form, setForm] = useState({
     name: user.found.name,
     email: user.found.email,
@@ -45,16 +46,6 @@ function UserProfile() {
         setAddName(e.target.value)
     }
   }
-
-//   async function editProfile() {
-//     try {
-//         await Axios.put(`http://localhost:8080/auth/user/${id}`); //form
-//         setShowEditProfile(false)
-//         window.location.reload()
-//     } catch (err) {
-//         console.log(err.response)
-//     }
-// }
 
 async function editProfile() {
   try {
@@ -104,6 +95,7 @@ async function addButton() {
                 <Image className="mx-auto p-4" width="100%" src={user.user.image} roundedCircle />
               </div>
               <Button className="btn btn-dark btn-block" onClick={() => setShowEditProfile(true)}>Edit Profile</Button>
+              <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button>
             </Col>
           </Row>
           <Row className="mt-4">
@@ -121,14 +113,24 @@ async function addButton() {
                     </tr>
                   </tbody>
                 </Table>
+          <Row>
+            <Col>
+              {showEditPicture ? <div>
+                <small>Upload: </small>
+                <InputGroup>
+
+                </InputGroup>
+              </div> : <div></div>}
+            </Col>
+          </Row>
               {/* Check if edit button is pressed then show edit form and update button */}
                 {showEditProfile ? <div>
                   <small>Name:</small>
                   <InputGroup>
                     <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
-                      <InputGroup.Append>
+                      {/* <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={addButton}>Add</Button>
-                      </InputGroup.Append>
+                      </InputGroup.Append> */}
                   </InputGroup>
                   <div>
                     <small>Email:</small>
