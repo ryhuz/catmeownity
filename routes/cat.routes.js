@@ -10,29 +10,31 @@ router.post("/add", async (req, res) => {
     try {
         let {
             name, breed, gender, colour,
-            comment, location, image, sterilised,
+            catDescription, location, image, sterilised,
             userID, imgDesc } = req.body;
 
         let names = [name];
         let colours = colour.split(",");
-        let newDesc = new Desc({
-            comment,
-            reference
-        })
         let photos = [];
         if (image !== "") {
             let newPhoto = {
+                isDefault: true,
                 image,
                 desc: imgDesc,
                 uploadedBy: userID,
             }
             photos.push(newPhoto);
         }
-        let desc = [newDesc];
-        
         let cat = new Cat({
-            names, location, breed, gender, colours, sterilised, desc, photos
+            names, location, breed, gender, colours, sterilised, photos
         });
+        let newDesc = new Desc({
+            catDescription,
+            byUser: userID,
+            forCat: cat._id
+        })
+        let desc = [newDesc];
+        cat.desc = desc;
 
         await cat.save();
 
@@ -46,6 +48,7 @@ router.post("/add", async (req, res) => {
 // edit cat for profile modal --> use cat ID
 router.put("/:catID", async (req, res) => {
     try {
+        // DOUBLE CHECK THAT COLOUR IS ARRAY
         let { names, breed, gender, colour } = req.body;
         await Cat.findByIdAndUpdate(req.params.catID, {
             names,
@@ -90,6 +93,7 @@ router.put("/delname/:catID", async (req, res) => {
 })
 
 // delete cat --> use cat ID
+// PROBLEM - HOW TO REMOVE CAT FROM FAVOURITES LISTS?
 router.delete("/:catID", async (req, res) => {
     try {
         await Cat.findByIdAndDelete(req.params.catID);
@@ -102,12 +106,11 @@ router.delete("/:catID", async (req, res) => {
 // feed cat --> use user ID & cat ID
 router.put("/:userID/feed/:catID", async (req, res) => {
     try {
-        let user = await User.findById(req.params.userID);
         let cat = await Cat.findByIdAndUpdate(req.params.catID, {
             $push: {
                 fed: {
                     time: Date.now(),
-                    byUser: user._id,
+                    byUser: req.params.userID,
                 }
             }
         })

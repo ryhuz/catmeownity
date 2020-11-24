@@ -6,25 +6,16 @@ const Desc = require("../models/desc.model");
 // add new comment && push to cat model
 router.post("/:catID/desc/:userID", async (req, res) => {
     try {
-        let { comment } = req.body;
+        let { catDescription } = req.body;
         let user = await User.findById(req.params.userID);
         let cat = await Cat.findById(req.params.catID);
-
-        //desc for Cat
+        /* New Description */
         let desc = new Desc({
-            comment, 
-            reference: user._id,
-            referenceModal: 'User',
+            catDescription,
+            byUser: req.params.userID,
+            forCat: req.params.catID
         });
         await desc.save();
-
-        //desc for User
-        let desc1 = new Desc({
-            comment, 
-            reference: cat._id,
-            referenceModal: 'Cat',
-        });
-        await desc1.save();
 
         //push to Cat
         await Cat.findByIdAndUpdate(req.params.catID, {
@@ -37,7 +28,7 @@ router.post("/:catID/desc/:userID", async (req, res) => {
         //push to User
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
-                desc: desc1._id,
+                descForCats: desc._id,
             }
         })
         await user.save();
@@ -52,6 +43,20 @@ router.post("/:catID/desc/:userID", async (req, res) => {
 //delete comment
 router.delete("/:descID/:userID", async (req, res) => {
     try {
+        let curr = Desc.findById(req.params.descID);
+        /* Remove from user */
+        await User.findByIdAndUpdate(req.params.userID, {
+            $pull: {
+                descForCats: curr._id,
+            }
+        })
+        /* Remove from cat */
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $pull: {
+                desc: curr._id,
+            }
+        })
+        /* Delete comment */
         await Desc.findByIdAndDelete(req.params.descID);
         res.status(200).json({ message: "Comment has been deleted" });
     } catch (error) {
@@ -62,9 +67,9 @@ router.delete("/:descID/:userID", async (req, res) => {
 //edit comment
 router.put("/:descID", async (req, res) => {
     try {
-        let { comment } = req.body;
-        await Desc.findByIdAndUpdate(req.params.descID, { 
-            comment
+        let { catDescription } = req.body;
+        await Desc.findByIdAndUpdate(req.params.descID, {
+            catDescription
         });
         res.status(200).json({ message: "Successfully updated comment" });
     } catch (error) {

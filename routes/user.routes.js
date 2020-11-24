@@ -4,8 +4,6 @@ const User = require("../models/user.model");
 var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
-// const uploadController = require('../lib/upload');
-// const Image = require("../models/image.model");
 
 /* Register */
 router.post("/register", async (req, res) => {
@@ -21,7 +19,6 @@ router.post("/register", async (req, res) => {
                 location
             }
         );
-        console.log(user)
         await user.save();
         // give token to user upon successful registration
         const body = { _id: user._id };
@@ -71,19 +68,14 @@ router.get('/:id', async (req, res) => {
     try {
         let user = await User.findById(req.params.id).populate(
             {
-                path: 'favorites',
+                path: 'favourites',
                 model: 'Cat',
             },
         ).populate(
             {
                 path: 'desc',
                 model: 'Desc',
-                select: 'comment',
-                populate: {
-                    path: 'reference',
-                    model: 'Cat',
-                    select: 'names',
-                }
+                select: 'catDescription',
             }
         )
 
