@@ -77,24 +77,24 @@ function CatProfile() {
             )
         }
     }
-    function displayLocations() {
-        let places = cat.cat.locations;
-        if (places.length > 0) {
-            return (
-                <>
-                    {places.map((place, index) => (
-                        <li key={index} >{place.street}</li>
-                    ))}
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <span>Not Sure</span>
-                </>
-            )
-        }
-    }
+    // function displayLocations() {
+    //     let places = cat.cat.locations;
+    //     if (places.length > 0) {
+    //         return (
+    //             <>
+    //                 {places.map((place, index) => (
+    //                     <li key={index} >{place.street}</li>
+    //                 ))}
+    //             </>
+    //         )
+    //     } else {
+    //         return (
+    //             <>
+    //                 <span>Not Sure</span>
+    //             </>
+    //         )
+    //     }
+    // }
     function followed() {
         return favourites.includes(id);
     }
@@ -215,13 +215,13 @@ function CatProfile() {
                                         <ListGroupItem>
                                             <div className="d-flex bd-highlight mb-3">
                                                 <div className="font-weight-bold p-2 bd-highlight">
-                                                    {cat.cat.desc[cat.cat.desc.length - 1].reference.name}
+                                                    {/* {cat.cat.desc[cat.cat.desc.length - 1].reference.name} */}
                                                 </div>
                                                 <div className="font-weight-bold p-2 bd-highlight">
-                                                    {cat.cat.desc[cat.cat.desc.length - 1].comment}
+                                                    {/* {cat.cat.desc[cat.cat.desc.length - 1].comment} */}
                                                 </div>
                                                 <div className="text-muted ml-auto p-2 bd-highligh">
-                                                    {moment(cat.cat.desc[cat.cat.desc.length - 1].createdAt).fromNow()}
+                                                    {/* {moment(cat.cat.desc[cat.cat.desc.length - 1].createdAt).fromNow()} */}
                                                 </div>
                                             </div>
                                         </ListGroupItem>
@@ -230,13 +230,13 @@ function CatProfile() {
                                             <ListGroupItem>
                                                 <div className="d-flex bd-highlight mb-3">
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[cat.cat.desc.length - 2].reference.name}
+                                                        {/* {cat.cat.desc[cat.cat.desc.length - 2].reference.name} */}
                                                     </div>
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[cat.cat.desc.length - 2].comment}
+                                                        {/* {cat.cat.desc[cat.cat.desc.length - 2].comment} */}
                                                     </div>
                                                     <div className="text-muted ml-auto p-2 bd-highligh">
-                                                        {moment(cat.cat.desc[cat.cat.desc.length - 2].createdAt).fromNow()}
+                                                        {/* {moment(cat.cat.desc[cat.cat.desc.length - 2].createdAt).fromNow()} */}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
@@ -245,13 +245,13 @@ function CatProfile() {
                                             <ListGroupItem>
                                                 <div className="d-flex bd-highlight mb-3">
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[cat.cat.desc.length - 3].reference.name}
+                                                        {/* {cat.cat.desc[cat.cat.desc.length - 3].reference.name} */}
                                                     </div>
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {cat.cat.desc[cat.cat.desc.length - 3].comment}
+                                                        {/* {cat.cat.desc[cat.cat.desc.length - 3].comment} */}
                                                     </div>
                                                     <div className="text-muted ml-auto p-2 bd-highligh">
-                                                        {moment(cat.cat.desc[cat.cat.desc.length - 3].createdAt).fromNow()}
+                                                        {/* {moment(cat.cat.desc[cat.cat.desc.length - 3].createdAt).fromNow()} */}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
@@ -312,7 +312,7 @@ function CatProfile() {
                                     </tr>
                                     <tr>
                                         <td>Residing:</td>
-                                        <td>{displayLocations()}</td>
+                                        {/* <td>{displayLocations()}</td> */}
                                     </tr>
                                 </tbody>
                             </Table>
