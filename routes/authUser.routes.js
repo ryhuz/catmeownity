@@ -66,7 +66,19 @@ router.put("/:userID/tracked/:locationID", async (req, res) => {
                 trackedLocations: req.params.locationID
             }
         })
-        res.status(200).json({ message: "Successfully updated user profile" });
+        res.status(200).json({ message: "Successfully added tracked location" });
+    } catch (error) {
+        res.status(400).json({ message: "Trouble finding user" });
+    }
+})
+router.put("/:userID/untrack/:locationID", async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.params.userID, {
+            $pull: {
+                trackedLocations: req.params.locationID
+            }
+        })
+        res.status(200).json({ message: "Successfully added tracked location" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
     }
@@ -112,6 +124,20 @@ router.put("/:userID/unfavourite/:catID", async (req, res) => {
         res.status(200).json({ message: "Successfully removed cat from favorites" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
+    }
+})
+
+/* get tracked locations from user */
+router.get("/tracked/:userID", async (req, res) => {
+    try {
+        let user = await User.findById(req.params.userID);
+        return res.status(200).json({
+            tracked: user.trackedLocations,
+            message: "Successfully fetched user favourites!"
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: "Problem fetching data!" });
     }
 })
 

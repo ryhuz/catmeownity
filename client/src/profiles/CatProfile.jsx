@@ -177,6 +177,14 @@ function CatProfile() {
         }
     })(eventKey);
 
+    function checkLoginForUpload(){
+        if (user){
+            setUploadingPhoto(true)
+        }else{
+            setNeedToLogIn(true);
+        }
+    }
+
     return (
         <>{cat.found &&
             <>
@@ -198,7 +206,7 @@ function CatProfile() {
                                             {cat.cat.names[0]} doesn't have a picture yet.
                                         </Col>
                                         <Col className='text-center'>
-                                            <div className='btn btn-success' onClick={() => setUploadingPhoto(true)}>
+                                            <div className='btn btn-success' onClick={checkLoginForUpload}>
                                                 Add their first photo!
                                             </div>
                                         </Col>
