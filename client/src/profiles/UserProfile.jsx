@@ -17,7 +17,6 @@ function UserProfile() {
     found: false,
   });
 
-  
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -33,7 +32,6 @@ function UserProfile() {
   }, [id])
   
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [showEditPicture, setShowEditPicture] = useState(false)
   const [form, setForm] = useState({
     name: user.found.name,
     email: user.found.email,
@@ -66,16 +64,18 @@ async function editProfile() {
   }
 }
 
-async function addButton() {
-    try {
-        await Axios.put(`http://localhost:8080/auth/user/name/${id}`, {
-          name: addName
-        });
-        window.location.reload()
-    } catch (e) {
-        console.log(e.response)
-    }
-}
+// async function addButton() {
+//     try {
+//         await Axios.put(`http://localhost:8080/auth/user/name/${id}`, {
+//           name: addName
+//         });
+//         window.location.reload()
+//     } catch (e) {
+//         console.log(e.response)
+//     }
+// }
+
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   return (
     <>
@@ -95,7 +95,7 @@ async function addButton() {
                 <Image className="mx-auto p-4" width="100%" src={user.user.image} roundedCircle />
               </div>
               <Button className="btn btn-dark btn-block" onClick={() => setShowEditProfile(true)}>Edit Profile</Button>
-              <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button>
+              {/* <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button> */}
             </Col>
           </Row>
           <Row className="mt-4">
@@ -115,12 +115,7 @@ async function addButton() {
                 </Table>
           <Row>
             <Col>
-              {showEditPicture ? <div>
-                <small>Upload: </small>
-                <InputGroup>
 
-                </InputGroup>
-              </div> : <div></div>}
             </Col>
           </Row>
               {/* Check if edit button is pressed then show edit form and update button */}
