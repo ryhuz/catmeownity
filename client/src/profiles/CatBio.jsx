@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Col, Button, Form, InputGroup, FormLabel } from 'react-bootstrap'
+import React, { useState, useEffect, useRef } from 'react'
+import { Col, Button, Form, InputGroup } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 
@@ -22,14 +22,34 @@ function CatBio({ cat, setCat, user, fetchCat }) {
         colour: cat.cat.colour,
     });
     const [addName, setAddName] = useState("")
+    const node = useRef()
 
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
         if (e.target.name === "names") {
-            setAddName(e.target.value)
+            if (e.target.value != "") {
+                setAddName(e.target.value)
+            }
         }
-
     }
+
+    useEffect(() => {
+        // add when mounted
+        document.addEventListener("mousedown", handleClick);
+        // return function to be called when unmounted
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
+
+    const handleClick = e => {
+        if (node.current.contains(e.target)) {
+            // inside click
+            return;
+        }
+        // outside click 
+        setShowEditCat(false)
+    };
 
     async function editCat() {
         try {
@@ -111,10 +131,10 @@ function CatBio({ cat, setCat, user, fetchCat }) {
     }
 
     return (
-        <Col>
+        <Col ref={node}>
             {/* Check if edit button is pressed then show edit form and update button */}
-            {showEditCat ? <div>
-                <InputGroup>
+            {showEditCat ? <div >
+                <InputGroup  >
                     <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={addButton}>Add</Button>
@@ -152,7 +172,6 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                     </div>
                 </p>
                 <div className="d-flex justify-content-between">
-                    <Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>
                     <Button variant="outline-secondary" onClick={editCat}>Update</Button>
                 </div>
             </div> : <div>
