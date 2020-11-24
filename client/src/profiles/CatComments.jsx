@@ -13,7 +13,6 @@ function CatComments({ desc, fetchCat }) {
     let { id } = useParams()
     const [ownComment, setOwnComment] = useState(false);
 
-    console.log(desc)
     var moment = require('moment')
     async function deleteCatDescription() {
         try {

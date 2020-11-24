@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, ListGroupItem } from 'react-bootstrap'
+import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, Popover, OverlayTrigger } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 import CatBio from './CatBio';
@@ -24,6 +24,7 @@ function CatProfile() {
     const [catDescription, setCatDescription] = useState({})
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [eventKey, setEventKey] = useState(false);
+    const [feedingDescription, setFeedingDescription] = useState();
     const moment = require('moment');
 
     /* get curr user list of favourites */
@@ -58,12 +59,11 @@ function CatProfile() {
         }
     }
     function displayEatingTimes() {
-        let times = cat.cat.fed;
-        if (times.length > 0) {
+        if (cat.cat.fed.length > 0) {
             return (
                 <>
-                    {times.map((time, index) => (
-                        <li key={index} >{time}</li>
+                    {cat.cat.fed.reverse().slice(0, 3).map((el, index) => (
+                        <li key={index} >{`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by ${el.byUser.name}`}</li>
                     ))}
                 </>
             )
@@ -75,24 +75,6 @@ function CatProfile() {
             )
         }
     }
-    // function displayLocations() {
-    //     let places = cat.cat.locations;
-    //     if (places.length > 0) {
-    //         return (
-    //             <>
-    //                 {places.map((place, index) => (
-    //                     <li key={index} >{place.street}</li>
-    //                 ))}
-    //             </>
-    //         )
-    //     } else {
-    //         return (
-    //             <>
-    //                 <span>Not Sure</span>
-    //             </>
-    //         )
-    //     }
-    // }
     function followed() {
         return favourites.includes(id);
     }
@@ -148,6 +130,22 @@ function CatProfile() {
     function handleCatDescription(e) {
         setCatDescription({ ...catDescription, [e.target.name]: e.target.value });
     }
+    function handleFeeding(e) {
+        setFeedingDescription({ ...feedingDescription, [e.target.name]: e.target.value });
+    }
+    async function feedKitty() {
+        if (!user) {
+            setNeedToLogIn(true);
+            return;
+        }
+        try {
+            await Axios.post(`http://localhost:8080/auth/cats/${user.user._id}/feed/${id}`, feedingDescription)
+            fetchCat();
+            document.querySelector('#overlaybtn').click()
+        } catch (error) {
+            console.log(error)
+        }
+    }
     function addPhoto() {
         fetchCat();
     }
@@ -157,7 +155,21 @@ function CatProfile() {
         } else {
             return "1"
         }
-    })();
+    })(eventKey);
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Title as="h3">Log the feeding</Popover.Title>
+            <Popover.Content>
+                <InputGroup className="my-3">
+                    <Form.Control type="text" placeholder="Food Description" name="foodDescription" aria-describedby="basic-addon2" onChange={handleFeeding} />
+                    <InputGroup.Append>
+                        <Button variant="outline-secondary" onClick={feedKitty}>Add</Button>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Popover.Content>
+        </Popover>
+    );
+    
     return (
         <>{cat.found &&
             <>
@@ -280,7 +292,14 @@ function CatProfile() {
                                     </tr>
                                     <tr>
                                         <td>Residing:</td>
-                                        {/* <td>{displayLocations()}</td> */}
+                                        <td>{`${cat.cat.location.district.name},${cat.cat.location.street}`}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+                                                <Button variant="outline-secondary" id="overlaybtn">Fed this kitty?</Button>
+                                            </OverlayTrigger>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </Table>
