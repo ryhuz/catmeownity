@@ -18,16 +18,6 @@ router.get("/:userID", async (req, res) => {
             },
         ).populate(
             {
-                path: 'homeLocation',
-                model: 'Location',
-                select: 'street',
-                populate: {
-                    path: 'district',
-                    select: 'name locality',
-                }
-            }
-        ).populate(
-            {
                 path: 'trackedLocations',
                 model: 'Location',
                 select: 'street',

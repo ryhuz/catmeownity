@@ -12,6 +12,8 @@ const Dashboard = () => {
   Axios.defaults.headers.common['x-auth-token'] = token;
 
   const [confirmUnfollow, setConfirmUnfollow] = useState(false);
+  const [confirmUntrack, setConfirmUntrack] = useState(false);
+
   const [profile, setProfile] = useState({
     profile: {},
     found: false
@@ -77,7 +79,73 @@ const Dashboard = () => {
       )
     }
   }
+  function showTrackedLocations() {
+    if (profile.profile.trackedLocations.length > 0) {
+      let tracked = profile.profile.trackedLocations;
+      let districts = [];
+      tracked.forEach(location => {
+        districts.push(location.district.name)
+      });
+      districts = Array.from(new Set(districts));
+      let allTracked = tracked.sort(function (a, b) {
+        var nameA = a.street; // ignore upper and lowercase
+        var nameB = b.street; // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+      })
+      return (
+        <>
+          {districts.map(district => (
+            <div>
+              <h6>{district}</h6>
+              <hr />
+              <Row className="mb-4" md={3}>
+                {allTracked.map(place => (
+                  <>
+                    {place.district.name === district &&
+                      <>
+                        <Col>
+                          <div className="d-flex">
+                            <NavLink to={`/location/${place._id}`} className='btn btn-success btn-block'>
+                              {place.street}
+                            </NavLink>
+                            <div className='btn btn-outline-danger d-flex align-items-center'>
+                              <span aria-hidden="true">&times;</span>
+                            </div>
+                          </div>
+                        </Col>
+                      </>
+                    }
+                  </>
+                ))}
+              </Row>
+            </div>
+          ))
+          }
 
+        </>
+      )
+    } else {
+      return (
+        /*         <Col>
+                  <Card>
+                    <Card.Title>
+                      You haven't followed any cats :(
+                    </Card.Title>
+                    <Card.Body>
+                      Search for one now!
+                    </Card.Body>
+                  </Card>
+                </Col> */
+        <>
+        </>
+      )
+    }
+  }
   async function unfollow(id) {
     await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`, {
       headers: {
@@ -128,19 +196,15 @@ const Dashboard = () => {
                   <Row sm={2} md={3}>
                     {showFavouriteCats()}
                   </Row>
-                  <Button variant="dark" block>Go somewhere</Button>
                 </Card.Body>
               </Card>
               {/* Tracked locations */}
-              <Card className="text-center mb-3 mx-5">
-                <Card.Img src="https://picsum.photos/1200/600" />
+              <Card className="mb-3 mx-5">
                 <Card.Body>
                   <Card.Title>Your tracked locations</Card.Title>
-                  <ul>
-                    <li>Locations list</li>
-                    <li>Open up to cats in each location</li>
-                  </ul>
-                  <Button variant="dark" block>Go somewhere</Button>
+                  <div>
+                    {showTrackedLocations()}
+                  </div>
                 </Card.Body>
               </Card>
             </CardGroup>
