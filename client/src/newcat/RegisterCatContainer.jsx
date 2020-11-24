@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Button, Col, Container, Form, FormFile, Image, InputGroup, Jumbotron, Row } from 'react-bootstrap'
 import Axios from 'axios'
 import SimilarCat from './SimilarCat';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { decode } from "jsonwebtoken";
+import Loading from '../Loading';
 
 function RegisterCatContainer() {
     let { locationID } = useParams()
@@ -14,6 +15,11 @@ function RegisterCatContainer() {
         found: false
     });
     const [loading, setLoading] = useState(false);
+    const [adding, setAdding] = useState({
+        adding: false,
+        added: false,
+        id: "",
+    });
     const [sameName, setSameName] = useState([]);
     const [imageFile, setImageFile] = useState({ file: null, url: null });
     const [form, setForm] = useState({
@@ -117,27 +123,38 @@ function RegisterCatContainer() {
                 comment: "",
                 imgDesc: "",
             };
+            let anyErrors = false;
             if (form.name === "") {
                 final.name = errMsg.name;
+                anyErrors = true;
             }
             if (form.breed === "") {
                 final.breed = errMsg.breed;
+                anyErrors = true;
             }
             if (form.colour === "") {
                 final.colour = errMsg.colour;
+                anyErrors = true;
             }
             if (form.sterilised === "") {
                 final.sterilised = errMsg.sterilised;
+                anyErrors = true;
             }
             if (form.comment === "") {
                 final.comment = errMsg.comment;
+                anyErrors = true;
             }
             if (imageFile.file && form.imgDesc === "") {
-                final.comment = errMsg.comment;
+                final.imgDesc = errMsg.imgDesc;
+                anyErrors = true;
             }
             setErr(final);
+            return anyErrors;
         }
-        checkForErrors();
+
+        if (checkForErrors()) {
+            return;
+        };
         let token = localStorage.getItem('token');
         let user = decode(token);
         Axios.defaults.headers.common['x-auth-token'] = token;
@@ -147,6 +164,10 @@ function RegisterCatContainer() {
             location: locationID,
         };
         try {
+            setAdding({
+                ...adding,
+                adding: true,
+            })
             //include image
             if (imageFile.file) {
                 const formData = new FormData();
@@ -163,10 +184,17 @@ function RegisterCatContainer() {
                 catData.image = imageURL;
             }
             let resp = await Axios.post("http://localhost:8080/auth/cats/add", catData);
-            console.Log(resp.data)
-        }catch(e){
+            setAdding({
+                adding: false,
+                added: true,
+                id: resp.data.cat._id,
+            })
+        } catch (e) {
             console.log(e.response)
         }
+    }
+    if(adding.added){
+        return <Redirect to={`/cat/${adding.id}`} />
     }
     return (
         <>
@@ -295,6 +323,13 @@ function RegisterCatContainer() {
                         </Col>
                     </Form.Row>
                     <hr />
+                    {adding.adding &&
+                        <Row className="justify-content-center">
+                            <Col sm={2}>
+                                <Loading />
+                            </Col>
+                        </Row>
+                    }
                     <Form.Row>
                         <Button block variant="success" onClick={addCat} >Add this cat</Button>
                     </Form.Row>
