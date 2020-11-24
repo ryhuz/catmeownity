@@ -27,7 +27,6 @@ router.post("/add", async (req, res) => {
             }
             photos.push(newPhoto);
         }
-        console.log(photos)
         let cat = new Cat({
             names, location, breed, gender, colours, sterilised, desc, photos
         });
@@ -40,7 +39,7 @@ router.post("/add", async (req, res) => {
 
         await cat.save();
 
-        res.status(201).json({ message: "Cat has been added" });
+        res.status(201).json({ cat, message: "Cat has been added" });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: "Could not add cat" })
