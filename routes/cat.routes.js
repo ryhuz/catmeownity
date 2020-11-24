@@ -3,14 +3,36 @@ const Cat = require("../models/cats.model");
 const User = require("../models/user.model");
 const Location = require("../models/location.model");
 const District = require("../models/district.model");
+const Desc = require("../models/desc.model");
 
 // add new cat
 router.post("/add", async (req, res) => {
     try {
-        let { namesArr, breed, gender, colourArr, desc, locations, photos, sterilised } = req.body;
-        let colour = colourArr.split(","); // not sure how the forms will be so I just put a split between commas for the array (temporary)
-        let names = namesArr.split(",");
-        let cat = new Cat({ names, breed, gender, colour, desc, locations, photos, sterilised });
+        let {
+            name, breed, gender, colour,
+            comment, location, image, sterilised,
+            userID, imgDesc } = req.body;
+
+        let names = [name];
+        let colours = colour.split(",");
+        let newDesc = new Desc({
+            comment,
+            reference
+        })
+        let photos = [];
+        if (image !== "") {
+            let newPhoto = {
+                image,
+                desc: imgDesc,
+                uploadedBy: userID,
+            }
+            photos.push(newPhoto);
+        }
+        let desc = [newDesc];
+        
+        let cat = new Cat({
+            names, location, breed, gender, colours, sterilised, desc, photos
+        });
 
         await cat.save();
 
@@ -25,11 +47,11 @@ router.post("/add", async (req, res) => {
 router.put("/:catID", async (req, res) => {
     try {
         let { names, breed, gender, colour } = req.body;
-        await Cat.findByIdAndUpdate(req.params.catID, { 
+        await Cat.findByIdAndUpdate(req.params.catID, {
             names,
-            breed, 
-            gender, 
-            colour 
+            breed,
+            gender,
+            colour
         });
         res.status(200).json({ message: "Successfully updated cat profile" });
     } catch (error) {
@@ -138,12 +160,13 @@ router.put("/:catID/found", async (req, res) => {
 /* Add cat photo */
 router.put('/addphoto/:catID', async (req, res) => {
     try {
-        let { image, isDefault, desc } = req.body;
-        
+        let { image, isDefault, desc, uploadedBy } = req.body;
+
         let photo = {
             image,
             desc,
             isDefault,
+            uploadedBy,
         }
         await Cat.findByIdAndUpdate(req.params.catID, {
             $push: {

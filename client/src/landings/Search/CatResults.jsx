@@ -4,14 +4,13 @@ import Axios from 'axios'
 import { Card, Col, Container, Image, Jumbotron, Row } from 'react-bootstrap'
 import pic from '../../resources/nocatpic.png'
 
-function CatResults() {
+function CatResults({ validLogIn }) {
     const [info, setInfo] = useState({
         cats: [],
         street: "",
         found: false,
     })
     let { locationID } = useParams()
-
     useEffect(() => {
         async function fetchCats() {
             try {
@@ -39,11 +38,10 @@ function CatResults() {
             if (info.cats.length > 0) {
                 /* display each cat */
                 return (
-                    <Row>
+                    <>
                         {info.cats.map(cat => (
                             <Col sm={3} key={cat._id} className="mb-3">
                                 <NavLink to={`/cat/${cat._id}`} className="text-center">
-                                    {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
                                     <Image src={getDefaultPic(cat)} width="100%" className="img-thumbnail" />
                                 </NavLink>
                                 <Card>
@@ -54,8 +52,9 @@ function CatResults() {
                                     </Card.Header>
                                 </Card>
                             </Col>
-                        ))}
-                    </Row>
+                        ))
+                        }
+                    </>
                 )
             } else {
                 return (
@@ -77,7 +76,26 @@ function CatResults() {
                 </div>
             </Jumbotron>
             <Container>
-                {showCats()}
+                <Row>
+                    {validLogIn.valid &&
+                        /* Display add cat if logged in */
+                        <>
+                            <Col sm={3} className="mb-3">
+                                <NavLink to={`/newcat/${locationID}/`} className="text-center">
+                                    <Image src={pic} width="100%" className="img-thumbnail border border-dark" />
+                                </NavLink>
+                                <Card className="border border-dark">
+                                    <Card.Header>
+                                        <NavLink to={`/newcat/${locationID}/`} className='h6 nav-link'>
+                                            <i className="fas fa-plus"></i> Add a new cat
+                                        </NavLink>
+                                    </Card.Header>
+                                </Card>
+                            </Col>
+                        </>
+                    }
+                    {showCats()}
+                </Row >
             </Container>
         </>
     )

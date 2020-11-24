@@ -7,26 +7,22 @@ const feedingSchema = new Schema({
 })
 
 let gender = ['Male', 'Female', 'Not Sure'];
+let ster = ['Yes', 'No', 'Not Sure'];
 
 const catSchema = new Schema({
     names: [{ type: String, required: true }],
-    locations: [{ type: Schema.Types.ObjectId, ref: 'Location', required: true }],
-    // locations: [
-    //     {
-    //         location: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
-    //         description: { type: String, required: true }
-    //     }
-    // ],
+    location: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
     breed: String,
     gender: { type: String, enum: gender, default: gender[2], },
-    sterilised: { type: Boolean, default: false },
-    colour: { type: String },
-    desc: [{type: Schema.Types.ObjectId, ref: 'Desc'}],
+    sterilised: { type: String, enum: ster, default: "Not Sure" },
+    colours: [{ type: String }],
+    desc: [{ type: Schema.Types.ObjectId, ref: 'Desc' }],
     fed: [feedingSchema],
     photos: [{
         image: String,
         isDefault: { type: Boolean, default: false },
-        desc: String,
+        desc: { type: String, required: true },
+        uploadedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true }
     }],
     missing: { type: Boolean, default: false },
     duplicate: { type: Boolean, default: false },

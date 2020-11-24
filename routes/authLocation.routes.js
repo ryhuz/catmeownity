@@ -36,7 +36,6 @@ router.post("/:districtID", async (req, res) => {
         })
         let check = await Location.find({ street: temp.trim() })
 
-        console.log(check)
         if (check.length > 0) {
             res.status(400).json({ exists: true, message: "Location already exists" })
         }

@@ -3,7 +3,7 @@ import { Col, Form, FormControl, FormFile, Image, InputGroup, Modal, Row } from 
 import Axios from 'axios';
 import Loading from '../Loading'
 
-function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto }) {
+function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user }) {
     const [imageFile, setImageFile] = useState({ file: null, url: null });
     const [desc, setDesc] = useState("");
     const [err, setErr] = useState({
@@ -75,6 +75,7 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto }) {
                 image,
                 isDefault,
                 desc,
+                uploadedBy: user.user._id
             }
             await Axios.put(`http://localhost:8080/auth/cats/addphoto/${id}`, photo);
             setUploadingPhoto(false);
