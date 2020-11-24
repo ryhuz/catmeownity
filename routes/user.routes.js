@@ -4,8 +4,6 @@ const User = require("../models/user.model");
 var passport = require("../lib/passportConfig");
 const jwt = require("jsonwebtoken");
 const bcrpyt = require("bcrypt");
-const uploadController = require('../lib/upload');
-// const Image = require("../models/image.model");
 
 /* Register */
 router.post("/register", async (req, res) => {

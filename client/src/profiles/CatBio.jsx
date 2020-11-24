@@ -108,7 +108,6 @@ function CatBio({ cat, setCat, user }) {
 
     }
 
-    console.log(cat)
     return (
         <Col>
             {/* Check if edit button is pressed then show edit form and update button */}

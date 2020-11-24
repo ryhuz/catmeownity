@@ -10,12 +10,7 @@ router.get('/cats/:location', async (req, res) => {
     try {
         let locationID = req.params.location;
         let locationName = await Location.findById(locationID);
-        let cats = await Cat.find(
-            {
-                locations: {
-                    location: locationID
-                }
-            }
+        let cats = await Cat.find({ locations: locationID }
         );
 
         return res.status(200).json({
@@ -31,34 +26,24 @@ router.get('/cats/:location', async (req, res) => {
 /* get single cat data */
 router.get("/cat/:catID", async (req, res) => {
     try {
-        let cat = await Cat.findById(req.params.catID).populate(
-            {
-                path: 'locations',
-                model: 'Location',
-                select: 'street block',
-                populate: {
-                    path: 'district',
-                    select: 'name locality',
-                }
-            }
-        ).populate(
-            {
-                path: 'desc',
-                model: 'Desc',
-                select: 'comment',
+        let cat = await Cat.findById(req.params.catID)
+            .populate('locations')
+            .populate({ 
+                path:'desc',
                 populate: {
                     path: 'reference',
                     model: 'User',
-                    select: 'name',
+                    select: 'name'
                 }
-            }
-        )
+            })
+
         return res.status(200).json({
             cat,
             message: "Successfully fetched cat!"
         });
     } catch (error) {
         res.status(400).json({ message: "Problem fetching data!" });
+        console.log(error)
     }
 })
 /* get district data from NSEW*/

@@ -2,7 +2,6 @@ import React from 'react'
 import { ListGroupItem } from 'react-bootstrap'
 
 function CatComments({ desc }) {
-    console.log(desc)
     return (
         <div>
             <ListGroupItem>

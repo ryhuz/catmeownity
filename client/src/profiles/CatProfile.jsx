@@ -129,7 +129,6 @@ function CatProfile() {
                 await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/favourite/${id}`);
                 setFavourites([...favourites, id])
             } catch (e) {
-                console.log("here");
                 console.log(e.response)
             }
         }
