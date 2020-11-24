@@ -173,7 +173,7 @@ const Dashboard = () => {
       {profile.found &&
         <>
           {/* Header */}
-          <Jumbotron className='bg-dark'>
+          <Jumbotron className='bg-dark jumbotop'>
             <Card.Title className="text-white mb-auto jumbotitledown">Welcome back, {profile.profile.name}!</Card.Title>
           </Jumbotron>
           {/* Profile Preview */}

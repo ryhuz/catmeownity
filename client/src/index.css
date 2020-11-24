@@ -24,11 +24,14 @@ body {
   background-color: #ffdab9c2;
 }
 
-.jumbotitledown {
-  padding-top: 50px;
-}
-
 .scroll {
   height: 400px;
   overflow-y: scroll;
+}
+.jumbotron.jumbotop{
+  padding-top: 108px;
+}
+
+.to-link:hover {
+  cursor: pointer;
 }

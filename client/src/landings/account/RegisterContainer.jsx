@@ -54,6 +54,7 @@ const RegisterContainer = ({ setValid }) => {
         } catch (error) {
             console.log(error.response)
             setLastErr(true)
+            setLoading(false);
         }
     }
 

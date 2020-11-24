@@ -67,7 +67,7 @@ function CatResults({ validLogIn }) {
     }
     return (
         <>
-            <Jumbotron className='bg-secondary'>
+            <Jumbotron className='bg-secondary jumbotop'>
                 <div className="ml-5 pl-5">
                     <h1>Cats in the area</h1>
                     <h4>

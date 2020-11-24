@@ -331,7 +331,7 @@ function RegisterCatContainer() {
                         </Row>
                     }
                     <Form.Row>
-                        <Button block variant="success" onClick={addCat} >Add this cat</Button>
+                        <Button block variant="success" onClick={addCat} disabled={loading}>Add this cat</Button>
                     </Form.Row>
                 </Form>
             </Container>

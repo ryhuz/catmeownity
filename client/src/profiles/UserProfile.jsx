@@ -85,7 +85,7 @@ async function editProfile() {
   return (
     <>
     {/* My Profile Jumbotron */}
-    <Jumbotron className="bg-dark">
+    <Jumbotron className="bg-dark jumbotop">
       <Container>
         <h3 className="mt-4 text-white">My Profile</h3>
       </Container>

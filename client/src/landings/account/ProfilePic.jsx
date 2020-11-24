@@ -57,10 +57,10 @@ function ProfilePic({ setImageFile, imageFile, register, prevSection, loading, s
                                 </Col>
                                 <Col sm={6}>
                                     {imageFile.file ?
-                                        <Button block variant='dark' onClick={register}>
+                                        <Button block variant='dark' onClick={register} disabled={loading}>
                                             Upload and complete sign-up
                             </Button> :
-                                        <Button block variant='danger' onClick={register}>
+                                        <Button block variant='danger' onClick={register} disabled={loading}>
                                             Skip this step and complete sign-up
                             </Button>
                                     }

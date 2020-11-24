@@ -177,10 +177,10 @@ function CatProfile() {
         }
     })(eventKey);
 
-    function checkLoginForUpload(){
-        if (user){
+    function checkLoginForUpload() {
+        if (user) {
             setUploadingPhoto(true)
-        }else{
+        } else {
             setNeedToLogIn(true);
         }
     }
@@ -208,7 +208,7 @@ function CatProfile() {
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
                     <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
                 </Modal>
-                <Jumbotron>
+                <Jumbotron className="jumbotop">
                     <Container>
                         <Row>
                             {/* Cat main picture and follow button */}
@@ -247,103 +247,103 @@ function CatProfile() {
                     {missing()}
                 </Jumbotron>
                 {/* Tabs nav */}
-                <Tabs defaultActiveKey="comment" id="uncontrolled-tab-example">
-                    {/* Comments Tab */}
-                    <Tab eventKey="comment" title="Comments">
-                        <Accordion defaultActiveKey="0" className="scroll">
-                            <Card>
-                                <Card.Header>
-                                    {eventKey === false && <div><div>
-                                        {cat.cat.desc.reverse().slice(0, 3).map((el) => (
-                                            <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
-                                        ))}
-                                        {cat.cat.desc.length < 3 && <InputGroup className="my-3">
-                                            <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
-                                            <InputGroup.Append>
-                                                <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
-                                            </InputGroup.Append>
-                                        </InputGroup>}
-                                    </div></div>}
-                                    {/* Check if cat description is more than 3 to display show all comments button */}
-                                    {cat.cat.desc.length > 2 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
-                                        {eventKey ? 'close' : 'show all comments...'}
-                                    </Accordion.Toggle>}
-                                </Card.Header>
-                                <Accordion.Collapse eventKey="1">
-                                    <Card.Body>
-                                        <ListGroup>
-                                            {cat.cat.desc.map((el) => (
+                <Container>
+                    <Tabs defaultActiveKey="comment" id="uncontrolled-tab-example">
+                        {/* Comments Tab */}
+                        <Tab eventKey="comment" title="Comments">
+                            <Accordion defaultActiveKey="0" className="scroll">
+                                <Card>
+                                    <Card.Header>
+                                        {eventKey === false && <div><div>
+                                            {cat.cat.desc.reverse().slice(0, 3).map((el) => (
                                                 <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                             ))}
-                                        </ListGroup>
-                                        <InputGroup className="my-3">
-                                            <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
-                                            <InputGroup.Append>
-                                                <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
-                                            </InputGroup.Append>
-                                        </InputGroup>
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                        </Accordion>
-                    </Tab>
-                    {/* Photo Tab */}
-                    <Tab eventKey="photos" title="Photo">
-                        <Row>
-                            <Col md={12}>
-                                <Accordion defaultActiveKey="0">
-                                    <Card>
-                                        <Card.Header>
-                                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                More photos
+{/*                                             {cat.cat.desc.length < 2 && <InputGroup className="my-3">
+                                                <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
+                                                <InputGroup.Append>
+                                                    <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
+                                                </InputGroup.Append>
+                                            </InputGroup>} */}
+                                        </div></div>}
+                                        {/* Check if cat description is more than 3 to display show all comments button */}
+                                        {cat.cat.desc.length > 2 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                            {eventKey ? 'close' : 'show all comments...'}
+                                        </Accordion.Toggle>}
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="1">
+                                        <Card.Body>
+                                            <ListGroup>
+                                                {cat.cat.desc.map((el) => (
+                                                    <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
+                                                ))}
+                                            </ListGroup>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                    <InputGroup className="my-3">
+                                        <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
+                                        <InputGroup.Append>
+                                            <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                </Card>
+                            </Accordion>
+                        </Tab>
+                        {/* Photo Tab */}
+                        <Tab eventKey="photos" title="Photo">
+                            <Accordion defaultActiveKey="0">
+                                <Card>
+                                    <Card.Header>
+                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                            More photos
                                     </Accordion.Toggle>
-                                        </Card.Header>
-                                        <Accordion.Collapse eventKey="0">
-                                            <Card.Body className="mx-auto">
-                                                <Row md={4} sm={3} className="mx-5">
-                                                    {user &&
-                                                        <Col>
-                                                            <Card onClick={() => setUploadingPhoto(true)}>
-                                                                <Image thumbnail rounded src={pic} className="img-responsive" width="100%" />
-                                                                <Card.Body>
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="0">
+                                        <Card.Body className="mx-auto">
+                                            <Row md={4} sm={3} className="mx-5">
+                                                {user &&
+                                                    <Col>
+                                                        <Card onClick={() => setUploadingPhoto(true)}>
+                                                            <Image thumbnail rounded src={pic} className="to-link" width="100%" />
+                                                            <Card.Body className="my-2 py-4">
+                                                                <div className="to-link">
                                                                     <i className="fas fa-plus"></i> Add a new photo
-                                                                </Card.Body>
-                                                            </Card>
-                                                        </Col>}
-                                                    {showCatPhotos()}
-                                                </Row>
-                                            </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
-                                </Accordion>
+                                                            </div>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </Col>}
+                                                {showCatPhotos()}
+                                            </Row>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>
+                        </Tab>
+                        {/* Feeding Tab */}
+                        <Tab eventKey="feeding" title="Feeding">
+                            <Col className="border">
+                                <Table borderless size="lg">
+                                    <tbody>
+                                        <tr>
+                                            <td>Last fed:</td>
+                                            <td className="align-middle">{displayEatingTimes()}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Residing:</td>
+                                            <td>{`${cat.cat.location.district.name},${cat.cat.location.street}`}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+                                                    <Button variant="outline-secondary" id="overlaybtn">Fed this kitty?</Button>
+                                                </OverlayTrigger>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
                             </Col>
-                        </Row>
-                    </Tab>
-                    {/* Feeding Tab */}
-                    <Tab eventKey="feeding" title="Feeding">
-                        <Col className="border">
-                            <Table borderless size="lg">
-                                <tbody>
-                                    <tr>
-                                        <td>Last fed:</td>
-                                        <td className="align-middle">{displayEatingTimes()}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Residing:</td>
-                                        <td>{`${cat.cat.location.district.name},${cat.cat.location.street}`}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-                                                <Button variant="outline-secondary" id="overlaybtn">Fed this kitty?</Button>
-                                            </OverlayTrigger>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Col>
-                    </Tab>
-                </Tabs>
+                        </Tab>
+                    </Tabs>
+                </Container>
             </>
         }
         </>

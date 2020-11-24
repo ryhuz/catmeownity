@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Form, FormControl, FormFile, Image, InputGroup, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Form, FormControl, FormFile, Image, InputGroup, Modal, Row } from 'react-bootstrap'
 import Axios from 'axios';
 import Loading from '../Loading'
 
@@ -144,14 +144,14 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
                 <Row className="mt-3">
                     <Col sm={6} />
                     <Col>
-                        <div className="btn btn-block btn-secondary" onClick={uploadPhoto}>
+                        <Button block variant="secondary" onClick={uploadPhoto} disabled={loading}>
                             Upload
-                        </div>
+                        </Button>
                     </Col>
                     <Col>
-                        <div className="btn btn-block btn-danger" onClick={() => setUploadingPhoto(false)}>
+                        <Button block variant="danger" onClick={() => setUploadingPhoto(false)} disabled={loading}>
                             Cancel
-                        </div>
+                        </Button>
                     </Col>
                 </Row>
             </Modal.Body>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Nav, Navbar } from 'react-bootstrap'
-import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom'
+import { Button, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
 import Home from './landings/Home'
@@ -13,6 +13,7 @@ import PrivateRoute from './private/PrivateRoute';
 import LogOut from './private/LogOut';
 import { decode } from "jsonwebtoken";
 import RegisterCatContainer from './newcat/RegisterCatContainer';
+import Footer from './Footer';
 
 function App() {
   const [valid, setValid] = useState({
@@ -49,9 +50,10 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <NavLink to="/dashboard" className="btn btn-warning mx-2">Dashboard</NavLink>
-            <NavLink to="/search" className="btn btn-success mx-2">Search</NavLink>
-            <NavLink to="/logout" className='btn btn-outline-danger mx-2'>Log Out</NavLink>
+            <NavLink to="/dashboard" className="btn btn-light border-info mx-2">Dashboard</NavLink>
+            <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
+            <NavLink to="/logout" className='btn btn-light border-danger mx-2'>Log Out</NavLink>
+            <NavLink to="/" className='btn btn-light border-info mx-2'><i class="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -65,8 +67,10 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Button variant="dark" className="mr-3 my-1" href="/login">Log In</Button>
-            <Button variant="dark" className="mr-3 my-1" href="/register">Register</Button>
+            <Link className="mx-2 btn btn-dark" to="/login">Log In</Link>
+            <Link className="mx-2 btn btn-dark" to="/register">Register</Link>
+            <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
+            <NavLink to="/" className='btn btn-light border-info mx-2'><i class="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -106,6 +110,7 @@ function App() {
         <PrivateRoute path='/logout' component={LogOut} valid={valid} setValid={setValid} />
         <PrivateRoute path='/newcat/:locationID/' component={RegisterCatContainer} valid={valid} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   )
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Col, Container, Row } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import Loading from '../Loading';
 
@@ -20,9 +21,13 @@ function LogOut({ setValid, valid }) {
     }
 
     return (
-        <>
-            <Loading />
-        </>
+        <Container>
+            <Row className="justify-content-center">
+                <Col sm={4}>
+                    <Loading />
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

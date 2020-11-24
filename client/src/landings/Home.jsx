@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 function Home() {
     return (
         <>
-            <Jumbotron className='text-center'>
+            <Jumbotron className='text-center jumbotop'>
                 <h1>CatMeownity</h1>
                 <p className="text-muted">
                     Neighbourhood and community cats in an app

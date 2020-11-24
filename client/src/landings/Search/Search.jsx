@@ -23,7 +23,7 @@ function Search() {
     }
     return (
         <>
-            <Jumbotron className='bg-secondary'>
+            <Jumbotron className='bg-secondary jumbotop'>
                 <h1 className='text-center'>Search</h1>
                 <Container>
                     {showAreaButtons()}
