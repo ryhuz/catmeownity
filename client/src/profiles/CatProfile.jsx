@@ -8,7 +8,6 @@ import NotLoggedIn from '../private/NotLoggedIn';
 import CatComments from '../profiles/CatComments';
 import pic from '../resources/nocatpic.png'
 import CatPhotoUpload from './CatPhotoUpload';
-import e from 'cors';
 
 function CatProfile() {
     let token = localStorage.getItem('token')
@@ -26,7 +25,8 @@ function CatProfile() {
         reference: id
     })
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
-    const [eventKey, setEventKey] = useState(false)
+    const [eventKey, setEventKey] = useState(false);
+    var moment = require('moment');
 
     /* get curr user list of favourites */
     useEffect(() => {
@@ -213,36 +213,45 @@ function CatProfile() {
                                 <Card.Header>
                                     {eventKey === false && <div><div>
                                         <ListGroupItem>
-                                            <div className="d-flex">
-                                                <div className="font-weight-bold mr-4">
+                                            <div className="d-flex bd-highlight mb-3">
+                                                <div className="font-weight-bold p-2 bd-highlight">
                                                     {cat.cat.desc[0].reference.name}
                                                 </div>
-                                                <div>
+                                                <div className="font-weight-bold p-2 bd-highlight">
                                                     {cat.cat.desc[0].comment}
+                                                </div>
+                                                <div className="text-muted ml-auto p-2 bd-highligh">
+                                                    {moment(cat.cat.desc[0].createdAt).fromNow()}
                                                 </div>
                                             </div>
                                         </ListGroupItem>
                                     </div>
                                         <div>
                                             <ListGroupItem>
-                                                <div className="d-flex">
-                                                    <div className="font-weight-bold mr-4">
+                                                <div className="d-flex bd-highlight mb-3">
+                                                    <div className="font-weight-bold p-2 bd-highlight">
                                                         {cat.cat.desc[1].reference.name}
                                                     </div>
-                                                    <div>
+                                                    <div className="font-weight-bold p-2 bd-highlight">
                                                         {cat.cat.desc[1].comment}
+                                                    </div>
+                                                    <div className="text-muted ml-auto p-2 bd-highligh">
+                                                        {moment(cat.cat.desc[1].createdAt).fromNow()}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
                                         </div>
                                         <div>
                                             <ListGroupItem>
-                                                <div className="d-flex">
-                                                    <div className="font-weight-bold mr-4">
+                                                <div className="d-flex bd-highlight mb-3">
+                                                    <div className="font-weight-bold p-2 bd-highlight">
                                                         {cat.cat.desc[2].reference.name}
                                                     </div>
-                                                    <div>
+                                                    <div className="font-weight-bold p-2 bd-highlight">
                                                         {cat.cat.desc[2].comment}
+                                                    </div>
+                                                    <div className="text-muted ml-auto p-2 bd-highligh">
+                                                        {moment(cat.cat.desc[2].createdAt).fromNow()}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
