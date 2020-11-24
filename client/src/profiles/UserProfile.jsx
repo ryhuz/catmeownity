@@ -50,10 +50,11 @@ async function editProfile() {
     if (user.user.name.length > 1) {
       user.user.name.shift();
       user.user.name.unshift(addName);
-      await Axios.put(`http://localhost:8080/auth/user/${id}`, {
+      await Axios.put(`http://localhost:8080/auth/user/${user.user._id}`, {
         name: user.user.name,
         email: user.user.email,
       });
+      console.log("here");
     } else {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
     }
@@ -142,7 +143,7 @@ async function uploadPicture() {
                   </div>
                   <div className="d-flex justify-content-between">
                     <Button variant="dark" onClick={() => setShowEditProfile(false)}>Cancel</Button>
-                    <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button>
+                    {/* <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button> */}
                     <Button variant="dark" onClick={editProfile}>Update</Button>
                   </div>
                   </div> : <div>
