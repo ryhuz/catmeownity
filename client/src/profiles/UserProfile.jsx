@@ -6,7 +6,6 @@ import Axios from 'axios'
 /* REDIRECT IF USER NOT FOUND */
 
 function UserProfile() {
-
   let token = localStorage.getItem('token');
   let { id } = useParams();
   Axios.defaults.headers.common['x-auth-token'] = token;
@@ -30,52 +29,58 @@ function UserProfile() {
     }
     fetchUser()
   }, [id])
+
+    useEffect(() => {
+      setUser(user)
+  }, [])
   
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [form, setForm] = useState({
     name: user.found.name,
     email: user.found.email,
   });
+  // console.log("hello", user.user.name) // no idea why user.user.name is empty (null) when declared above. (user.found == true)
   const [addName, setAddName] = useState("")
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
     if (e.target.name === "name") {
+      if (e.target.value !== "") {
         setAddName(e.target.value)
+      }
     }
-  }
+}
 
 async function editProfile() {
   try {
     if (user.user.name.length > 1) {
       user.user.name.shift();
       user.user.name.unshift(addName);
-      await Axios.put(`http://localhost:8080/auth/user/${user.user._id}`, {
+      await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
         email: user.user.email,
       });
-      console.log("here");
+      // console.log("here");
     } else {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
     }
       setShowEditProfile(false)
       window.location.reload()
-  } catch (e) {
-      console.log(e.response)
+  } catch (err) {
+      console.log(err.response)
   }
 }
 
-const [uploadingPhoto, setUploadingPhoto] = useState(false);
-async function uploadPicture() {
-  try {
-    let tempPhoto;
-    
-  } catch (error) {
-    
-  }
+// const [uploadingPhoto, setUploadingPhoto] = useState(false);
+// async function uploadPicture() {
+//   try {
+//     let tempPhoto;
 
-}
+//   } catch (error) {
 
+//   }
+
+// }
 
   return (
     <>
@@ -111,14 +116,6 @@ async function uploadPicture() {
                       <td><strong>Email: </strong></td>
                       <td> {user.user.email}  </td>
                     </tr>
-                    {/* <tr>
-                      <td><strong>Other tracked locations: </strong></td>
-                      <td> This can be at the bottom  </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Fave cats: </strong></td>
-                      <td> This can be at the bottom </td>
-                    </tr> */}
                   </tbody>
                 </Table>
           <Row>
@@ -142,7 +139,7 @@ async function uploadPicture() {
                     </div>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <Button variant="dark" onClick={() => setShowEditProfile(false)}>Cancel</Button>
+                    <Button variant="dark" onClick={() => setShowEditProfile(false)}>Back</Button>
                     {/* <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button> */}
                     <Button variant="dark" onClick={editProfile}>Update</Button>
                   </div>
