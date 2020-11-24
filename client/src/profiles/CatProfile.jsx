@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form } from 'react-bootstrap'
+import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, ListGroupItem } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 import CatBio from './CatBio';
@@ -8,6 +8,7 @@ import NotLoggedIn from '../private/NotLoggedIn';
 import CatComments from '../profiles/CatComments';
 import pic from '../resources/nocatpic.png'
 import CatPhotoUpload from './CatPhotoUpload';
+import e from 'cors';
 
 function CatProfile() {
     let token = localStorage.getItem('token')
@@ -25,6 +26,7 @@ function CatProfile() {
         reference: id
     })
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
+    const [eventKey, setEventKey] = useState(false)
 
     /* get curr user list of favourites */
     useEffect(() => {
@@ -144,10 +146,17 @@ function CatProfile() {
     function handleComment(e) {
         setComment({ ...comment, [e.target.name]: e.target.value });
     }
-
     function addPhoto() {
         fetchCat();
     }
+    (async () => {
+        if (eventKey) {
+            return "0"
+        } else {
+            return "1"
+        }
+    })(eventKey);
+
     return (
         <>{cat.found &&
             <>
@@ -155,7 +164,7 @@ function CatProfile() {
                     <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
                 </Modal>
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id}/>
+                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} />
                 </Modal>
                 <Jumbotron>
                     <Container>
@@ -169,7 +178,7 @@ function CatProfile() {
                                             {cat.cat.names[0]} doesn't have a picture yet.
                                         </Col>
                                         <Col className='text-center'>
-                                            <div className='btn btn-success' onClick={()=>setUploadingPhoto(true)}>
+                                            <div className='btn btn-success' onClick={() => setUploadingPhoto(true)}>
                                                 Add their first photo!
                                             </div>
                                         </Col>
@@ -195,54 +204,97 @@ function CatProfile() {
                     </Container>
                     {missing()}
                 </Jumbotron>
-                {/* Description Carousel */}
-                {/* <Carousel className="my-4"> */}
-                <Container>
-                    <Accordion defaultActiveKey="0">
-                        <Card>
-                            <Card.Header>
-                                <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                                    More Comments
-                                </Accordion.Toggle>
-                            </Card.Header>
-                            <Accordion.Collapse eventKey="1">
-                                <Card.Body>
-                                    <ListGroup>
-                                        {cat.cat.desc.map((el) => (
-                                            <CatComments desc={el} key={el._id} />
-                                        ))}
-                                    </ListGroup>
-                                    <InputGroup className="my-3">
-                                        <Form.Control type="text" placeholder="Enter your comment" name="comment" aria-describedby="basic-addon2" onChange={handleComment} />
-                                        <InputGroup.Append>
-                                            <Button variant="outline-secondary" onClick={postComment}>Add</Button>
-                                        </InputGroup.Append>
-                                    </InputGroup>
-                                </Card.Body>
-                            </Accordion.Collapse>
-                        </Card>
-                    </Accordion>
-                </Container>
-                {/* </Carousel> */}
-                {/* {cat.cat.desc.map((desc, index) => {
-                                <Carousel.Item key={index}>
-                                    <Card className="text-light bg-dark mx-5 px-5">
-                                        <Container>
-                                            <Card.Body>
-                                                <blockquote class="blockquote">
-                                                    {desc}
-                                                </blockquote>
-                                                <h3>Said by user</h3>
+                {/* Tabs nav */}
+                <Tabs defaultActiveKey="comment" id="uncontrolled-tab-example">
+                    {/* Comments Tab */}
+                    <Tab eventKey="comment" title="Comments">
+                        <Accordion defaultActiveKey="0" className="scroll">
+                            <Card>
+                                <Card.Header>
+                                    {eventKey === false && <div><div>
+                                        <ListGroupItem>
+                                            <div className="d-flex">
+                                                <div className="font-weight-bold mr-4">
+                                                    {cat.cat.desc[0].reference.name}
+                                                </div>
+                                                <div>
+                                                    {cat.cat.desc[0].comment}
+                                                </div>
+                                            </div>
+                                        </ListGroupItem>
+                                    </div>
+                                        <div>
+                                            <ListGroupItem>
+                                                <div className="d-flex">
+                                                    <div className="font-weight-bold mr-4">
+                                                        {cat.cat.desc[1].reference.name}
+                                                    </div>
+                                                    <div>
+                                                        {cat.cat.desc[1].comment}
+                                                    </div>
+                                                </div>
+                                            </ListGroupItem>
+                                        </div>
+                                        <div>
+                                            <ListGroupItem>
+                                                <div className="d-flex">
+                                                    <div className="font-weight-bold mr-4">
+                                                        {cat.cat.desc[2].reference.name}
+                                                    </div>
+                                                    <div>
+                                                        {cat.cat.desc[2].comment}
+                                                    </div>
+                                                </div>
+                                            </ListGroupItem>
+                                        </div></div>}
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                        {eventKey ? 'close' : 'show all comments...'}
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                    <Card.Body>
+                                        <ListGroup>
+                                            {cat.cat.desc.map((el) => (
+                                                <CatComments desc={el} key={el._id} />
+                                            ))}
+                                        </ListGroup>
+                                        <InputGroup className="my-3">
+                                            <Form.Control type="text" placeholder="Enter your comment" name="comment" aria-describedby="basic-addon2" onChange={handleComment} />
+                                            <InputGroup.Append>
+                                                <Button variant="outline-secondary" onClick={postComment}>Add</Button>
+                                            </InputGroup.Append>
+                                        </InputGroup>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        </Accordion>
+                    </Tab>
+                    {/* Photo Tab */}
+                    <Tab eventKey="photos" title="Photo">
+                        <Row>
+                            <Col md={12}>
+                                <Accordion defaultActiveKey="0">
+                                    <Card>
+                                        <Card.Header>
+                                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                More photos
+                                    </Accordion.Toggle>
+                                        </Card.Header>
+                                        <Accordion.Collapse eventKey="0">
+                                            <Card.Body className="mx-auto">
+                                                <img src="http://placekitten.com/200/320" className="rounded thumbnail img-responsive mx-5" width="250px" />
+                                                <img src="http://placekitten.com/200/310" className="rounded thumbnail img-responsive mx-5" width="250px" />
+                                                <img src="http://placekitten.com/200/330" className="rounded thumbnail img-responsive mx-5" width="250px" />
                                             </Card.Body>
-                                        </Container>
+                                        </Accordion.Collapse>
                                     </Card>
-                                </Carousel.Item>
-                            })
-                            } */}
-                <Container className="border border-dark">
-                    <Row>
-
-                        <Col md={7} className="border">
+                                </Accordion>
+                            </Col>
+                        </Row>
+                    </Tab>
+                    {/* Feeding Tab */}
+                    <Tab eventKey="feeding" title="Feeding">
+                        <Col className="border">
                             <Table borderless size="lg">
                                 <tbody>
                                     <tr>
@@ -256,26 +308,8 @@ function CatProfile() {
                                 </tbody>
                             </Table>
                         </Col>
-                        <Col md={12}>
-                            <Accordion defaultActiveKey="0">
-                                <Card>
-                                    <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                            More photos
-                                    </Accordion.Toggle>
-                                    </Card.Header>
-                                    <Accordion.Collapse eventKey="0">
-                                        <Card.Body className="mx-auto">
-                                            <img src="http://placekitten.com/200/320" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                            <img src="http://placekitten.com/200/310" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                            <img src="http://placekitten.com/200/330" className="rounded thumbnail img-responsive mx-5" width="250px" />
-                                        </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
-                            </Accordion>
-                        </Col>
-                    </Row>
-                </Container>
+                    </Tab>
+                </Tabs>
             </>
         }
         </>

@@ -2,6 +2,7 @@ import React from 'react'
 import { ListGroupItem } from 'react-bootstrap'
 
 function CatComments({ desc }) {
+    console.log(desc)
     return (
         <div>
             <ListGroupItem>
@@ -11,6 +12,9 @@ function CatComments({ desc }) {
                     </div>
                     <div>
                         {desc.comment}
+                    </div>
+                    <div>
+                        {desc.createdAt}
                     </div>
                 </div>
             </ListGroupItem>

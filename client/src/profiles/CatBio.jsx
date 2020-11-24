@@ -27,7 +27,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
         if (e.target.name === "names") {
-            if (e.target.value != "") {
+            if (e.target.value !== "") {
                 setAddName(e.target.value)
             }
         }
