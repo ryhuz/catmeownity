@@ -12,6 +12,7 @@ import Dashboard from './landings/dashboard/Dashboard';
 import PrivateRoute from './private/PrivateRoute';
 import LogOut from './private/LogOut';
 import { decode } from "jsonwebtoken";
+import RegisterCatContainer from './newcat/RegisterCatContainer';
 
 function App() {
   const [valid, setValid] = useState({
@@ -84,7 +85,7 @@ function App() {
           <Search />
         </Route>
         <Route path='/location/:locationID'>
-          <CatResults />
+          <CatResults validLogIn={valid} />
         </Route>
         <Route path='/cat/:id'>
           <CatProfile />
@@ -101,8 +102,9 @@ function App() {
         </Route>
 
         {/* THESE ROUTES SHOULD BE PRIVATE */}
-        <PrivateRoute path='/dashboard' component={Dashboard} valid={valid}/>
-        <PrivateRoute path='/logout' component={LogOut} valid={valid} setValid={setValid}/>
+        <PrivateRoute path='/dashboard' component={Dashboard} valid={valid} />
+        <PrivateRoute path='/logout' component={LogOut} valid={valid} setValid={setValid} />
+        <PrivateRoute path='/newcat/:locationID/' component={RegisterCatContainer} valid={valid} />
       </Switch>
     </BrowserRouter>
   )

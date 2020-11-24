@@ -155,7 +155,7 @@ function CatProfile() {
                     <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
                 </Modal>
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id}/>
+                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user}/>
                 </Modal>
                 <Jumbotron>
                     <Container>
