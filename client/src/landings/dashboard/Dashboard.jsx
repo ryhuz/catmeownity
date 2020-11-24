@@ -36,7 +36,7 @@ const Dashboard = () => {
     if (profile.profile.favorites.length > 0) {
       return (
         <>
-          {profile.favorites.map(cat => (
+          {profile.profile.favorites.map(cat => (
             <Col className="" key={cat._id}>
               <Card>
                 {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
@@ -45,6 +45,7 @@ const Dashboard = () => {
                   <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
                 <Card.Body>
+                  {console.log(cat)}
                   <div>{cat.locations[0].street}</div>
                   <div>
                     <Button variant="outline-danger" block onClick={() => setConfirmUnfollow(true)}>

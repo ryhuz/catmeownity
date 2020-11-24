@@ -94,6 +94,7 @@ const UserProfile = () => {
                       <td> {user.user.email}  </td>
                     </tr>
                     <tr>
+                      {console.log(user)}
                       <td><strong>Home Location: </strong></td>
                       <td> {user.user.location.street}  </td>
                     </tr>

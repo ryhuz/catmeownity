@@ -10,7 +10,7 @@ let gender = ['Male', 'Female', 'Not Sure'];
 
 const catSchema = new Schema({
     names: [{ type: String, required: true }],
-    locations: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
+    locations: [{ type: Schema.Types.ObjectId, ref: 'Location', required: true }],
     // locations: [
     //     {
     //         location: { type: Schema.Types.ObjectId, ref: 'Location', required: true },
