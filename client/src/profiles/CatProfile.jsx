@@ -99,7 +99,7 @@ function CatProfile() {
     function missing() {
         if (cat.cat.missing) {
             return (
-                <Container className="bg-danger">
+                <Container className="bg-danger mt-3">
                     <Row>
                         <Col sm={5}>
                             <h5 className="mt-4 text-right">Missing Cat
@@ -190,7 +190,7 @@ function CatProfile() {
                                 </div>
                             </Col>
                             {/* Cat profile */}
-                            <CatBio cat={cat} setCat={setCat} user={user} />
+                            <CatBio cat={cat} setCat={setCat} user={user} fetchCat={fetchCat} />
                         </Row>
                     </Container>
                     {missing()}

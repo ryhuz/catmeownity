@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Col, Button, Form, InputGroup } from 'react-bootstrap'
+import { Col, Button, Form, InputGroup, FormLabel } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 
 
-function CatBio({ cat, setCat, user }) {
+function CatBio({ cat, setCat, user, fetchCat }) {
 
     let token = localStorage.getItem('token');
     let { id } = useParams();
@@ -46,7 +46,7 @@ function CatBio({ cat, setCat, user }) {
                 await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
             }
             setShowEditCat(false)
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
         } catch (e) {
             console.log(e.response)
         }
@@ -65,7 +65,8 @@ function CatBio({ cat, setCat, user }) {
                                 await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
                                     names: delName
                                 });
-                                window.location.reload();
+                                setShowEditCat(false)
+                                fetchCat();
                             })();
                         }}>
                             <span aria-hidden="true">&times;</span>
@@ -82,7 +83,8 @@ function CatBio({ cat, setCat, user }) {
             await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
                 names: addName
             });
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
+            setShowEditCat(false)
         } catch (e) {
             console.log(e.response)
         }
@@ -91,7 +93,7 @@ function CatBio({ cat, setCat, user }) {
     async function missing() {
         try {
             await Axios.put(`http://localhost:8080/auth/cats/${id}/missing`);
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
         } catch (error) {
             console.log(error)
         }
@@ -101,7 +103,7 @@ function CatBio({ cat, setCat, user }) {
     async function found() {
         try {
             await Axios.put(`http://localhost:8080/auth/cats/${id}/found`);
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
         } catch (error) {
             console.log(error)
         }
@@ -113,7 +115,7 @@ function CatBio({ cat, setCat, user }) {
             {/* Check if edit button is pressed then show edit form and update button */}
             {showEditCat ? <div>
                 <InputGroup>
-                    <Form.Control type="text" placeholder="Enter name of cat" defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
+                    <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={addButton}>Add</Button>
                     </InputGroup.Append>
