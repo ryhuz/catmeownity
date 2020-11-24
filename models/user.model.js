@@ -5,7 +5,6 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
-    homeLocation: { type: Schema.Types.ObjectId, ref: 'Location' },
     trackedLocations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
     favourites: [{ type: Schema.Types.ObjectId, ref: 'Cat' }],
     descForCats: [{type: Schema.Types.ObjectId, ref: 'Desc'}],

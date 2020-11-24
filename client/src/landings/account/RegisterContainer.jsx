@@ -1,8 +1,7 @@
 import Axios from 'axios';
 import React, { useState } from 'react'
-import { Button, Card, Container, Form } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
-import ChooseLocation from './ChooseLocation';
 import ProfilePic from './ProfilePic';
 import Register from './Register';
 
@@ -16,7 +15,7 @@ const RegisterContainer = ({ setValid }) => {
     const [home, setHome] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [showSection, setSection] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [lastErr, setLastErr] = useState(false);
 
     function changeHandler(e) {
@@ -67,10 +66,7 @@ const RegisterContainer = ({ setValid }) => {
                 <Register setValid={setValid} form={form} changeHandler={changeHandler} errMsg={errMsg} nextSection={() => setSection(2)} />
             }
             {showSection === 2 &&
-                <ChooseLocation form={form} setForm={setForm} nextSection={() => setSection(3)} prevSection={() => setSection(1)} />
-            }
-            {showSection === 3 &&
-                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(2)}
+                <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(1)}
                 loading={loading} lastErr={lastErr} setLastErr={setLastErr} />
             }
         </Container>

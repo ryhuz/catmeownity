@@ -69,7 +69,7 @@ function ProfilePic({ setImageFile, imageFile, register, prevSection, loading, s
                         </Col>
                     </Row>
                     {loading &&
-                        <Row classname="justify-content-center">
+                        <Row className="justify-content-center">
                             <Col sm={2}>
                                 <Loading />
                             </Col>

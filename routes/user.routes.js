@@ -8,7 +8,7 @@ const bcrpyt = require("bcrypt");
 /* Register */
 router.post("/register", async (req, res) => {
     try {
-        let { email, password, name, location, image } = req.body;
+        let { email, password, name, image } = req.body;
         let hashedPassword = await bcrpyt.hash(password, 10);
         let user = new User(
             {
@@ -16,7 +16,6 @@ router.post("/register", async (req, res) => {
                 password: hashedPassword,
                 name,
                 image,
-                location
             }
         );
         await user.save();
