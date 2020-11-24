@@ -4,6 +4,7 @@ import { decode } from "jsonwebtoken";
 import Axios from 'axios'
 import { NavLink } from 'react-router-dom';
 import ConfirmUnfollow from './ConfirmUnfollow';
+import pic from '../../resources/nocatpic.png'
 
 const Dashboard = () => {
   let token = localStorage.getItem('token')
@@ -40,13 +41,12 @@ const Dashboard = () => {
             <Col className="" key={cat._id}>
               <Card>
                 {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
-                <Image src="http://placekitten.com/200/300" width="100%" className="img-thumbnail" />
+                <Image src={showCatPhoto(cat)} width="100%" className="img-thumbnail" />
                 <Card.Header className='h5'>
                   <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
                 <Card.Body>
-                  {console.log(cat)}
-                  <div>{cat.locations[0].street}</div>
+                  <div>{cat.location.street}</div>
                   <div>
                     <Button variant="outline-danger" block onClick={() => setConfirmUnfollow(true)}>
                       <i className="fas fa-cat mx-2"></i>Unfollow this cat
@@ -89,7 +89,14 @@ const Dashboard = () => {
     temp.splice(temp.indexOf(x => x._id === id), 1);
     setProfile({ ...profile, favourites: temp });
   }
-
+  function showCatPhoto(cat) {
+    if (cat.photos.length > 0) {
+      let temp = cat.photos.find(x=>x.isDefault)
+      return temp.image;
+    }else{
+      return pic;
+    }
+  }
   return (
     <div>
       {profile.found &&
