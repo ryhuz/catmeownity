@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Col, Button, Form, InputGroup } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams } from 'react-router-dom';
 
 
-function CatBio({ cat, setCat, user }) {
+function CatBio({ cat, setCat, user, fetchCat }) {
 
     let token = localStorage.getItem('token');
     let { id } = useParams();
@@ -22,14 +22,34 @@ function CatBio({ cat, setCat, user }) {
         colour: cat.cat.colour,
     });
     const [addName, setAddName] = useState("")
+    const node = useRef()
 
     function changeHandler(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
         if (e.target.name === "names") {
-            setAddName(e.target.value)
+            if (e.target.value !== "") {
+                setAddName(e.target.value)
+            }
         }
-
     }
+
+    useEffect(() => {
+        // add when mounted
+        document.addEventListener("mousedown", handleClick);
+        // return function to be called when unmounted
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
+
+    const handleClick = e => {
+        if (node.current.contains(e.target)) {
+            // inside click
+            return;
+        }
+        // outside click 
+        setShowEditCat(false)
+    };
 
     async function editCat() {
         try {
@@ -46,7 +66,7 @@ function CatBio({ cat, setCat, user }) {
                 await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
             }
             setShowEditCat(false)
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
         } catch (e) {
             console.log(e.response)
         }
@@ -65,7 +85,8 @@ function CatBio({ cat, setCat, user }) {
                                 await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
                                     names: delName
                                 });
-                                window.location.reload();
+                                setShowEditCat(false)
+                                fetchCat();
                             })();
                         }}>
                             <span aria-hidden="true">&times;</span>
@@ -82,7 +103,8 @@ function CatBio({ cat, setCat, user }) {
             await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
                 names: addName
             });
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
+            setShowEditCat(false)
         } catch (e) {
             console.log(e.response)
         }
@@ -91,7 +113,7 @@ function CatBio({ cat, setCat, user }) {
     async function missing() {
         try {
             await Axios.put(`http://localhost:8080/auth/cats/${id}/missing`);
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
         } catch (error) {
             console.log(error)
         }
@@ -101,7 +123,7 @@ function CatBio({ cat, setCat, user }) {
     async function found() {
         try {
             await Axios.put(`http://localhost:8080/auth/cats/${id}/found`);
-            window.location.reload() //not the best option but will do for now
+            fetchCat();
         } catch (error) {
             console.log(error)
         }
@@ -109,11 +131,11 @@ function CatBio({ cat, setCat, user }) {
     }
 
     return (
-        <Col>
+        <Col ref={node}>
             {/* Check if edit button is pressed then show edit form and update button */}
-            {showEditCat ? <div>
-                <InputGroup>
-                    <Form.Control type="text" placeholder="Enter name of cat" defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
+            {showEditCat ? <div >
+                <InputGroup  >
+                    <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={addButton}>Add</Button>
                     </InputGroup.Append>
@@ -150,7 +172,6 @@ function CatBio({ cat, setCat, user }) {
                     </div>
                 </p>
                 <div className="d-flex justify-content-between">
-                    <Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>
                     <Button variant="outline-secondary" onClick={editCat}>Update</Button>
                 </div>
             </div> : <div>

@@ -14,13 +14,21 @@ body {
   max-width: 60%;
   max-height: 30vh;
 }
-#navpadding{
+
+#navpadding {
   background: none;
   padding: 28px 0;
 }
-.topnav{
+
+.topnav {
   background-color: #ffdab9c2;
 }
-.jumbotitledown{
+
+.jumbotitledown {
   padding-top: 50px;
+}
+
+.scroll {
+  height: 400px;
+  overflow-y: scroll;
 }
