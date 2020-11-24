@@ -40,8 +40,9 @@ const Dashboard = () => {
           {profile.profile.favourites.map(cat => (
             <Col className="" key={cat._id}>
               <Card>
-                {/* IF HAVE IMAGE, DISPLAY IMAGE, ELSE PLACEHOLDER */}
-                <Image src={showCatPhoto(cat)} width="100%" className="img-thumbnail" />
+                <NavLink to={`/cat/${cat._id}`}>
+                  <Image src={showCatPhoto(cat)} width="100%" className="img-thumbnail" />
+                </NavLink>
                 <Card.Header className='h5'>
                   <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
@@ -85,15 +86,17 @@ const Dashboard = () => {
     });
 
     setConfirmUnfollow(false);
-    let temp = profile.favourites;
+
+    let temp = profile.profile.favourites;
     temp.splice(temp.indexOf(x => x._id === id), 1);
     setProfile({ ...profile, favourites: temp });
   }
+
   function showCatPhoto(cat) {
     if (cat.photos.length > 0) {
-      let temp = cat.photos.find(x=>x.isDefault)
+      let temp = cat.photos.find(x => x.isDefault)
       return temp.image;
-    }else{
+    } else {
       return pic;
     }
   }
