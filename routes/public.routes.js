@@ -28,7 +28,14 @@ router.get("/cat/:catID", async (req, res) => {
     try {
         let cat = await Cat.findById(req.params.catID)
             .populate('locations')
-            // .populate('desc')
+            .populate({ 
+                path:'desc',
+                populate: {
+                    path: 'reference',
+                    model: 'User',
+                    select: 'name'
+                }
+            })
 
         return res.status(200).json({
             cat,
