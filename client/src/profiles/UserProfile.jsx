@@ -58,9 +58,9 @@ function UserProfile() {
 
 async function editProfile() {
   try {
-    if (user.found.name.length > 1) {
-      user.found.name.shift();
-      user.found.name.unshift(addName);
+    if (user.user.name.length > 1) {
+      user.user.name.shift();
+      user.user.name.unshift(addName);
       await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
         email: user.user.name,
@@ -94,6 +94,7 @@ async function addButton() {
         <h3 className="mt-4 text-white">My Profile</h3>
       </Container>
     </Jumbotron>
+
     {/* Start of Profile */}
       {user.found &&
         <Container className="d-flex flex-row border">
@@ -120,34 +121,38 @@ async function addButton() {
                     </tr>
                   </tbody>
                 </Table>
+          {/* Check if edit button is pressed then show edit form and update button */}
+          {showEditProfile ? <div>
+            <small>Name:</small>
+            <InputGroup>
+              <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
+                <InputGroup.Append>
+                  <Button variant="outline-secondary" onClick={addButton}>Add</Button>
+                </InputGroup.Append>
+            </InputGroup>
+            <div>
+              <small>Email:</small>
+              <div className="h5">
+                <Form.Control type="text" placeholder="Enter email" onChange={changeHandler} defaultValue={user.user.email} name="email" />
+              </div>
+            </div>
+            <div className="d-flex justify-content-between">
+                <Button className="btn btn-dark" onClick={() => setShowEditProfile(false)}>Back</Button>
+                <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button>
+                <Button variant="dark" onClick={editProfile}>Update</Button>
+            </div>
+            </div> : <div>
+          </div>}
               </div>
             </Col>
+
           </Row>
         </Container>
       }
-      <Col>
-      {/* Check if edit button is pressed then show edit form and update button */}
-        {showEditProfile ? <div>
-          <InputGroup>
-            <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
-              <InputGroup.Append>
-                <Button variant="outline-secondary" onClick={addButton}>Add</Button>
-              </InputGroup.Append>
-          </InputGroup>
-          <p>
-            <small>Email:</small>
-            <div className="h5">
-              <Form.Control type="text" placeholder="Enter email" onChange={changeHandler} defaultValue={user.user.email} name="email" />
-            </div>
-          </p>
-          <div className="d-flex justify-content-between">
-              <Button variant="outline-secondary" onClick={() => setShowEditProfile(true)}>Edit</Button>
-              <Button variant="outline-secondary" onClick={editProfile}>Update</Button>
-          </div>
-          </div> : <div>
-          </div>}
-      </Col>
+      {/* <Container className="d-flex flex-row border"> */}    
+      {/* </Container> */}
     {/* End of Profile */}
+
     {/* Start of Container with locations and favorite cats */}
       <Container className="d-flex border border-dark mt-4 mb-4">
         <Row className="p-3">
@@ -157,12 +162,12 @@ async function addButton() {
                 <tr>
                   <td><strong>Tracked locations: </strong></td>
                   <td>One cat just leads to another...</td>
-                  <Button className="m-2" size="sm" variant="outline-success">Track here!</Button>
+                  <div className="btn m-2" size="sm" variant="outline-success">Track here!</div>
                 </tr>
                 <tr>
                   <td><strong>Favorite Cats: </strong></td>
                   <td>Hmm... Looks like you haven't favorited any cats yet.</td>
-                  <Button className="m-2" size="sm" variant="outline-danger">Add now!</Button>
+                  <div className="btn m-2" size="sm" variant="outline-danger">Add now!</div>
                 </tr>
               </tbody>
             </Table>
@@ -170,6 +175,7 @@ async function addButton() {
         </Row>
       </Container>
     {/* End of Container */}
+
     {/* Start of Footer */}
       <Card className="bg-dark text-white p-3 mx-auto">
         <Card.Body>
