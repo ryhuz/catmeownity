@@ -5,10 +5,10 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
-    location: { type: Schema.Types.ObjectId, ref: 'Location' },
-    tracked: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
+    homeLocation: { type: Schema.Types.ObjectId, ref: 'Location' },
+    trackedLocations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
     favorites: [{ type: Schema.Types.ObjectId, ref: 'Cat' }],
-    desc: [{type: Schema.Types.ObjectId, ref: 'Desc'}],
+    descForCats: [{type: Schema.Types.ObjectId, ref: 'Desc'}],
     image: String,
     // userType: 
 });
