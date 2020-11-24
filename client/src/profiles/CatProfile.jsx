@@ -21,9 +21,7 @@ function CatProfile() {
     });
     const [favourites, setFavourites] = useState([]);
     const [needToLogIn, setNeedToLogIn] = useState(false);
-    const [comment, setComment] = useState({
-        reference: id
-    })
+    const [catDescription, setCatDescription] = useState({})
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [eventKey, setEventKey] = useState(false);
     const moment = require('moment');
@@ -135,16 +133,16 @@ function CatProfile() {
             }
         }
     }
-    async function postComment() {
+    async function postCatDescription() {
         try {
-            await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, comment)
+            await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, catDescription)
             fetchCat();
         } catch (error) {
             console.log(error)
         }
     }
-    function handleComment(e) {
-        setComment({ ...comment, [e.target.name]: e.target.value });
+    function handleCatDescription(e) {
+        setCatDescription({ ...catDescription, [e.target.name]: e.target.value });
     }
     function addPhoto() {
         fetchCat();
@@ -156,7 +154,7 @@ function CatProfile() {
             return "1"
         }
     })(eventKey);
-
+    console.log(cat)
     return (
         <>{cat.found &&
             <>
@@ -164,7 +162,7 @@ function CatProfile() {
                     <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
                 </Modal>
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user}/>
+                    <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
                 </Modal>
                 <Jumbotron>
                     <Container>
@@ -212,53 +210,31 @@ function CatProfile() {
                             <Card>
                                 <Card.Header>
                                     {eventKey === false && <div><div>
-                                        <ListGroupItem>
-                                            <div className="d-flex bd-highlight mb-3">
-                                                <div className="font-weight-bold p-2 bd-highlight">
-                                                    {/* {cat.cat.desc[cat.cat.desc.length - 1].reference.name} */}
-                                                </div>
-                                                <div className="font-weight-bold p-2 bd-highlight">
-                                                    {/* {cat.cat.desc[cat.cat.desc.length - 1].comment} */}
-                                                </div>
-                                                <div className="text-muted ml-auto p-2 bd-highligh">
-                                                    {/* {moment(cat.cat.desc[cat.cat.desc.length - 1].createdAt).fromNow()} */}
-                                                </div>
-                                            </div>
-                                        </ListGroupItem>
-                                    </div>
-                                        <div>
+                                        {cat.cat.desc.reverse().slice(0, 3).map((el) => (
                                             <ListGroupItem>
                                                 <div className="d-flex bd-highlight mb-3">
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {/* {cat.cat.desc[cat.cat.desc.length - 2].reference.name} */}
+                                                        {el.byUser.name}
                                                     </div>
                                                     <div className="font-weight-bold p-2 bd-highlight">
-                                                        {/* {cat.cat.desc[cat.cat.desc.length - 2].comment} */}
+                                                        {el.catDescription}
                                                     </div>
                                                     <div className="text-muted ml-auto p-2 bd-highligh">
-                                                        {/* {moment(cat.cat.desc[cat.cat.desc.length - 2].createdAt).fromNow()} */}
+                                                        {moment(el.createdAt).fromNow()}
                                                     </div>
                                                 </div>
                                             </ListGroupItem>
-                                        </div>
-                                        <div>
-                                            <ListGroupItem>
-                                                <div className="d-flex bd-highlight mb-3">
-                                                    <div className="font-weight-bold p-2 bd-highlight">
-                                                        {/* {cat.cat.desc[cat.cat.desc.length - 3].reference.name} */}
-                                                    </div>
-                                                    <div className="font-weight-bold p-2 bd-highlight">
-                                                        {/* {cat.cat.desc[cat.cat.desc.length - 3].comment} */}
-                                                    </div>
-                                                    <div className="text-muted ml-auto p-2 bd-highligh">
-                                                        {/* {moment(cat.cat.desc[cat.cat.desc.length - 3].createdAt).fromNow()} */}
-                                                    </div>
-                                                </div>
-                                            </ListGroupItem>
-                                        </div></div>}
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                        ))}
+                                        <InputGroup className="my-3">
+                                            <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
+                                            <InputGroup.Append>
+                                                <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
+                                            </InputGroup.Append>
+                                        </InputGroup>
+                                    </div></div>}
+                                    {cat.cat.desc.length > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                         {eventKey ? 'close' : 'show all comments...'}
-                                    </Accordion.Toggle>
+                                    </Accordion.Toggle>}
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="1">
                                     <Card.Body>
@@ -268,9 +244,9 @@ function CatProfile() {
                                             ))}
                                         </ListGroup>
                                         <InputGroup className="my-3">
-                                            <Form.Control type="text" placeholder="Enter your comment" name="comment" aria-describedby="basic-addon2" onChange={handleComment} />
+                                            <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
                                             <InputGroup.Append>
-                                                <Button variant="outline-secondary" onClick={postComment}>Add</Button>
+                                                <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
                                             </InputGroup.Append>
                                         </InputGroup>
                                     </Card.Body>
