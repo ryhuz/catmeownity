@@ -40,9 +40,8 @@ router.get("/:userID", async (req, res) => {
 // edit user
 router.put("/:userID", async (req, res) => {
     try {
-        let { name, homeLocation, favourites, image } = req.body;
-        console.log(req.body)
-        await User.findByIdAndUpdate(req.params.userID, { name, homeLocation, favourites, image });
+        let { name, email } = req.body;
+        await User.findByIdAndUpdate(req.params.userID, { name, email });
         res.status(200).json({ message: "Successfully updated user profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
