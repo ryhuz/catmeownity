@@ -47,7 +47,7 @@ function CatComments({ desc, fetchCat }) {
                         <div>{moment(desc.createdAt).fromNow()}</div>
                         <div className="mx-4">
                             {ownComment && <div>
-                                <button type="button" class="close" aria-label="Close" onClick={deleteCatDescription}>
+                                <button type="button" className="close" aria-label="Close" onClick={deleteCatDescription}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>}

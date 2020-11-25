@@ -98,7 +98,7 @@ console.log(img)
                     </p>
                 {imageFile.file &&
                     <div className="text-center profile-image-upload my-4">
-                        <Image src={imageFile.url} width="50%" />
+                        <Image src={imageFile.url} width="50%" height="auto"/>
                     </div>
                 }
                 <Row>

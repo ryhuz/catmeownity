@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, Popover, OverlayTrigger, ListGroupItem, Image } from 'react-bootstrap'
+import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, Popover, OverlayTrigger, Image } from 'react-bootstrap'
 import Axios from 'axios'
 import { useParams, useLocation, NavLink } from 'react-router-dom';
 import CatBio from './CatBio';
@@ -126,7 +126,7 @@ function CatProfile() {
         }
         try {
             await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, catDescription)
-            document.querySelector('#catDescriptionInput').value= ""
+            document.querySelector('#catDescriptionInput').value = ""
             fetchCat();
         } catch (error) {
             console.log(error)
@@ -158,7 +158,7 @@ function CatProfile() {
         return (
             <>
                 {cat.cat.photos.map(photo => (
-                    <Col>
+                    <Col key={photo._id}>
                         <Card>
                             <Image thumbnail rounded src={photo.image} className="img-responsive" width="100%" />
                             <Card.Body className='d-flex justify-content-between'>
@@ -191,7 +191,7 @@ function CatProfile() {
             console.log(e)
         }
     }
-  
+
     (async () => {
         if (eventKey) {
             return "0"
@@ -211,7 +211,12 @@ function CatProfile() {
             <Popover.Title as="h3">Log the feeding</Popover.Title>
             <Popover.Content>
                 <InputGroup className="my-3">
-                    <Form.Control type="text" placeholder="Food Description" name="foodDescription" aria-describedby="basic-addon2" onChange={handleFeeding} />
+                    <Form.Control type="text" placeholder="Food Description" name="foodDescription" aria-describedby="basic-addon2" onChange={handleFeeding}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                handleFeeding();
+                            }
+                        }} />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={feedKitty}>Add</Button>
                     </InputGroup.Append>
@@ -219,12 +224,12 @@ function CatProfile() {
             </Popover.Content>
         </Popover>
     );
-    
+
     return (
         <>{cat.found &&
             <>
                 <Modal show={needToLogIn} onHide={() => (setNeedToLogIn(false))}>
-                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn} location={location.pathname}/>
+                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn} location={location.pathname} />
                 </Modal>
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
                     <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
@@ -275,17 +280,11 @@ function CatProfile() {
                             <Accordion defaultActiveKey="0" className="scroll">
                                 <Card>
                                     <Card.Header>
-                                        {eventKey === false && <div><div>
+                                        {eventKey === false && <div>
                                             {cat.cat.desc.slice(0, 3).map((el) => (
                                                 <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                             ))}
-                                            {/*                                             {cat.cat.desc.length < 2 && <InputGroup className="my-3">
-                                                <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
-                                                <InputGroup.Append>
-                                                    <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
-                                                </InputGroup.Append>
-                                            </InputGroup>} */}
-                                        </div></div>}
+                                        </div>}
                                         {/* Check if cat description is more than 3 to display show all comments button */}
                                         {(cat.cat.desc.length) > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                             {eventKey ? 'close' : 'show all comments...'}
@@ -300,12 +299,21 @@ function CatProfile() {
                                             </ListGroup>
                                         </Card.Body>
                                     </Accordion.Collapse>
-                                    <InputGroup className="my-3">
-                                        <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} id="catDescriptionInput"/>
-                                        <InputGroup.Append>
-                                            <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
-                                        </InputGroup.Append>
-                                    </InputGroup>
+                                    <Card.Body>
+                                        <InputGroup>
+                                            <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription}
+                                                id="catDescriptionInput" onKeyDown={e => {
+                                                    if (e.key === 'Enter') {
+                                                        postCatDescription();
+                                                    }
+                                                }} />
+                                            <InputGroup.Append>
+                                                <Button variant="outline-secondary" onClick={postCatDescription}>
+                                                    Add
+                                                </Button>
+                                            </InputGroup.Append>
+                                        </InputGroup>
+                                    </Card.Body>
                                 </Card>
                             </Accordion>
                         </Tab>
