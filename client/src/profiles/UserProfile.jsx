@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Container, Form, InputGroup, Image, Jumbotron, Row, Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import Axios from 'axios'
+import Axios from 'axios';
 
 /* REDIRECT IF USER NOT FOUND */
 
@@ -21,7 +21,7 @@ function UserProfile() {
       try {
         let resp = await Axios.get(`http://localhost:8080/user/${id}`);
         setUser({ user: resp.data.user, found: true });
-        // console.log(resp.data.user)
+        console.log(resp.data.user)
       } catch (err) {
         // setError(e.response.data.message);
         console.log(err.response)
@@ -29,18 +29,14 @@ function UserProfile() {
     }
     fetchUser()
   }, [id])
-
-    useEffect(() => {
-      setUser(user)
-  }, [])
   
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [addName, setAddName] = useState("")
   const [form, setForm] = useState({
-    name: user.found.name,
-    email: user.found.email,
+    name: "",
+    email: "",
   });
   // console.log("hello", user.user.name) // no idea why user.user.name is empty (null) when declared above. (user.found == true)
-  const [addName, setAddName] = useState("")
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -54,13 +50,12 @@ function UserProfile() {
 async function editProfile() {
   try {
     if (user.user.name.length > 1) {
-      user.user.name.shift();
-      user.user.name.unshift(addName);
+      user.user.name.replace(addName);
       await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
         email: user.user.email,
       });
-      // console.log("here");
+      console.log("submit");
     } else {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
     }
