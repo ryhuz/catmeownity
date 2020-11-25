@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Col, Modal, Row } from 'react-bootstrap'
+import { Col, Modal, Row } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
-function NotLoggedIn({ setNeedToLogIn }) {
+function NotLoggedIn({ setNeedToLogIn, location }) {
+    localStorage.setItem('location', location)
     return (
         <>
             <Modal.Header closeButton>
@@ -15,7 +16,7 @@ function NotLoggedIn({ setNeedToLogIn }) {
                     <Col>
                         <NavLink to='/login' className="btn btn-block btn-secondary">
                             Login
-                    </NavLink>
+                        </NavLink>
                     </Col>
                     <Col>
                         <NavLink to='/register' className="btn btn-block btn-primary">
