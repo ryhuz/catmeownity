@@ -33,9 +33,8 @@ function UserProfile() {
   const [addName, setAddName] = useState("")
   const [form, setForm] = useState({
     name: "",
-    // email: "",
+    email: "",
   });
-  // console.log("hello", user.user.name) // no idea why user.user.name is empty (null) when declared above. (user.found == true)
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,9 +51,9 @@ async function editProfile() {
       user.user.name.replace(addName);
       await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
-        // email: user.user.email,
+        email: user.user.email,
       }, form);
-      console.log("submit");
+      // console.log("submit");
     } else {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
     }
@@ -150,20 +149,20 @@ async function editProfile() {
       <Container className="d-flex border border-dark mt-4 mb-4">
         <Row className="p-3">
           <Col>
-            <Table borderless>
-              <tbody>
-                <tr>
-                  <td><strong>Tracked locations: </strong></td>
-                  <td>One cat just leads to another...</td>
-                </tr>
-                  {/* <Button className="btn" size="sm" variant="outline-success">Track here!</Button> */}
-                <tr>
-                  <td><strong>Favorite Cats: </strong></td>
-                  <td>Hmm... Looks like you haven't favorited any cats yet.</td>
-                </tr>
-                  {/* <div className="btn" size="sm" variant="outline-danger">Add now!</div> */}
-              </tbody>
-            </Table>
+            <div className="borderless">
+              <Col>
+                <div>
+                  <h6><strong>Tracked locations: </strong></h6>
+                  <small>One cat just leads to another...</small>
+                </div>
+                <br />
+                <br />
+                <div>
+                  <h6><strong>Favorite Cats: </strong></h6>
+                  <small>Hmm... Looks like you haven't favorited any cats yet.</small>
+                </div>
+              </Col>
+            </div>
           </Col>
         </Row>
       </Container>
