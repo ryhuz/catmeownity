@@ -8,6 +8,7 @@ import NotLoggedIn from '../private/NotLoggedIn';
 import CatComments from '../profiles/CatComments';
 import pic from '../resources/nocatpic.png'
 import CatPhotoUpload from './CatPhotoUpload';
+import CatPhotos from './CatPhotos';
 
 function CatProfile() {
     let token = localStorage.getItem('token')
@@ -153,43 +154,6 @@ function CatProfile() {
     }
     function addPhoto() {
         fetchCat();
-    }
-    function showCatPhotos() {
-        return (
-            <>
-                {cat.cat.photos.map(photo => (
-                    <Col key={photo._id}>
-                        <Card>
-                            <Image thumbnail rounded src={photo.image} className="img-responsive" width="100%" />
-                            <Card.Body className='d-flex justify-content-between'>
-                                <div>
-                                    {photo.desc}
-                                    <div><code className='text-dark'>-{photo.uploadedBy.name}</code></div>
-                                </div>
-                                {user &&
-                                    <div>
-                                        <button type="button" className="close text-danger" aria-label="Close" onClick={() => confirmDelPhoto(photo.image)}>
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                }
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))
-                }
-            </>
-        )
-    }
-
-    async function confirmDelPhoto(image) {
-        try {
-            let resp = await Axios.put(`http://localhost:8080/auth/cats/delphoto/${id}`, { image });
-
-            fetchCat();
-        } catch (e) {
-            console.log(e)
-        }
     }
 
     (async () => {
@@ -340,7 +304,7 @@ function CatProfile() {
                                                             </Card.Body>
                                                         </Card>
                                                     </Col>}
-                                                {showCatPhotos()}
+                                                <CatPhotos cat={cat} user={user} fetchCat={fetchCat}/>
                                             </Row>
                                         </Card.Body>
                                     </Accordion.Collapse>

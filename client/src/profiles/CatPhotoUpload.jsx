@@ -37,7 +37,6 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
     }
 
     async function uploadPhoto() {
-        setLoading(true);
         /* No image included */
         if (imageFile.file === null) {
             setErr({
@@ -54,6 +53,7 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
             });
             return;
         }
+        setLoading(true);
         /* If this is the first photo, set to default */
         let isDefault;
         if (defaultPhoto === null || defaultPhoto === undefined) {
@@ -72,7 +72,6 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
 
             let img = await instance.post(cloudinary, formData);
             let image = img.data.secure_url;
-console.log(img)
             let photo = {
                 image,
                 isDefault,
@@ -98,7 +97,7 @@ console.log(img)
                     </p>
                 {imageFile.file &&
                     <div className="text-center profile-image-upload my-4">
-                        <Image src={imageFile.url} width="50%" height="auto"/>
+                        <Image src={imageFile.url} width="50%" height="auto" />
                     </div>
                 }
                 <Row>
