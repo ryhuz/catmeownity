@@ -41,12 +41,36 @@ router.get("/:userID", async (req, res) => {
 router.put("/:userID", async (req, res) => {
     try {
         let { name, homeLocation, favourites, image } = req.body;
+        console.log(req.body)
         await User.findByIdAndUpdate(req.params.userID, { name, homeLocation, favourites, image });
         res.status(200).json({ message: "Successfully updated user profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
     }
 })
+
+// edit user details
+// router.put("/editprofile/:userID", async (req, res) => {
+//     try {
+//         let { name, email } = req.body;
+//         console.log(req.body)
+//         await User.findByIdAndUpdate(req.params.userID, { name, email });
+//         res.status(200).json({ message: "Successfully updated user profile" });
+//     } catch (error) {
+//         res.status(400).json({ message: "Trouble finding user" });
+//     }
+// })
+
+// edit user image
+// router.put("/:userID", async (req, res) => {
+//     try {
+//         let { name, homeLocation, favourites, image } = req.body;
+//         await User.findByIdAndUpdate(req.params.userID, { name, homeLocation, favourites, image });
+//         res.status(200).json({ message: "Successfully updated user profile" });
+//     } catch (error) {
+//         res.status(400).json({ message: "Trouble finding user" });
+//     }
+// })
 
 //add tracked location
 router.put("/:userID/tracked/:locationID", async (req, res) => {
