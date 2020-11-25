@@ -8,12 +8,13 @@ import * as Yup from "yup";
 const Login = ({ setValid }) => {
   const [home, setHome] = useState(false);
   const [err, setErr] = useState({ msg: '' });
+  const [location, setLocation] = useState(null);
   if (home && location) {
     return <Redirect to={`${location}`} />
   } else if (home) {
     return <Redirect to="/dashboard" />
   }
-  
+
   async function login(values) {
     try {
       //register user
@@ -26,13 +27,21 @@ const Login = ({ setValid }) => {
         refreshed: false,
       });
       setHome(true);
-      location && localStorage.removeItem('location')
+      let temp = localStorage.getItem('location')
+      if (temp) {
+        localStorage.removeItem('location');
+        setLocation(temp)
+      }
     } catch (error) {
       console.log(error.response)
       setErr(error.response.data)
     }
   }
-
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      login();
+    }
+  }
   function loginForm() {
     return (
       <>
@@ -62,38 +71,24 @@ const Login = ({ setValid }) => {
             return (
               <Form onSubmit={handleSubmit}>
                 <InputGroup className={`${errors.email && touched.email ? 'mb-1' : 'mb-3'}`}>
-                  <FormControl
-                    id="email"
-                    placeholder="Enter your email"
-                    name="email"
-                    type="text"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.email && touched.email
-                        ? "text-input error"
-                        : "text-input"
-                    }
+                  <FormControl id="email" placeholder="Enter your email" name="email" type="text"
+                    value={values.email} onChange={handleChange} onBlur={handleBlur} onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        handleSubmit();
+                      }
+                    }} className={errors.email && touched.email ? "text-input error" : "text-input"}
                   />
                 </InputGroup>
                 {errors.email && touched.email && (
                   <div className="input-feedback text-danger">{errors.email}</div>
                 )}
                 <InputGroup className={`${errors.password && touched.password ? 'mb-1' : 'mb-3'}`}>
-                  <FormControl
-                    id="password"
-                    placeholder="Enter your password"
-                    name="password"
-                    type="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                      errors.password && touched.password
-                        ? "text-input error"
-                        : "text-input"
-                    }
+                  <FormControl id="password" placeholder="Enter your password" name="password" type="password"
+                    value={values.password} onChange={handleChange} onBlur={handleBlur} onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        handleSubmit();
+                      }
+                    }} className={errors.password && touched.password ? "text-input error" : "text-input"}
                   />
                 </InputGroup>
                 {errors.password && touched.password && (

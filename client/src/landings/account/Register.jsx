@@ -5,7 +5,7 @@ import load from '../../resources/loading.gif'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-function Register({ changeHandler, nextSection, form }) {
+function Register({ changeHandler, nextSection, setFormData}) {
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState("");
 
@@ -32,7 +32,10 @@ function Register({ changeHandler, nextSection, form }) {
     return (
       <Formik
         initialValues={{ email: "", password: "", name: "" }}
-        onSubmit={nextSection}
+        onSubmit={(values) => {
+          nextSection();
+          setFormData(values);
+        }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .email('Please enter a valid email')
@@ -62,6 +65,10 @@ function Register({ changeHandler, nextSection, form }) {
                   onChange={e => { handleChange(e); setEmailExists(""); }} onBlur={e => {
                     handleBlur(e);
                     checkSimilarEmail(values.email)
+                  }} onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      handleSubmit(values);
+                    }
                   }} />
                 {emailExists !== "" &&
                   <Form.Text>
@@ -76,7 +83,11 @@ function Register({ changeHandler, nextSection, form }) {
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Control type="password" name="password" placeholder="Password" value={values.password}
-                  onChange={handleChange} onBlur={handleBlur} />
+                  onChange={handleChange} onBlur={handleBlur} onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      handleSubmit(values);
+                    }
+                  }} />
                 {errors.password && touched.password && (
                   <Form.Text>
                     <div className="text-danger">{errors.password}</div>
@@ -85,7 +96,11 @@ function Register({ changeHandler, nextSection, form }) {
               </Form.Group>
               <Form.Group controlId="formBasicName">
                 <Form.Control type="text" name="name" placeholder="Name" value={values.name}
-                  onChange={handleChange} onBlur={handleBlur} />
+                  onChange={handleChange} onBlur={handleBlur} onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      handleSubmit(values);
+                    }
+                  }} />
                 {errors.name && touched.name && (
                   <Form.Text>
                     <div className="input-feedback text-danger">{errors.name}</div>
@@ -122,7 +137,6 @@ function Register({ changeHandler, nextSection, form }) {
   return (
     <Card className="p-3 mx-auto mt-5">
       <Card.Body>
-        <Form>
           <Form.Label>
             <h5>You're on your way to a wonderful world of cats!</h5>
           </Form.Label>
@@ -134,8 +148,6 @@ function Register({ changeHandler, nextSection, form }) {
 
             </Col>
           </Row>
-        </Form>
-
       </Card.Body>
     </Card>
   )
