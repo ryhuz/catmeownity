@@ -219,6 +219,7 @@ function CatProfile() {
             </Popover.Content>
         </Popover>
     );
+    
     return (
         <>{cat.found &&
             <>
