@@ -25,7 +25,6 @@ function CatProfile() {
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [eventKey, setEventKey] = useState(false);
     const [feedingDescription, setFeedingDescription] = useState();
-    const [catDesc, setCatDesc] = ([]);
     const moment = require('moment');
 
     /* get curr user list of favourites */
@@ -61,9 +60,10 @@ function CatProfile() {
     }
     function displayEatingTimes() {
         if (cat.cat.fed.length > 0) {
+            console.log(cat.cat.fed);
             return (
                 <>
-                    {cat.cat.fed.reverse().slice(0, 3).map((el, index) => (
+                    {cat.cat.fed.slice(0, 3).map((el, index) => (
                         <li key={index} >{`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by ${el.byUser.name}`}</li>
                     ))}
                 </>
@@ -150,7 +150,6 @@ function CatProfile() {
     function addPhoto() {
         fetchCat();
     }
-
     function showCatPhotos() {
         return (
             <>
@@ -197,6 +196,7 @@ function CatProfile() {
         </Popover>
     );
 
+    
     return (
         <>{cat.found &&
             <>
@@ -256,7 +256,7 @@ function CatProfile() {
                                             {cat.cat.desc.slice(0, 3).map((el) => (
                                                 <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                             ))}
-{/*                                             {cat.cat.desc.length < 2 && <InputGroup className="my-3">
+                                            {/*                                             {cat.cat.desc.length < 2 && <InputGroup className="my-3">
                                                 <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
                                                 <InputGroup.Append>
                                                     <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
