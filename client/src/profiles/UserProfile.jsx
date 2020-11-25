@@ -53,7 +53,7 @@ async function editProfile() {
       user.user.name.replace(addName);
       await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
-        email: user.user.email,
+        // email: user.user.email,
       });
       console.log("submit");
     } else {
