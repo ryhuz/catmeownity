@@ -62,7 +62,7 @@ function CatProfile() {
         if (cat.cat.fed.length > 0) {
             return (
                 <>
-                    {cat.cat.fed.reverse().slice(0, 3).map((el, index) => (
+                    {cat.cat.fed.slice(0, 3).map((el, index) => (
                         <li key={index} >{`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by ${el.byUser.name}`}</li>
                     ))}
                 </>
@@ -122,6 +122,7 @@ function CatProfile() {
         }
         try {
             await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, catDescription)
+            document.querySelector('#catDescriptionInput').value= ""
             fetchCat();
         } catch (error) {
             console.log(error)
@@ -176,6 +177,7 @@ function CatProfile() {
             </>
         )
     }
+
     async function confirmDelPhoto(image) {
         try {
             let resp = await Axios.put(`http://localhost:8080/auth/cats/delphoto/${id}`, { image });
@@ -185,6 +187,7 @@ function CatProfile() {
             console.log(e)
         }
     }
+  
     (async () => {
         if (eventKey) {
             return "0"
@@ -192,7 +195,6 @@ function CatProfile() {
             return "1"
         }
     })(eventKey);
-
     function checkLoginForUpload() {
         if (user) {
             setUploadingPhoto(true)
@@ -200,7 +202,6 @@ function CatProfile() {
             setNeedToLogIn(true);
         }
     }
-
     const popover = (
         <Popover id="popover-basic">
             <Popover.Title as="h3">Log the feeding</Popover.Title>
@@ -215,6 +216,7 @@ function CatProfile() {
         </Popover>
     );
 
+    
     return (
         <>{cat.found &&
             <>
@@ -271,7 +273,7 @@ function CatProfile() {
                                 <Card>
                                     <Card.Header>
                                         {eventKey === false && <div><div>
-                                            {cat.cat.desc.reverse().slice(0, 3).map((el) => (
+                                            {cat.cat.desc.slice(0, 3).map((el) => (
                                                 <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                             ))}
                                             {/*                                             {cat.cat.desc.length < 2 && <InputGroup className="my-3">
@@ -282,7 +284,7 @@ function CatProfile() {
                                             </InputGroup>} */}
                                         </div></div>}
                                         {/* Check if cat description is more than 3 to display show all comments button */}
-                                        {cat.cat.desc.length > 2 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                        {(cat.cat.desc.length) > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                             {eventKey ? 'close' : 'show all comments...'}
                                         </Accordion.Toggle>}
                                     </Card.Header>
@@ -296,7 +298,7 @@ function CatProfile() {
                                         </Card.Body>
                                     </Accordion.Collapse>
                                     <InputGroup className="my-3">
-                                        <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
+                                        <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} id="catDescriptionInput"/>
                                         <InputGroup.Append>
                                             <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
                                         </InputGroup.Append>

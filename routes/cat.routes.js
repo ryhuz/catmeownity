@@ -121,7 +121,10 @@ router.post("/:userID/feed/:catID", async (req, res) => {
 
         await Cat.findByIdAndUpdate(req.params.catID, {
             $push: {
-                fed: fed._id,
+                fed: {
+                    $each: [fed._id],
+                    $position: 0
+                }
             }
         })
         await cat.save();
