@@ -101,7 +101,7 @@ function Register({ changeHandler, nextSection, form }) {
                     <Col />
                     <Col sm='auto'>
                       Have an account?
-              </Col>
+                    </Col>
                   </Row>
                   <Row bottom="xs">
                     <Col />
