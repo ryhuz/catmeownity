@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Loading from '../Loading';
 import Axios from 'axios'
 import SimilarCat from './SimilarCat';
-import { Button, Col, Container, Form, FormFile, Image, InputGroup, Jumbotron, Row } from 'react-bootstrap'
-import { NavLink, Redirect, useParams } from 'react-router-dom';
+import { Button, Col, Form, FormFile, Image, InputGroup, Row } from 'react-bootstrap'
 
-function RegisterCatForm({ locationID, setAdding, user, adding }) {
+function RegisterCatForm({ locationID, setAdding, user, adding, setNewCatError }) {
 
     const [loading, setLoading] = useState(false);
     const [sameName, setSameName] = useState([]);
@@ -83,6 +82,7 @@ function RegisterCatForm({ locationID, setAdding, user, adding }) {
             })
         } catch (e) {
             console.log(e.response)
+            setNewCatError(true);
         }
     }
     return (
@@ -160,7 +160,7 @@ function RegisterCatForm({ locationID, setAdding, user, adding }) {
                                             )}
                                         </Form.Group>
                                         <Form.Group className={`${errors.gender && touched.gender ? 'mb-1' : 'mb-3'}`}>
-                                            <Form.Control as="select" name="gender" defaultValue="Cat's Gender"
+                                            <Form.Control as="select" name="gender" defaultValue={"Cat's gender"}
                                                 onChange={handleChange} onBlur={handleBlur}
                                                 className={errors.gender && touched.gender ? "text-input error" : "text-input"}>
                                                 <option disabled>Cat's gender</option>

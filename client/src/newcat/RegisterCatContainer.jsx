@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Container, Form, FormFile, Image, InputGroup, Jumbotron, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, FormFile, Image, InputGroup, Jumbotron, Modal, Row } from 'react-bootstrap'
 import { NavLink, Redirect, useParams } from 'react-router-dom';
 import RegisterCatForm from './RegisterCatForm';
 import Axios from 'axios'
@@ -11,6 +11,7 @@ function RegisterCatContainer() {
     Axios.defaults.headers.common['x-auth-token'] = token;
 
     let { locationID } = useParams()
+    const [newCatError, setNewCatError] = useState(false)
     const [breadCrumb, setBreadCrumb] = useState({
         street: "",
         district: "",
@@ -76,8 +77,16 @@ function RegisterCatContainer() {
                     <h5>Tell us more about this cat!</h5>
                 </Form.Label>
                 <hr />
-                <RegisterCatForm user={user} locationID={locationID} adding={adding} setAdding={setAdding} />
+                <RegisterCatForm setNewCatError={setNewCatError} user={user} locationID={locationID} adding={adding} setAdding={setAdding} />
             </Container>
+            <Modal show={newCatError} onHide={() => (setNewCatError(false))}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Error creating adding the cat</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <NavLink to={`/location/${locationID}`} className='btn btn-block btn-outline-danger'>Back to cats</NavLink>
+                </Modal.Body>
+            </Modal>
         </>
     )
 }
