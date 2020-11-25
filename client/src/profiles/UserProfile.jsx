@@ -34,13 +34,13 @@ function UserProfile() {
   const [addName, setAddName] = useState("")
   const [form, setForm] = useState({
     name: "",
-    email: "",
+    // email: "",
   });
   // console.log("hello", user.user.name) // no idea why user.user.name is empty (null) when declared above. (user.found == true)
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-    if (e.target.name === "name") {
+    if (e.target.name === "name" || "email") {
       if (e.target.value !== "") {
         setAddName(e.target.value)
       }
