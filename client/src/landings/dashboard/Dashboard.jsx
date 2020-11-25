@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const [confirmUnfollow, setConfirmUnfollow] = useState(false);
   const [confirmUntrack, setConfirmUntrack] = useState(false);
-  const [un_Name, setUn_ID] = useState({
+  const [unParams, setUnParams] = useState({
     name: "",
     gender: "",
     ID: "",
@@ -40,12 +40,27 @@ const Dashboard = () => {
     fetchProfile()
   }, [])
 
+  function toConfirmUnfollow(name, gender, ID) {
+    setUnParams({
+      name,
+      gender,
+      ID
+    })
+    setConfirmUnfollow(true)
+  }
+  function toConfirmUntrack(name, ID) {
+    setUnParams({
+      name,
+      ID
+    })
+    setConfirmUntrack(true)
+  }
   function showFavouriteCats() {
     if (profile.profile.favourites.length > 0) {
       return (
         <>
           {profile.profile.favourites.map(cat => (
-            <Col className="" key={cat._id}>
+            <Col key={cat._id}>
               <Card>
                 <NavLink to={`/cat/${cat._id}`}>
                   <Image src={showCatPhoto(cat)} width="100%" className="img-thumbnail" />
@@ -56,7 +71,7 @@ const Dashboard = () => {
                 <Card.Body>
                   <div>{cat.location.street}</div>
                   <div>
-                    <Button variant="outline-danger" block onClick={() => (setConfirmUnfollow(true))}>
+                    <Button variant="outline-danger" block onClick={() => toConfirmUnfollow(cat.names[0], cat.gender, cat._id)}>
                       <i className="fas fa-cat mx-2"></i>Unfollow this cat
                     </Button>
                   </div>
@@ -102,12 +117,12 @@ const Dashboard = () => {
       return (
         <>
           {districts.map(district => (
-            <div>
+            <div key={district}>
               <h6>{district}</h6>
               <hr />
-              <Row className="mb-4" md={3}>
+              <Row className="mb-4">
                 {allTracked.map(place => (
-                  <>
+                  <div key={place._id}>
                     {place.district.name === district &&
                       <>
                         <Col>
@@ -115,17 +130,14 @@ const Dashboard = () => {
                             <NavLink to={`/location/${place._id}`} className='btn btn-success btn-block'>
                               {place.street}
                             </NavLink>
-                            <div className='btn btn-outline-danger d-flex align-items-center' onClick={() => setConfirmUntrack(true)}>
+                            <div className='btn btn-outline-danger d-flex align-items-center' onClick={() => toConfirmUntrack(place.street, place._id)}>
                               <span aria-hidden="true">&times;</span>
                             </div>
                           </div>
                         </Col>
-                        <Modal show={confirmUntrack} onHide={() => (setConfirmUntrack(false))}>
-                          <ConfirmUntrack setConfirmUntrack={setConfirmUntrack} location={place.street} untrack={() => untrack(place._id)} />
-                        </Modal>
                       </>
                     }
-                  </>
+                  </div>
                 ))}
               </Row>
             </div>
@@ -159,9 +171,10 @@ const Dashboard = () => {
     });
 
     setConfirmUnfollow(false);
-
     let temp = profile.profile.favourites;
-    temp.splice(temp.indexOf(x => x._id === id), 1);
+    temp.splice(temp.findIndex(x => x._id == id), 1);
+    console.log('after', temp)
+
     setProfile({ ...profile, favourites: temp });
   }
 
@@ -175,7 +188,8 @@ const Dashboard = () => {
     setConfirmUntrack(false);
 
     let temp = profile.profile.trackedLocations;
-    temp.splice(temp.indexOf(x => x._id === id), 1);
+    temp.splice(temp.findIndex(x => x._id === id), 1);
+    console.log(temp)
     setProfile({ ...profile, trackedLocations: temp });
   }
 
@@ -190,7 +204,10 @@ const Dashboard = () => {
   return (
     <div>
       <Modal show={confirmUnfollow} onHide={() => (setConfirmUnfollow(false))}>
-        <ConfirmUnfollow setConfirmUnfollow={setConfirmUnfollow} name={un_Name.name} gender={un_Name.gender} unfollow={() => unfollow(un_Name._id)} />
+        <ConfirmUnfollow setConfirmUnfollow={setConfirmUnfollow} name={unParams.name} gender={unParams.gender} unfollow={() => unfollow(unParams.ID)} />
+      </Modal>
+      <Modal show={confirmUntrack} onHide={() => (setConfirmUntrack(false))}>
+        <ConfirmUntrack setConfirmUntrack={setConfirmUntrack} location={unParams.name} untrack={() => untrack(unParams.ID)} />
       </Modal>
       {profile.found &&
         <>

@@ -21,8 +21,10 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
         }
     }
     function remove() {
-        document.querySelector('.form-control-file').value = null;
-        setImageFile({ file: null, url: null })
+        if (!loading) {
+            document.querySelector('.form-control-file').value = null;
+            setImageFile({ file: null, url: null })
+        }
     }
     function descHandler(e) {
         setDesc(e.target.value);
@@ -70,7 +72,7 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
 
             let img = await instance.post(cloudinary, formData);
             let image = img.data.secure_url;
-
+console.log(img)
             let photo = {
                 image,
                 isDefault,
