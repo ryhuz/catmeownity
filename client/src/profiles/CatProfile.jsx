@@ -60,7 +60,6 @@ function CatProfile() {
     }
     function displayEatingTimes() {
         if (cat.cat.fed.length > 0) {
-            console.log(cat.cat.fed);
             return (
                 <>
                     {cat.cat.fed.slice(0, 3).map((el, index) => (
@@ -123,6 +122,7 @@ function CatProfile() {
         }
         try {
             await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, catDescription)
+            document.querySelector('#catDescriptionInput').value= ""
             fetchCat();
         } catch (error) {
             console.log(error)
@@ -278,7 +278,7 @@ function CatProfile() {
                                         </Card.Body>
                                     </Accordion.Collapse>
                                     <InputGroup className="my-3">
-                                        <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} />
+                                        <Form.Control type="text" placeholder="Enter your comment" name="catDescription" aria-describedby="basic-addon2" onChange={handleCatDescription} id="catDescriptionInput"/>
                                         <InputGroup.Append>
                                             <Button variant="outline-secondary" onClick={postCatDescription}>Add</Button>
                                         </InputGroup.Append>
