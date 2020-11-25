@@ -23,7 +23,6 @@ function UserProfile() {
         setUser({ user: resp.data.user, found: true });
         console.log(resp.data.user)
       } catch (err) {
-        // setError(e.response.data.message);
         console.log(err.response)
       }
     }
@@ -54,7 +53,7 @@ async function editProfile() {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, {
         name: user.user.name,
         // email: user.user.email,
-      });
+      }, form);
       console.log("submit");
     } else {
       await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
