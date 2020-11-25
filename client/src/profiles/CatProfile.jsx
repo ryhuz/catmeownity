@@ -63,7 +63,7 @@ function CatProfile() {
             return (
                 <>
                     {cat.cat.fed.slice(0, 3).map((el, index) => (
-                        <li key={index} >{`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by ${el.byUser.name}`}</li>
+                        <li key={index} >{`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by ${el.byUser && el.byUser.name}`}</li>
                     ))}
                 </>
             )

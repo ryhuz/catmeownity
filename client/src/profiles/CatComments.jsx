@@ -37,7 +37,7 @@ function CatComments({ desc, fetchCat }) {
             <ListGroupItem>
                 <div className="d-flex bd-highlight mb-3">
                     <div className="font-weight-bold p-2 bd-highlight">
-                        {desc.byUser.name}
+                        {desc.byUser && desc.byUser.name}
                     </div>
                     <div className="font-weight-bold p-2 bd-highlight">
                         {desc.catDescription}

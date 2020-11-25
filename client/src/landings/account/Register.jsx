@@ -2,53 +2,122 @@ import React, { useState } from 'react'
 import { Button, Card, Col, Form, Image, Row } from 'react-bootstrap'
 import Axios from 'axios'
 import load from '../../resources/loading.gif'
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 function Register({ changeHandler, nextSection, form }) {
   const [loading, setLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState({
-    email: "",
-    name: false,
-    password: false,
-  });
-  function handleEnter(e) {
-    if (e.key === 'Enter') {
-      nextSection(true)
-    }
-  }
-  async function blur() {
+  const [emailExists, setEmailExists] = useState("");
+
+  async function checkSimilarEmail(email) {
     setLoading(true);
-    if (form.email !== "") {
+    if (email !== "") {
       try {
-        let exists = await Axios.get(`http://localhost:8080/user/check/${form.email}`);
+        let exists = await Axios.get(`http://localhost:8080/user/check/${email}`);
         if (exists.data.found) {
-          setErrMsg({ ...errMsg, email: "This email is already registered" })
+          setEmailExists("This email is already registered");
         } else {
-          setErrMsg({ ...errMsg, email: "" })
+          setEmailExists("");
         }
       } catch (e) {
 
       }
     } else {
-      setErrMsg({ ...errMsg, email: "" })
+      setEmailExists("");
     }
     setLoading(false);
   }
 
-  function next() {
-    let hasEmail = !(form.email === "");
-    let hasName = !(form.name === "");
-    let hasPassword = !(form.password === "");
-    if (!hasEmail || !hasName || !hasPassword || errMsg.email.length > 0) {
-      setErrMsg({
-        email: !hasEmail ? "Please enter your email" : errMsg.email,
-        name: !hasName,
-        password: !hasPassword
-      })
-      console.log(errMsg)
-    } else {
-      nextSection(true)
-    }
+  function registrationFormik() {
+    return (
+      <Formik
+        initialValues={{ email: "", password: "", name: "" }}
+        onSubmit={nextSection}
+        validationSchema={Yup.object().shape({
+          email: Yup.string()
+            .email('Please enter a valid email')
+            .required("Please enter your email"),
+          password: Yup.string()
+            .required("Please enter your password")
+            .min(6, 'Your password needs to be at least 6 characters long'),
+          name: Yup.string()
+            .required("Please enter your name")
+        })}
+      >
+        {props => {
+          const {
+            values,
+            touched,
+            errors,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          } = props;
+          return (
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                {loading && <div className="text-center"><Image src={load} width="10%" /></div>}
+                <Form.Control type="text" name="email" placeholder="Email (you will use this to log in)" value={values.email}
+                  onChange={e => { handleChange(e); setEmailExists(""); }} onBlur={e => {
+                    handleBlur(e);
+                    checkSimilarEmail(values.email)
+                  }} />
+                {emailExists !== "" &&
+                  <Form.Text>
+                    <div className="text-danger">{emailExists}</div>
+                  </Form.Text>
+                }
+                {errors.email && touched.email && (
+                  <Form.Text>
+                    <div className="input-feedback text-danger">{errors.email}</div>
+                  </Form.Text>
+                )}
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Control type="password" name="password" placeholder="Password" value={values.password}
+                  onChange={handleChange} onBlur={handleBlur} />
+                {errors.password && touched.password && (
+                  <Form.Text>
+                    <div className="text-danger">{errors.password}</div>
+                  </Form.Text>
+                )}
+              </Form.Group>
+              <Form.Group controlId="formBasicName">
+                <Form.Control type="text" name="name" placeholder="Name" value={values.name}
+                  onChange={handleChange} onBlur={handleBlur} />
+                {errors.name && touched.name && (
+                  <Form.Text>
+                    <div className="input-feedback text-danger">{errors.name}</div>
+                  </Form.Text>
+                )}
+              </Form.Group>
+              <Row className="justify-content-center">
+                <Col>
+                  <Button variant="dark" block onClick={handleSubmit} disabled={loading || isSubmitting || emailExists}>
+                    Next Step
+                </Button>
+                  <Row className='justify-content-end mt-3'>
+                    <Col />
+                    <Col sm='auto'>
+                      Have an account?
+              </Col>
+                  </Row>
+                  <Row bottom="xs">
+                    <Col />
+                    <Col sm='auto'>
+                      <a href="/login">Log in here</a>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Form>
+          );
+        }}
+      </Formik>
+    )
   }
+
 
   return (
     <Card className="p-3 mx-auto mt-5">
@@ -60,56 +129,13 @@ function Register({ changeHandler, nextSection, form }) {
           <hr />
           <Row className="justify-content-center">
             <Col sm={8}>
-              <Form.Group controlId="formBasicEmail">
-                {loading && <div className="text-center"><Image src={load} width="10%" /></div>}
-                <Form.Control type="text" name="email" placeholder="Email (you will use this to log in)" value={form.email && form.email}
-                  onChange={changeHandler} onKeyDown={handleEnter} onBlur={blur} />
-                {errMsg.email !== "" &&
-                  <Form.Text>
-                    <div className="text-danger">{errMsg.email}</div>
-                  </Form.Text>
-                }
-              </Form.Group>
-              <Form.Group controlId="formBasicName">
-                <Form.Control type="text" name="name" placeholder="Name" value={form.name && form.name}
-                  onChange={changeHandler} onKeyDown={handleEnter} />
-                {errMsg.name &&
-                  <Form.Text>
-                    <div className="text-danger">Please enter your name</div>
-                  </Form.Text>
-                }
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Control type="password" name="password" placeholder="Password" value={form.password && form.password}
-                  onChange={changeHandler} onKeyDown={handleEnter} />
-                {errMsg.password &&
-                  <Form.Text>
-                    <div className="text-danger">Please enter your password</div>
-                  </Form.Text>
-                }
-              </Form.Group>
+              {registrationFormik()}
+
+
             </Col>
           </Row>
         </Form>
-        <Row className="justify-content-center">
-          <Col sm={8}>
-            <Button variant="dark" block onClick={next} disabled={loading}>
-              Next Step
-            </Button>
-            <Row className='justify-content-end mt-3'>
-              <Col />
-              <Col sm='auto'>
-                Have an account?
-              </Col>
-            </Row>
-            <Row bottom="xs">
-              <Col />
-              <Col sm='auto'>
-                <a href="/login">Log in here</a>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+
       </Card.Body>
     </Card>
   )
