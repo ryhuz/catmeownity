@@ -194,14 +194,14 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                     </InputGroup.Append>
                 </InputGroup>
                 {cat.cat.names.length > 1 &&
-                    <p>
+                    <div>
                         <small>Also known as:</small>
                         <div>
                             {displayOtherNames()}
                         </div>
-                    </p>
+                    </div>
                 }
-                <p>
+                <div>
                     <small>Gender:</small>
                     <div className="h5">
                         <Form.Control as="select" type="select" onChange={changeHandler} defaultValue={cat.cat.gender} name="gender">
@@ -211,14 +211,14 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                             <option value="Not Sure">Not Sure</option>
                         </Form.Control>
                     </div>
-                </p>
-                <p>
+                </div>
+                <div>
                     <small>Breed:</small>
                     <div className="h5">
                         <Form.Control type="text" placeholder="Enter breed of cat" onChange={changeHandler} defaultValue={cat.cat.breed} name="breed" />
                     </div>
-                </p>
-                <p>
+                </div>
+                <div>
                     <small>Colour:</small>
                     <div className="h5">
                         <InputGroup  >
@@ -229,38 +229,38 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                         </InputGroup>
                         {displayColours()}
                     </div>
-                </p>
+                </div>
                 <div className="d-flex justify-content-between">
                     <Button variant="outline-secondary" onClick={editCat}>Update</Button>
                 </div>
             </div> : <div>
                     <h1 className="my-2">{cat.cat.names[0]}</h1>
                     {cat.cat.names.length > 1 &&
-                        <p>
+                        <div>
                             <small>Also known as:</small>
                             <div>
                                 {displayOtherNames()}
                             </div>
-                        </p>
+                        </div>
                     }
-                    <p>
+                    <div>
                         <small>Gender:</small>
                         <div className="h5">
                             {cat.cat.gender}
                         </div>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <small>Breed:</small>
                         <div className="h5">
                             {cat.cat.breed}
                         </div>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         <small>Colour:</small>
                         <div className="h5">
                             {displayColours()}
                         </div>
-                    </p>
+                    </div>
                     {/* Check if user is logged in then display edit button and if cat missing display missing button */}
                     {user ? <div><Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>{!cat.cat.missing ? <Button className="mx-2" variant="outline-danger" onClick={missing}>Haven't seen this kitty lately?</Button> : <Button className="mx-2" variant="outline-success" onClick={found}>Saw this kitty somewhere?</Button>}</div> : <div></div>}
                 </div>}
