@@ -14,29 +14,29 @@ router.post("/add", async (req, res) => {
             name, breed, gender, colour,
             catDescription, location, image, sterilised,
             userID, imgDesc } = req.body;
-
         let names = [name];
         let colours = colour.split(",");
-        let photos = [];
-        let desc = [];
-        if (image !== "") {
-            let newPhoto = {
-                isDefault: true,
-                image,
-                desc: imgDesc,
-                uploadedBy: userID,
-            }
-            photos.push(newPhoto);
-        }
+
         let cat = new Cat({
-            names, location, breed, gender, colours, sterilised, desc, photos
+            names, location, breed, gender, colours, sterilised
         });
         let newDesc = new Desc({
             catDescription,
             byUser: userID,
             forCat: cat._id
         })
-        cat.desc = [newDesc];
+        if (image) {
+            console.log('there is an image', image)
+            let newPhoto = {
+                isDefault: true,
+                image,
+                desc: imgDesc,
+                uploadedBy: userID,
+            }
+            cat.photos = [newPhoto];
+        }
+        newDesc.save();
+        cat.desc = [newDesc._id];
 
         await cat.save();
 
@@ -205,7 +205,7 @@ router.put('/delphoto/:catID', async (req, res) => {
         let start = image.indexOf('catmeownity')
         let end = image.split('').reverse().join('').indexOf('.')
 
-        let publicID = image.slice(start, image.length-(end+1))
+        let publicID = image.slice(start, image.length - (end + 1))
 
         cloudinary.api.delete_resources([publicID],
             function (error, result) { console.log(result, error); });
