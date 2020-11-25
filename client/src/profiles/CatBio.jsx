@@ -99,7 +99,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                                 await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
                                     names: delName
                                 });
-                                setShowEditCat(false)
+                                setShowEditCat(true)
                                 fetchCat();
                             })();
                         }}>
@@ -125,7 +125,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                                 await Axios.put(`http://localhost:8080/auth/cats/delcolour/${id}`, {
                                     colours: delcolour
                                 });
-                                setShowEditCat(false)
+                                setShowEditCat(true)
                                 fetchCat();
                             })();
                         }}>
@@ -143,8 +143,9 @@ function CatBio({ cat, setCat, user, fetchCat }) {
             await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
                 names: addName
             });
+            document.querySelector('#addNameInput').value  = ""
             fetchCat();
-            setShowEditCat(false)
+            setShowEditCat(true)
         } catch (e) {
             console.log(e.response)
         }
@@ -156,7 +157,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                 colours: addColour
             });
             fetchCat();
-            setShowEditCat(false)
+            setShowEditCat(true)
         } catch (e) {
             console.log(e.response)
         }
@@ -187,7 +188,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
             {/* Check if edit button is pressed then show edit form and update button */}
             {showEditCat ? <div >
                 <InputGroup  >
-                    <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
+                    <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" id="addNameInput"/>
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={addButtonName}>Add</Button>
                     </InputGroup.Append>

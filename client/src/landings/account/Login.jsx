@@ -5,9 +5,14 @@ import { Redirect } from 'react-router-dom';
 
 const Login = ({ setValid }) => {
 
+  
+
   const [form, setForm] = useState({});
   const [home, setHome] = useState(false);
   const [err, setErr] = useState({ msg: '' });
+  
+  let location = localStorage.getItem('location')
+  
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,14 +36,19 @@ const Login = ({ setValid }) => {
         refreshed: false,
       });
       setHome(true);
+      localStorage.removeItem('location')
     } catch (error) {
       console.log(error.response)
       setErr(error.response.data)
     }
   }
 
-  if (home) return <Redirect to="/dashboard" />
-
+  if (home && location) {
+    return <Redirect to={`${location}`} />
+  } else if (home) {
+    return <Redirect to="/dashboard" />
+  }
+  console.log(location)
   return (
     <>
       <Jumbotron className='bg-warning'>

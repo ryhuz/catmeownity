@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, Popover, OverlayTrigger, ListGroupItem, Image } from 'react-bootstrap'
 import Axios from 'axios'
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
@@ -25,6 +25,7 @@ function CatProfile() {
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [eventKey, setEventKey] = useState(false);
     const [feedingDescription, setFeedingDescription] = useState();
+    const location = useLocation();
     const moment = require('moment');
 
     /* get curr user list of favourites */
@@ -215,13 +216,11 @@ function CatProfile() {
             </Popover.Content>
         </Popover>
     );
-
-    
     return (
         <>{cat.found &&
             <>
                 <Modal show={needToLogIn} onHide={() => (setNeedToLogIn(false))}>
-                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn} />
+                    <NotLoggedIn setNeedToLogIn={setNeedToLogIn} location={location.pathname}/>
                 </Modal>
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
                     <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
