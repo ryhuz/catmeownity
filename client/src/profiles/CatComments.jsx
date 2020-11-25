@@ -2,8 +2,9 @@ import React from 'react'
 import Axios from 'axios'
 import { useParams, NavLink } from 'react-router-dom'
 import { decode } from "jsonwebtoken"
-import { ListGroupItem } from 'react-bootstrap'
+import { ListGroupItem, Modal } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
+import ConfirmDeleteComment from './ConfirmDeleteComment'
 
 function CatComments({ desc, fetchCat }) {
 
@@ -12,8 +13,15 @@ function CatComments({ desc, fetchCat }) {
     Axios.defaults.headers.common['x-auth-token'] = token;
     let { id } = useParams()
     const [ownComment, setOwnComment] = useState(false);
+    const [confirmDel, setConfirmDel] = useState(false);
+    const [commentIdToDelete, setCommentIdToDelete] = useState("")
 
     var moment = require('moment')
+    function confirmDelComment(commentID) {
+        setConfirmDel(true);
+        setCommentIdToDelete(commentID)
+    }
+
     async function deleteCatDescription() {
         try {
             await Axios.delete(`http://localhost:8080/auth/comment/${desc._id}/${user.user._id}/${id}`);
@@ -47,7 +55,7 @@ function CatComments({ desc, fetchCat }) {
                         <div>{moment(desc.createdAt).fromNow()}</div>
                         <div className="mx-4">
                             {ownComment && <div>
-                                <button type="button" className="close" aria-label="Close" onClick={deleteCatDescription}>
+                                <button type="button" className="close" aria-label="Close" onClick={()=>confirmDelComment(desc._id)}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>}
@@ -55,6 +63,9 @@ function CatComments({ desc, fetchCat }) {
                     </div>
                 </div>
             </ListGroupItem>
+            <Modal show={confirmDel} onHide={() => (setConfirmDel(false))}>
+                <ConfirmDeleteComment setConfirmDel={setConfirmDel} delComment={() => deleteCatDescription(commentIdToDelete)} />
+            </Modal>
         </div>
     )
 }
