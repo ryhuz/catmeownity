@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { NavLink } from 'react-router-dom';
 import ConfirmUnfollow from './ConfirmUnfollow';
 import pic from '../../resources/nocatpic.png'
+import ConfirmUntrack from './ConfirmUntrack';
 
 const Dashboard = () => {
   let token = localStorage.getItem('token')
@@ -13,6 +14,11 @@ const Dashboard = () => {
 
   const [confirmUnfollow, setConfirmUnfollow] = useState(false);
   const [confirmUntrack, setConfirmUntrack] = useState(false);
+  const [un_Name, setUn_ID] = useState({
+    name: "",
+    gender: "",
+    ID: "",
+  });
 
   const [profile, setProfile] = useState({
     profile: {},
@@ -28,7 +34,6 @@ const Dashboard = () => {
           found: true
         });
       } catch (e) {
-        // setError(e.response.data.message);
         console.log(e.response)
       }
     }
@@ -51,12 +56,9 @@ const Dashboard = () => {
                 <Card.Body>
                   <div>{cat.location.street}</div>
                   <div>
-                    <Button variant="outline-danger" block onClick={() => setConfirmUnfollow(true)}>
+                    <Button variant="outline-danger" block onClick={() => (setConfirmUnfollow(true))}>
                       <i className="fas fa-cat mx-2"></i>Unfollow this cat
                     </Button>
-                    <Modal show={confirmUnfollow} onHide={() => (setConfirmUnfollow(false))}>
-                      <ConfirmUnfollow setConfirmUnfollow={setConfirmUnfollow} name={cat.names[0]} gender={cat.gender} unfollow={() => unfollow(cat._id)} />
-                    </Modal>
                   </div>
                 </Card.Body>
               </Card>
@@ -86,10 +88,10 @@ const Dashboard = () => {
       tracked.forEach(location => {
         districts.push(location.district.name)
       });
-      districts = Array.from(new Set(districts));
+      districts = Array.from(new Set(districts)).sort();
       let allTracked = tracked.sort(function (a, b) {
-        var nameA = a.street; // ignore upper and lowercase
-        var nameB = b.street; // ignore upper and lowercase
+        var nameA = a.street;
+        var nameB = b.street;
         if (nameA < nameB) {
           return -1;
         }
@@ -113,11 +115,14 @@ const Dashboard = () => {
                             <NavLink to={`/location/${place._id}`} className='btn btn-success btn-block'>
                               {place.street}
                             </NavLink>
-                            <div className='btn btn-outline-danger d-flex align-items-center'>
+                            <div className='btn btn-outline-danger d-flex align-items-center' onClick={() => setConfirmUntrack(true)}>
                               <span aria-hidden="true">&times;</span>
                             </div>
                           </div>
                         </Col>
+                        <Modal show={confirmUntrack} onHide={() => (setConfirmUntrack(false))}>
+                          <ConfirmUntrack setConfirmUntrack={setConfirmUntrack} location={place.street} untrack={() => untrack(place._id)} />
+                        </Modal>
                       </>
                     }
                   </>
@@ -160,6 +165,20 @@ const Dashboard = () => {
     setProfile({ ...profile, favourites: temp });
   }
 
+  async function untrack(id) {
+    await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/untrack/${id}`, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+
+    setConfirmUntrack(false);
+
+    let temp = profile.profile.trackedLocations;
+    temp.splice(temp.indexOf(x => x._id === id), 1);
+    setProfile({ ...profile, trackedLocations: temp });
+  }
+
   function showCatPhoto(cat) {
     if (cat.photos.length > 0) {
       let temp = cat.photos.find(x => x.isDefault)
@@ -170,6 +189,9 @@ const Dashboard = () => {
   }
   return (
     <div>
+      <Modal show={confirmUnfollow} onHide={() => (setConfirmUnfollow(false))}>
+        <ConfirmUnfollow setConfirmUnfollow={setConfirmUnfollow} name={un_Name.name} gender={un_Name.gender} unfollow={() => unfollow(un_Name._id)} />
+      </Modal>
       {profile.found &&
         <>
           {/* Header */}
