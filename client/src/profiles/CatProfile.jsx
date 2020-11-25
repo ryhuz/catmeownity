@@ -266,7 +266,7 @@ function CatProfile() {
                                             </InputGroup>} */}
                                         </div></div>}
                                         {/* Check if cat description is more than 3 to display show all comments button */}
-                                        {cat.cat.desc.length > 2 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                        {(cat.cat.desc.length) > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                             {eventKey ? 'close' : 'show all comments...'}
                                         </Accordion.Toggle>}
                                     </Card.Header>
