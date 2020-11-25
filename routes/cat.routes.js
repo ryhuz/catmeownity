@@ -5,6 +5,7 @@ const Location = require("../models/location.model");
 const District = require("../models/district.model");
 const Desc = require("../models/desc.model");
 const Fed = require("../models/feeding.model");
+const cloudinary = require('cloudinary').v2;
 
 // add new cat
 router.post("/add", async (req, res) => {
@@ -195,6 +196,31 @@ router.put('/addphoto/:catID', async (req, res) => {
         } else {
             res.status(400).json({ message: "Error here!" })
         }
+    }
+})
+/* Del cat photo */
+router.put('/delphoto/:catID', async (req, res) => {
+    try {
+        let { image } = req.body;
+        let start = image.indexOf('catmeownity')
+        let end = image.split('').reverse().join('').indexOf('.')
+
+        let publicID = image.slice(start, image.length-(end+1))
+
+        cloudinary.api.delete_resources([publicID],
+            function (error, result) { console.log(result, error); });
+
+        await Cat.findByIdAndUpdate(req.params.catID, {
+            $pull: {
+                photos: {
+                    image
+                }
+            }
+        })
+
+        res.status(200).json({ message: "successfully deleted photo from cat" });
+    } catch (error) {
+        console.log(error)
     }
 })
 

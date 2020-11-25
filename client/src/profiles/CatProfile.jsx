@@ -157,9 +157,18 @@ function CatProfile() {
                     <Col>
                         <Card>
                             <Image thumbnail rounded src={photo.image} className="img-responsive" width="100%" />
-                            <Card.Body>
-                                {photo.desc}
-                                <div>-{photo.uploadedBy.name}</div>
+                            <Card.Body className='d-flex justify-content-between'>
+                                <div>
+                                    {photo.desc}
+                                    <div><code className='text-dark'>-{photo.uploadedBy.name}</code></div>
+                                </div>
+                                {user &&
+                                    <div>
+                                        <button type="button" className="close text-danger" aria-label="Close" onClick={() => confirmDelPhoto(photo.image)}>
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                }
                             </Card.Body>
                         </Card>
                     </Col>
@@ -168,6 +177,17 @@ function CatProfile() {
             </>
         )
     }
+
+    async function confirmDelPhoto(image) {
+        try {
+            let resp = await Axios.put(`http://localhost:8080/auth/cats/delphoto/${id}`, { image });
+
+            fetchCat();
+        } catch (e) {
+            console.log(e)
+        }
+    }
+  
     (async () => {
         if (eventKey) {
             return "0"
@@ -297,7 +317,7 @@ function CatProfile() {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
                                         <Card.Body className="mx-auto">
-                                            <Row md={4} sm={3} className="mx-5">
+                                            <Row md={4} sm={2} className="mx-5">
                                                 {user &&
                                                     <Col>
                                                         <Card onClick={() => setUploadingPhoto(true)}>

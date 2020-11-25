@@ -15,7 +15,7 @@ const RegisterContainer = ({ setValid }) => {
     const [home, setHome] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const [showSection, setSection] = useState(1);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [lastErr, setLastErr] = useState(false);
 
     function changeHandler(e) {
@@ -33,8 +33,10 @@ const RegisterContainer = ({ setValid }) => {
                 formData.append('upload_preset', 'catmeownity_user');
 
                 const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
+                const instance = Axios.create();
+                instance.defaults.headers.common = {};
 
-                let img = await Axios.post(cloudinary, formData);
+                let img = await instance.post(cloudinary, formData);
                 let imageURL = img.data.secure_url;
 
                 userData.image = imageURL;
@@ -68,7 +70,7 @@ const RegisterContainer = ({ setValid }) => {
             }
             {showSection === 2 &&
                 <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(1)}
-                loading={loading} lastErr={lastErr} setLastErr={setLastErr} />
+                    loading={loading} lastErr={lastErr} setLastErr={setLastErr} />
             }
         </Container>
     )

@@ -53,7 +53,7 @@ function App() {
             <NavLink to="/dashboard" className="btn btn-light border-info mx-2">Dashboard</NavLink>
             <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
             <NavLink to="/logout" className='btn btn-light border-danger mx-2'>Log Out</NavLink>
-            <NavLink to="/" className='btn btn-light border-info mx-2'><i class="fas fa-question-circle"></i></NavLink>
+            <NavLink to="/" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -70,7 +70,7 @@ function App() {
             <Link className="mx-2 btn btn-dark" to="/login">Log In</Link>
             <Link className="mx-2 btn btn-dark" to="/register">Register</Link>
             <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
-            <NavLink to="/" className='btn btn-light border-info mx-2'><i class="fas fa-question-circle"></i></NavLink>
+            <NavLink to="/" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -26,7 +26,7 @@ function ConfirmUnfollow({ setConfirmUnfollow, name, gender, unfollow }) {
                 </p>
                 <Row>
                     <Col>
-                        <div to='/login' className="btn btn-block btn-outline-danger" onClick={unfollow}>
+                        <div className="btn btn-block btn-outline-danger" onClick={unfollow}>
                             Yes
                         </div>
                     </Col>

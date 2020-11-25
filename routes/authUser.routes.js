@@ -61,6 +61,7 @@ router.put("/:userID/tracked/:locationID", async (req, res) => {
         res.status(400).json({ message: "Trouble finding user" });
     }
 })
+//remove tracked location
 router.put("/:userID/untrack/:locationID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
@@ -68,7 +69,7 @@ router.put("/:userID/untrack/:locationID", async (req, res) => {
                 trackedLocations: req.params.locationID
             }
         })
-        res.status(200).json({ message: "Successfully added tracked location" });
+        res.status(200).json({ message: "Successfully removed tracked location" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
     }
