@@ -25,6 +25,7 @@ function CatProfile() {
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [eventKey, setEventKey] = useState(false);
     const [feedingDescription, setFeedingDescription] = useState();
+    const [catDesc, setCatDesc] = ([]);
     const moment = require('moment');
 
     /* get curr user list of favourites */
@@ -168,7 +169,6 @@ function CatProfile() {
             </>
         )
     }
-
     (async () => {
         if (eventKey) {
             return "0"
@@ -176,7 +176,6 @@ function CatProfile() {
             return "1"
         }
     })(eventKey);
-
     function checkLoginForUpload() {
         if (user) {
             setUploadingPhoto(true)
@@ -184,7 +183,6 @@ function CatProfile() {
             setNeedToLogIn(true);
         }
     }
-
     const popover = (
         <Popover id="popover-basic">
             <Popover.Title as="h3">Log the feeding</Popover.Title>
@@ -255,7 +253,7 @@ function CatProfile() {
                                 <Card>
                                     <Card.Header>
                                         {eventKey === false && <div><div>
-                                            {cat.cat.desc.reverse().slice(0, 3).map((el) => (
+                                            {cat.cat.desc.slice(0, 3).map((el) => (
                                                 <CatComments desc={el} key={el._id} fetchCat={fetchCat} />
                                             ))}
 {/*                                             {cat.cat.desc.length < 2 && <InputGroup className="my-3">

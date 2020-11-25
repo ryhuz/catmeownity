@@ -21,6 +21,7 @@ router.post("/:catID/desc/:userID", async (req, res) => {
         await Cat.findByIdAndUpdate(req.params.catID, {
             $push: {
                 desc: desc._id,
+                $position: 0,
             }
         })
         await cat.save();
@@ -29,6 +30,7 @@ router.post("/:catID/desc/:userID", async (req, res) => {
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
                 descForCats: desc._id,
+                $position: 0,
             }
         })
         await user.save();
