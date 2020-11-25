@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Col, FormFile, Image, InputGroup, Modal, Row } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import Loading from '../../Loading';
 
-function ProfilePic({ setImageFile, imageFile, register, prevSection, loading, setLastErr, lastErr }) {
+function ProfilePic({ setImageFile, imageFile, register, prevSection, setLastErr, lastErr }) {
+    const [loading, setLoading] = useState(true);
+
+    
     function imageSelect(e) {
         if (e.target.files[0]) {
             setImageFile({

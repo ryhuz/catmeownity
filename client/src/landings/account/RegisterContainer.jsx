@@ -7,20 +7,9 @@ import Register from './Register';
 
 const RegisterContainer = ({ setValid }) => {
     const [imageFile, setImageFile] = useState({ file: null, url: null });
-    const [form, setForm] = useState({
-        email: "",
-        name: "",
-        password: "",
-    });
     const [home, setHome] = useState(false);
-    const [errMsg, setErrMsg] = useState("");
     const [showSection, setSection] = useState(1);
-    const [loading, setLoading] = useState(false);
     const [lastErr, setLastErr] = useState(false);
-
-    function changeHandler(e) {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    }
 
     async function register() {
         setLoading(true);
@@ -33,10 +22,8 @@ const RegisterContainer = ({ setValid }) => {
                 formData.append('upload_preset', 'catmeownity_user');
 
                 const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
-                const instance = Axios.create();
-                instance.defaults.headers.common = {};
 
-                let img = await instance.post(cloudinary, formData);
+                let img = await Axios.post(cloudinary, formData);
                 let imageURL = img.data.secure_url;
 
                 userData.image = imageURL;
@@ -66,11 +53,11 @@ const RegisterContainer = ({ setValid }) => {
         <Container>
             <h1>Register page</h1>
             {showSection === 1 &&
-                <Register setValid={setValid} form={form} changeHandler={changeHandler} errMsg={errMsg} nextSection={() => setSection(2)} />
+                <Register nextSection={() => setSection(2)} />
             }
             {showSection === 2 &&
                 <ProfilePic imageFile={imageFile} setImageFile={setImageFile} register={register} prevSection={() => setSection(1)}
-                    loading={loading} lastErr={lastErr} setLastErr={setLastErr} />
+                lastErr={lastErr} setLastErr={setLastErr} />
             }
         </Container>
     )

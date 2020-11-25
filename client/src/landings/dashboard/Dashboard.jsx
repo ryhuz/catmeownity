@@ -232,7 +232,7 @@ const Dashboard = () => {
               <Card className="mb-3 mx-5">
                 <Card.Body>
                   <Card.Title>Your favourite cats</Card.Title>
-                  <Row sm={2} md={3}>
+                  <Row sm={1} md={1} lg={3}>
                     {showFavouriteCats()}
                   </Row>
                 </Card.Body>
