@@ -1,6 +1,6 @@
 import React from 'react'
 import Axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import { decode } from "jsonwebtoken"
 import { ListGroupItem } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
@@ -37,7 +37,7 @@ function CatComments({ desc, fetchCat }) {
             <ListGroupItem>
                 <div className="d-flex bd-highlight mb-3">
                     <div className="font-weight-bold p-2 bd-highlight">
-                        {desc.byUser && desc.byUser.name}
+                        <NavLink exact to={`/profile/${desc.byUser._id}`}>{desc.byUser && desc.byUser.name}</NavLink>
                     </div>
                     <div className="font-weight-bold p-2 bd-highlight">
                         {desc.catDescription}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Table, Accordion, Card, Button, Jumbotron, Modal, ListGroup, InputGroup, Form, Tab, Tabs, Popover, OverlayTrigger, ListGroupItem, Image } from 'react-bootstrap'
 import Axios from 'axios'
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, NavLink } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../private/NotLoggedIn';
@@ -64,7 +64,10 @@ function CatProfile() {
             return (
                 <>
                     {cat.cat.fed.slice(0, 3).map((el, index) => (
-                        <li key={index} >{`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by ${el.byUser && el.byUser.name}`}</li>
+                        <li key={index}>
+                            {`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by `}
+                            <NavLink to={`/profile/${el.byUser._id}`}>{el.byUser && el.byUser.name}</NavLink>
+                        </li>
                     ))}
                 </>
             )
@@ -216,6 +219,7 @@ function CatProfile() {
             </Popover.Content>
         </Popover>
     );
+    
     return (
         <>{cat.found &&
             <>

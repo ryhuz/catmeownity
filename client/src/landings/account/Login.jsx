@@ -26,7 +26,7 @@ const Login = ({ setValid }) => {
         refreshed: false,
       });
       setHome(true);
-      localStorage.removeItem('location')
+      location && localStorage.removeItem('location')
     } catch (error) {
       console.log(error.response)
       setErr(error.response.data)
