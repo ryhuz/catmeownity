@@ -82,6 +82,7 @@ body {
 .thewholenavbar {
   background-color: #cb997e;
   opacity: .85;
+  width: 100%;
 }
 
 #dashie {
@@ -129,6 +130,10 @@ body {
 #search-container {
   padding: 2em;
 }
+
+/* #learn-container {
+  background-color: #00a896;
+} */
 
 #search-bar {
   margin-top: 1rem;

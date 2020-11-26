@@ -20,7 +20,7 @@ function Home() {
                     </Container>
                 </div>
             </Jumbotron>
-            <Container className="">
+            <Container className="learn-container">
                 <h4 className="text-center p-4">Learn more about cats</h4>
                 <Carousel>
                     <Carousel.Item>
