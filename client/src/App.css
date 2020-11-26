@@ -1,3 +1,22 @@
+body {
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+}
+
+.main-container {
+  min-height: 100vh;
+  /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 200px;
+  /* height of your footer */
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +54,115 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+ /* Navbar */
+
+.logo-nav {
+  width: 120%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo-nav:hover {
+    animation: App-logo-spin infinite 0.5s linear;
+  }
+}
+
+@keyframes logo-nav {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.thewholenavbar {
+  background-color: #cb997e;
+}
+
+#dashie {
+  background-color: #eddcd2;
+  /* padding: 5px 10px; */
+}
+#dashie:hover {
+  background-color: #fcbf49;
+}
+
+#search {
+  background-color: #eddcd2;
+}
+#search:hover {
+  background-color: #fcbf49;
+}
+
+#logout {
+  background-color: #eddcd2;
+}
+#logout:hover {
+  background-color: #fcbf49;
+}
+
+/* Jumbotron */
+#jumbo {
+  /* background-color: #b7b7a4; */
+  background-image: url("https://images.pexels.com/photos/2817419/pexels-photo-2817419.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 70vh;
+}
+
+.container-bg {
+  background-color: #f0efeb;
+}
+
+#footerz {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  /* background-color: #efefef; */
+  /* text-align: center; */
+}
+
+/* Dashboard */
+
+#jumbo-dashboard {
+  margin: 0;
+  margin-top: 5em;
+  background-color: #b7b7a4;
+  border-radius: 0;
+}
+
+#dash-preview {
+  margin: 0;
+  padding: 10px;
+  background-color: #fff1e6;
+  border: 10px solid #ffddd2;
+}
+
+#dash-image {
+  margin-right: 0;
+  margin: 1em;
+  border-radius: 10px;
+}
+
+#btnprofile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2em;
+  background-color: #02c39a;
+}
+
+#btnprofile:hover {
+  background-color: #00a896;
+}
+
+.fav-track-dash {
+  background-color: #edf6f9;
 }

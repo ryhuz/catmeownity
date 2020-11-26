@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { Card, Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import LocationResult from './LocationResult'
 
 function AreaResult({ area }) {
@@ -17,7 +17,6 @@ function AreaResult({ area }) {
                 let resp = await Axios.get(`http://localhost:8080/public/district/${area}`);
                 setDistricts({ districts: resp.data.districts, found: true });
             } catch (e) {
-                // setError(e.response.data.message);
                 console.log(e.response)
             }
         }

@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import ConfirmUnfollow from './ConfirmUnfollow';
 import pic from '../../resources/nocatpic.png'
 import ConfirmUntrack from './ConfirmUntrack';
+import '../../App.css'
 
 const Dashboard = () => {
   let token = localStorage.getItem('token')
@@ -212,21 +213,22 @@ const Dashboard = () => {
       {profile.found &&
         <>
           {/* Header */}
-          <Jumbotron className='bg-dark jumbotop'>
-            <Card.Title className="text-white mb-auto jumbotitledown">Welcome back, {profile.profile.name}!</Card.Title>
+          <Jumbotron id="jumbo-dashboard" className=''>
+            <h2 className="mb-auto jumbotitledown">Welcome back, {profile.profile.name}!</h2>
+            <cite>“I'm not sure why I like cats so much...</cite>
           </Jumbotron>
           {/* Profile Preview */}
-          <Row className="mx-5 p-3 justify-content-center">
+          <div id="dash-preview" className="justify-content-center">
             <Col sm={3}>
-              <Image src={profile.profile.image} width="100%" />
+              <Image id="dash-image" src={profile.profile.image} width="100%" />
             </Col>
             <Col sm={3}>
-              <NavLink to={`/profile/${profile.profile._id}`} className='btn'>
-                View full profile
+              <NavLink to={`/profile/${profile.profile._id}`} id="btnprofile" className='btn btn-success'>
+                Enter profile
               </NavLink>
             </Col>
-          </Row>
-          <div className="bg-dark">
+          </div>
+          <div className="fav-track-dash">
             {/* Favourite Cats */}
             <CardGroup className="mx-5 py-4">
               <Card className="mb-3 mx-5">
@@ -248,11 +250,11 @@ const Dashboard = () => {
               </Card>
             </CardGroup>
           </div>
-          <Card className="bg-dark text-white p-3 mx-auto">
+          <Card className="bg-light text-white p-3 mx-auto">
             <Card.Body>
               <Form className="text-center">
                 <Form.Label>
-                  <Card.Title className="text-center h-5">Kitty stuff</Card.Title>
+                  <Card.Title className="text-center h-5"></Card.Title>
                 </Form.Label>
               </Form>
             </Card.Body>
