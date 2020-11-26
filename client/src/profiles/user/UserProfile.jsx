@@ -201,23 +201,19 @@ function UserProfile() {
 
       {/* Start of Container with locations and favorite cats */}
       {user.found && <Container className="d-flex border border-dark mt-4 mb-4 justify-content-between bd-highlight">
-        <Row className="p-3 w-50 bd-highlight">
-          <div className="borderless">
-            <Col>
-              <Card className="mb-3 mx-5">
-                <Card.Body>
-                  <Card.Title>Most recent favourites</Card.Title>
-                  {user.user.favourites.slice(0, 3).map((el) => (
-                    <UserFavourites cat={el} fetchUser={fetchUser} ownProfile={ownProfile} />
-                  ))}
-                </Card.Body>
-              </Card>
-            </Col>
-          </div>
-        </Row>
-        <Row className="p-3">
-          <div className="borderless">
-            <Col>
+        <Row className="mt-4">
+          <Col>
+            <Card className="mb-3 mx-5">
+              <Card.Body>
+                <Card.Title>Most recent favourites</Card.Title>
+                {user.user.favourites.slice(0, 3).map((el) => (
+                  <UserFavourites cat={el} fetchUser={fetchUser} ownProfile={ownProfile} />
+                ))}
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col>
+            <div>
               <Card className="mb-3 mx-5">
                 <Card.Body>
                   <Card.Title>Most recent tracked locations</Card.Title>
@@ -226,8 +222,8 @@ function UserProfile() {
                   ))}
                 </Card.Body>
               </Card>
-            </Col>
-            <Col>
+            </div>
+            <div>
               <Card className="mb-3 mx-5">
                 <Card.Body>
                   <Card.Title>Most recent cativities</Card.Title>
@@ -253,8 +249,8 @@ function UserProfile() {
                   </Card>
                 </Card.Body>
               </Card>
-            </Col>
-          </div>
+            </div>
+          </Col>
         </Row>
       </Container>}
       {/* End of Container */}

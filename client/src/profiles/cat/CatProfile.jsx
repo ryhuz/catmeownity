@@ -178,7 +178,7 @@ function CatProfile() {
                     <Form.Control type="text" placeholder="Food Description" name="foodDescription" aria-describedby="basic-addon2" onChange={handleFeeding}
                         onKeyDown={e => {
                             if (e.key === 'Enter') {
-                                handleFeeding();
+                                feedKitty();
                             }
                         }} />
                     <InputGroup.Append>
