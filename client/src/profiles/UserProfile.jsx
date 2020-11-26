@@ -113,13 +113,13 @@ function UserProfile() {
             <Row className="p-3">
               <Col>
                 <div>
-                  <Image className="mx-auto p-4" width="100%" src={user.user.image ? user.user.image : pic} roundedCircle />
+                  <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
                 </div>
-                {ownProfile && <Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button>}
+                {ownProfile && <div><Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></div>}
                 {!user.user.image && ownProfile &&
                   <div>
                     <Col className='text-center py-2'>
-                      {user.user.name} doesn't have a picture yet.
+                      You don't have a picture yet.
                     </Col>
                     <Col className='text-center'>
                       <div className='btn btn-success' onClick={() => setUploadingPhoto(true)}>
@@ -152,7 +152,7 @@ function UserProfile() {
               <Row className="p-3">
                 <Col>
                   <div>
-                    <Image className="mx-auto p-4" width="100%" src={user.user.image ? user.user.image : pic} roundedCircle />
+                    <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
                   </div>
                 </Col>
               </Row>
