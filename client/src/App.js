@@ -14,6 +14,7 @@ import LogOut from './private/LogOut';
 import { decode } from "jsonwebtoken";
 import RegisterCatContainer from './newcat/RegisterCatContainer';
 import Footer from './Footer';
+import Help from './help/Help';
 
 function App() {
   const [valid, setValid] = useState({
@@ -53,7 +54,7 @@ function App() {
             <NavLink to="/dashboard" className="btn btn-light border-info mx-2">Dashboard</NavLink>
             <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
             <NavLink to="/logout" className='btn btn-light border-danger mx-2'>Log Out</NavLink>
-            <NavLink to="/" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
+            <NavLink to="/help" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -70,7 +71,7 @@ function App() {
             <Link className="mx-2 btn btn-dark" to="/login">Log In</Link>
             <Link className="mx-2 btn btn-dark" to="/register">Register</Link>
             <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
-            <NavLink to="/" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
+            <NavLink to="/help" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -104,7 +105,9 @@ function App() {
         <Route path='/register'>
           <RegisterContainer setValid={setValid} />
         </Route>
-
+        <Route path='/help'>
+          <Help />
+        </Route>
         {/* THESE ROUTES SHOULD BE PRIVATE */}
         <PrivateRoute path='/dashboard' component={Dashboard} valid={valid} />
         <PrivateRoute path='/logout' component={LogOut} valid={valid} setValid={setValid} />
