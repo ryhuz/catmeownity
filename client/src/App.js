@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
-import CatProfile from './profiles/Cat/CatProfile';
-import UserProfile from './profiles/User/UserProfile';
+import CatProfile from './profile/cat/CatProfile';
+import UserProfile from './profile/user/UserProfile';
 import Home from './landings/Home'
 import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
@@ -77,8 +77,6 @@ function App() {
         <img className="logo-nav"
         src={Logo}
         width="40"
-        // height="40"
-        // className="d-inline-block align-top"
         alt="CatMeownity"
         />
         </NavLink>
