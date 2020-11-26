@@ -26,10 +26,8 @@ app.get("/api/*", (req, res) => {
     res.status(404).json({ message: "Server route not found" });
 });
 app.get('/app', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
-
-
 
 app.listen(process.env.PORT, () => {
     console.log(`Connected on ${process.env.PORT}`);
