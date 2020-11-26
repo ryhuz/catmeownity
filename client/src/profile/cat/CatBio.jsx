@@ -264,7 +264,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                         </div>
                     </div>
                     {/* Check if user is logged in then display edit button and if cat missing display missing button */}
-                    {user ? <div><Button variant="outline-secondary" onClick={() => setShowEditCat(true)}>Edit</Button>{!cat.cat.missing ? <Button className="mx-2" variant="outline-danger" onClick={missing}>Haven't seen this kitty lately?</Button> : <Button className="mx-2" variant="outline-success" onClick={found}>Saw this kitty somewhere?</Button>}</div> : <div></div>}
+                    {user ? <div><Button id="btn-edit-cat" variant="secondary" onClick={() => setShowEditCat(true)}>Edit</Button>{!cat.cat.missing ? <Button id="btn-cat-missing" className="mx-2" variant="outline-danger" onClick={missing}>Haven't seen this kitty lately?</Button> : <Button className="mx-2" variant="outline-success" onClick={found}>Saw this kitty somewhere?</Button>}</div> : <div></div>}
                 </div>}
         </Col>
     )

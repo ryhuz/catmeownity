@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel, Col, Container, Image, Jumbotron } from 'react-bootstrap'
+import { Carousel, Col, Container, Jumbotron } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import '../App.css'
 
@@ -15,7 +15,7 @@ function Home() {
                         </p>
                     </Container>
                     <div>
-                        <NavLink to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
+                        <NavLink id="btn-search-community" to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
                     </div>
                 </Col>
             </Jumbotron>

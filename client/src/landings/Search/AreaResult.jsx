@@ -43,7 +43,7 @@ function AreaResult({ area }) {
                         {districts.districts.map(district => (
                             <Row key={district._id}>
                                 <Col className="p-1" xs={8}>
-                                    <div className={`btn btn-block ${selectedDistrict === district._id ? 'btn-success' : 'btn-outline-secondary'}`}
+                                    <div id="btn-search-results" className={`btn btn-block ${selectedDistrict === district._id ? 'btn-success' : 'btn-outline-secondary'}`}
                                         onClick={() => { setSelectedDistrict({ id: district._id, name: district.name }) }}>
                                         {district.name}
                                     </div>
