@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Col, Container, Form, Image, Jumbotron, Row, Table, Modal } from 'react-bootstrap';
-import pic from '../resources/no-profile-pic.png'
+import pic from '../../resources/no-profile-pic.png'
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { decode } from "jsonwebtoken";
-import UserPhotoUpload from '../profiles/UserPhotoUpload';
-import UserTrackedLocations from '../profiles/UserTrackedLocations';
-import UserFavourites from '../profiles/UserFavourites';
-import MostRecentComments from '../profiles/MostRecentComments';
-import MostRecentFeeding from '../profiles/MostRecentFeeding';
+import UserPhotoUpload from './UserPhotoUpload';
+import UserTrackedLocations from './UserTrackedLocations';
+import UserFavourites from './UserFavourites';
+import MostRecentComments from './MostRecentComments';
+import MostRecentFeeding from './MostRecentFeeding';
 
 /* REDIRECT IF USER NOT FOUND */
 

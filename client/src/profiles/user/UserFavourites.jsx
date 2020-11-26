@@ -3,8 +3,8 @@ import { Col, Modal, Card, Image, Button } from 'react-bootstrap';
 import { NavLink, useParams } from 'react-router-dom';
 import { decode } from "jsonwebtoken";
 import Axios from 'axios';
-import ConfirmUnfollow from '../landings/dashboard/ConfirmUnfollow';
-import pic from '../resources/nocatpic.png';
+import ConfirmUnfollow from '../../landings/dashboard/ConfirmUnfollow';
+import pic from '../../resources/nocatpic.png';
 
 
 function UserFavourites({ cat, fetchUser, ownProfile }) {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
-import CatProfile from './profiles/CatProfile';
-import UserProfile from './profiles/UserProfile';
+import CatProfile from './profiles/cat/CatProfile';
+import UserProfile from './profiles/user/UserProfile';
 import Home from './landings/Home'
 import CatResults from './landings/Search/CatResults';
 import Search from './landings/Search/Search';
