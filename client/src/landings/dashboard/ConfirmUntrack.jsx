@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button, Col, Modal, Row } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
+import { Col, Modal, Row } from 'react-bootstrap'
 
 function ConfirmUntrack({ location, setConfirmUntrack, untrack }) {
     return (

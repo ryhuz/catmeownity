@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel, Col, Container, Image, Jumbotron } from 'react-bootstrap'
+import { Carousel, Col, Container, Jumbotron } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import '../App.css'
 
@@ -65,7 +65,7 @@ function Home() {
                     <h4 className="text-center p-4">Learn more about cats</h4>
                     <Carousel>
                         {trivia.map((item, index) => (
-                            <Carousel.Item>
+                            <Carousel.Item key={index}>
                                 <img id={`trivia${index}`} className="d-block w-100" src="https://images.pexels.com/photos/35888/amazing-beautiful-breathtaking-clouds.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
                                 <Carousel.Caption>
                                     <h3>{item.header}</h3>

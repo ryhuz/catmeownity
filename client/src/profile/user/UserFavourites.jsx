@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Modal, Card, Image, Button } from 'react-bootstrap';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { decode } from "jsonwebtoken";
 import Axios from 'axios';
 import ConfirmUnfollow from '../../landings/dashboard/ConfirmUnfollow';
@@ -9,7 +9,6 @@ import pic from '../../resources/nocatpic.png';
 
 function UserFavourites({ cat, fetchUser, ownProfile }) {
     let token = localStorage.getItem('token');
-    let { id } = useParams();
     let user = decode(token)
     Axios.defaults.headers.common['x-auth-token'] = token;
 

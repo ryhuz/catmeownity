@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Container, Form, FormFile, Image, InputGroup, Jumbotron, Modal, Row } from 'react-bootstrap'
+import { Container, Form, Jumbotron, Modal } from 'react-bootstrap'
 import { NavLink, Redirect, useParams } from 'react-router-dom';
 import RegisterCatForm from './RegisterCatForm';
 import Axios from 'axios'

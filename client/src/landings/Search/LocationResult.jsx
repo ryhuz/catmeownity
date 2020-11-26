@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import Axios from 'axios'
-import { Button, Card, Col, Modal, Row } from 'react-bootstrap'
+import { Card, Col, Modal, Row } from 'react-bootstrap'
 import { decode } from "jsonwebtoken";
 import NotLoggedIn from '../../private/NotLoggedIn';
 import NewLocation from './NewLocation';

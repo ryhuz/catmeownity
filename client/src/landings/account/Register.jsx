@@ -5,7 +5,7 @@ import load from '../../resources/loading.gif'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-function Register({ changeHandler, nextSection, setFormData}) {
+function Register({ nextSection, setFormData}) {
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState("");
 

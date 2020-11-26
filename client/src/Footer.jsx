@@ -1,10 +1,9 @@
 import React from 'react'
-import { Container } from 'react-bootstrap';
 import './App.css';
 
 function Footer() {
     return (
-        <div id="footerz">
+        <div id="footerz" className="fixed-bottom">
             <div className="d-flex justify-content-between pad-thai">
                 <div>
                     <small>©2020 CatMeownity - SSH - GA SEI 25</small>

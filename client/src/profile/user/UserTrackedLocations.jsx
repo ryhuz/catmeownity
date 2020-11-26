@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Col, Modal } from 'react-bootstrap';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { decode } from "jsonwebtoken";
 import Axios from 'axios';
 import ConfirmUntrack from '../../landings/dashboard/ConfirmUntrack';
 
 function UserTrackedLocations({ location, fetchUser, ownProfile }) {
     let token = localStorage.getItem('token');
-    let { id } = useParams();
     let user = decode(token)
     Axios.defaults.headers.common['x-auth-token'] = token;
 
