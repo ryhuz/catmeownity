@@ -218,12 +218,12 @@ function CatProfile() {
                                 <div className="text-center h4 mt-3">
                                     {followed() ?
                                         <>
-                                            <Button variant="outline-danger" onClick={followUnfollow}>
+                                            <Button id="btn-unfollowing-cat" variant="outline-danger" onClick={followUnfollow}>
                                                 <i className="fas fa-heart mx-2"></i> Following this cat
                                             </Button>
                                         </> :
                                         <>
-                                            <Button variant="secondary" onClick={followUnfollow}>
+                                            <Button id="btn-follow-cat" variant="secondary" onClick={followUnfollow}>
                                                 <i className="fas fa-cat mx-2"></i> Follow this cat
                                             </Button>
                                         </>

@@ -239,7 +239,20 @@ body {
 }
 
 #btn-search {
-  background-color: white;
+  background-color: #89b0ae;
+  border: none;
+}
+
+#btn-search-results {
+  background-color: #197278;
+  color: white;
+  border: none;
+}
+
+#btn-search-results:hover {
+  background-color: #00afb9;
+  color: white;
+  border: none;
 }
 
 #btn-edit-profile {
@@ -278,16 +291,39 @@ body {
   background-color: #4ecdc4;
   border: none;
 }
+
 #btn-add-search:hover {
   background-color: #006d77;
   border: none;
 }
+
+#btn-unfollowing-cat {
+  background-color: #e63946;
+  color: white;
+  border: none;
+}
+#btn-unfollowing-cat:hover {
+  background-color: #e5989b;
+  border: none;
+}
+
+#btn-follow-cat {
+  background-color: #02c39a;
+  border: none;
+}
+
+#btn-follow-cat:hover {
+  background-color: #00a896;
+  border: none;
+}
+
 a.anchor {
   display: block;
   position: relative;
   top: -90px;
   visibility: hidden;
 }
+
 a:hover {
   text-shadow: 1px 1px 2px #4B4B4B;
 }
