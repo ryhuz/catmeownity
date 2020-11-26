@@ -317,6 +317,23 @@ body {
   border: none;
 }
 
+#btn-cat-missing {
+  background-color: #e63946;
+  color: white;
+}
+#btn-cat-missing:hover {
+  background-color: #e5989b;
+}
+
+#btn-edit-cat {
+  background-color: #ddbea9;
+  border: none;
+}
+#btn-edit-cat:hover {
+  background-color: #f4a261;
+  border: none;
+}
+
 a.anchor {
   display: block;
   position: relative;
