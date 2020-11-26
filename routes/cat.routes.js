@@ -93,17 +93,6 @@ router.put("/delname/:catID", async (req, res) => {
     }
 })
 
-// delete cat --> use cat ID
-// PROBLEM - HOW TO REMOVE CAT FROM FAVOURITES LISTS?
-router.delete("/:catID", async (req, res) => {
-    try {
-        await Cat.findByIdAndDelete(req.params.catID);
-        res.status(200).json({ message: "Cat has been deleted" });
-    } catch (error) {
-        res.status(400).json({ message: "Could not do this" });
-    }
-})
-
 // feed cat --> use user ID & cat ID
 router.post("/:userID/feed/:catID", async (req, res) => {
     try {
@@ -262,6 +251,17 @@ router.put("/delcolour/:catID", async (req, res) => {
         res.status(200).json({ message: "Successfully updated cat profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding cat data" });
+    }
+})
+
+// delete cat --> use cat ID
+// PROBLEM - HOW TO REMOVE CAT FROM FAVOURITES LISTS?
+router.delete("/:catID", async (req, res) => {
+    try {
+        await Cat.findByIdAndDelete(req.params.catID);
+        res.status(200).json({ message: "Cat has been deleted" });
+    } catch (error) {
+        res.status(400).json({ message: "Could not do this" });
     }
 })
 
