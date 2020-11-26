@@ -26,7 +26,6 @@ router.post("/add", async (req, res) => {
             forCat: cat._id
         })
         if (image) {
-            console.log('there is an image', image)
             let newPhoto = {
                 isDefault: true,
                 image,
