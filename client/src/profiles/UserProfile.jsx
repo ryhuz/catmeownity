@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Form, Image, Jumbotron, Row, Table, Modal
 import pic from '../resources/no-profile-pic.png'
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
+import { decode } from "jsonwebtoken";
 import UserPhotoUpload from '../profiles/UserPhotoUpload';
 
 /* REDIRECT IF USER NOT FOUND */
@@ -10,6 +11,7 @@ import UserPhotoUpload from '../profiles/UserPhotoUpload';
 function UserProfile() {
   let token = localStorage.getItem('token');
   let { id } = useParams();
+  let loggedUser = decode(token)
   Axios.defaults.headers.common['x-auth-token'] = token;
   const node = useRef()
 
@@ -18,6 +20,10 @@ function UserProfile() {
     user: null,
     found: false,
   });
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [form, setForm] = useState({});
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [ownProfile, setOwnProfile] = useState(false);
 
   useEffect(() => {
     fetchUser()
@@ -25,22 +31,32 @@ function UserProfile() {
 
   useEffect(() => {
     // add when mounted
-    document.addEventListener("mousedown", handleClick);
+    ownProfile && document.addEventListener("mousedown", handleClick);
     // return function to be called when unmounted
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [ownProfile]);
 
+  useEffect(() => {
+    if (user.found && token) {
+      if (user.user._id === loggedUser.user._id) {
+        setOwnProfile(true)
+      } else {
+        setOwnProfile(false)
+      }
+    }
+  }, [user])
+  
   async function fetchUser() {
     try {
       let resp = await Axios.get(`http://localhost:8080/user/${id}`);
-      setUser({ user: resp.data.user, found: true });
+      setUser({ user: resp.data.user, found: true })
     } catch (err) {
       console.log(err.response)
     }
   }
-  
+
   const handleClick = e => {
     if (node.current.contains(e.target)) {
       // inside click
@@ -49,10 +65,6 @@ function UserProfile() {
     // outside click 
     setShowEditProfile(false)
   };
-
-  const [showEditProfile, setShowEditProfile] = useState(false);
-  const [form, setForm] = useState({});
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -74,6 +86,7 @@ function UserProfile() {
   }
 
   console.log(user)
+  console.log(ownProfile)
   return (
     <>
       {/* My Profile Jumbotron */}
@@ -86,7 +99,7 @@ function UserProfile() {
       {/* Start of Profile */}
       {user.found && <Col>
         <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={user.user.image} addPhoto={addPhoto}  id={id} user={user} />
+          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={addPhoto} id={id} />
         </Modal>
         {!showEditProfile ?
           <Container className="d-flex flex-row border">
@@ -95,8 +108,8 @@ function UserProfile() {
                 <div>
                   <Image className="mx-auto p-4" width="100%" src={user.user.image ? user.user.image : pic} roundedCircle />
                 </div>
-                <Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button>
-                {!user.user.image &&
+                {ownProfile && <Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button>}
+                {!user.user.image && ownProfile &&
                   <div>
                     <Col className='text-center py-2'>
                       {user.user.name} doesn't have a picture yet.
