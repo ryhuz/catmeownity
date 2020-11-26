@@ -83,17 +83,17 @@ function Help() {
     ]
     return (
         <>
-            <Jumbotron className='text-center jumbotop'>
+            <Jumbotron className='text-center jumboboard text-white'>
                 <h1>Help Page</h1>
                 <p className="text-muted">
                     Can't figure out how to use CatMeownity?
                 </p>
             </Jumbotron>
-            <Container>
+            <Container className="my-5">
                 <div className="h5">
                     {helpItems.map((item, index) => (
                         <div key={index} className="my-3">
-                            <a href={`#${item.question.split(' ').join('-')}`}><li className="my-2">{item.question}</li></a>
+                            <a className="text-muted" href={`#${item.question.split(' ').join('-')}`}><li className="my-2">{item.question}</li></a>
                         </div>
                     ))}
                 </div>
@@ -102,10 +102,11 @@ function Help() {
             <Container>
                 <div>
                     {helpItems.map((item, index) => (
-                        <div key={index} className="mb-5">
-                            <a id={`${item.question.split(' ').join('-')}`}>
-                                <h4 className="pt-5">{item.question}</h4>
-                            </a>
+                        <div key={index} className='my-5'>
+                            <a className="anchor" id={`${item.question.split(' ').join('-')}`}></a>
+                            <div>
+                                <h4>{item.question}</h4>
+                            </div>
                             <Container dangerouslySetInnerHTML={{__html: item.answer}} />
                         </div>
                     ))}

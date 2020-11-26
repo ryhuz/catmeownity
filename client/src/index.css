@@ -8,15 +8,14 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
-  min-height: 100%;
   position: relative;
-  padding-bottom: 3.5rem;
+  padding-bottom: 5rem;
 }
 
 .logo-nav {
   width: 120%;
 }
+
 @media (prefers-reduced-motion: no-preference) {
   .logo-nav:hover {
     animation: App-logo-spin infinite 0.5s linear;
@@ -27,11 +26,11 @@ body {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
+
 .main-container {
   min-height: 100vh;
   overflow: hidden;
@@ -58,10 +57,65 @@ body {
   height: 400px;
   overflow-y: scroll;
 }
-.jumbotron.jumbotop{
+.jumbotron.jumbotop, .jumbotron.jumboacc {
+  background-image: url("https://images.pexels.com/photos/2817419/pexels-photo-2817419.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  margin-top: 63px;
+  padding-top: 63px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 37.6%;
+  opacity: 0.85;
+}
+
+.jumbotron.jumbocat {
+  background-image: url("https://images.pexels.com/photos/3250642/pexels-photo-3250642.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  margin-top: 63px;
+  padding-top: 63px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 55%;
+  opacity: 0.85;
+}
+
+.jumbotron.jumboboard {
+  margin: 0;
+  margin-top: 63px;
+  background-image: url("https://images.pexels.com/photos/37337/cat-silhouette-cats-silhouette-cat-s-eyes.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+}
+
+#jumbo {
+  background-image: url("https://images.pexels.com/photos/2817419/pexels-photo-2817419.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  height: 480px;
+  margin-bottom: 0em;
   padding-top: 108px;
 }
 
+#cat-holder{
+  background-color: #110c09d2;
+  padding: 50px 0 50px 0;
+}
+#profile-name{
+  background-color: #110c09d2;
+  padding: 20px 0 30px 50px;
+}
+
+.jumboheader {
+  background-color: #eddcd294;
+  padding: 20px 0 20px 0;
+}
+
+#title-container {
+  background-color: #eddcd294;
+  margin-top: 3em;
+}
 .to-link:hover {
   cursor: pointer;
 }
@@ -76,6 +130,7 @@ body {
   background-color: #eddcd2;
   /* padding: 5px 10px; */
 }
+
 #dashie:hover {
   background-color: #fcbf49;
 }
@@ -83,6 +138,7 @@ body {
 #search {
   background-color: #eddcd2;
 }
+
 #search:hover {
   background-color: #fcbf49;
 }
@@ -90,6 +146,7 @@ body {
 #logout {
   background-color: #eddcd2;
 }
+
 #logout:hover {
   background-color: #fcbf49;
 }
@@ -120,49 +177,9 @@ body {
   background-color: #293241;
 }
 
-#jumbo-dashboard {
-  margin: 0;
-  margin-top: 5em;
-  /* background-color: #b7b7a4; */
-  border-radius: 0;
-  background-image: url("https://images.pexels.com/photos/37337/cat-silhouette-cats-silhouette-cat-s-eyes.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.85;
-  height: 30vh;
-}
-
-#jumbo {
-  /* background-color: #b7b7a4; */
-  background-image: url("https://images.pexels.com/photos/2817419/pexels-photo-2817419.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.85;
-  height: 70vh;
-  margin-bottom: 0em;
-}
-
-.container-bg {
-  background-color: #f0efeb;
-}
-
-#title-container {
-  margin-top: 8em;
-}
-
-#search-container {
-  padding: 2em;
-}
-
 .learn-container {
   padding: 2rem;
   background-color: #e9ecef;
-}
-
-#search-bar {
-  margin-top: 1rem;
 }
 
 #footerz {
@@ -172,17 +189,21 @@ body {
   left: 0;
   padding: 1rem;
   text-align: center;
-  background-color: #ffa69e;
+  background-color: #ffdab9c2;
 }
+
 #login {
   background-color: #EDDCD2;
 }
+
 #login:hover {
   background-color: #FCBF49;
 }
+
 #register {
   background-color: #EDDCD2;
 }
+
 #register:hover {
   background-color: #FCBF49;
 }
@@ -260,4 +281,37 @@ body {
 #btn-add-search:hover {
   background-color: #006d77;
   border: none;
+}
+a.anchor {
+  display: block;
+  position: relative;
+  top: -90px;
+  visibility: hidden;
+}
+a:hover {
+  text-shadow: 1px 1px 2px #4B4B4B;
+}
+
+#uncontrolled-tab-example-tab-comment {
+  color: #6F6F6F;
+}
+
+#uncontrolled-tab-example-tab-comment.active {
+  color: #4B4B4B;
+}
+
+#uncontrolled-tab-example-tab-photos {
+  color: #6F6F6F;
+}
+
+#uncontrolled-tab-example-tab-photos.active {
+  color: #4B4B4B;
+}
+
+#uncontrolled-tab-example-tab-feeding {
+  color: #6F6F6F;
+}
+
+#uncontrolled-tab-example-tab-feeding.active {
+  color: #4B4B4B;
 }

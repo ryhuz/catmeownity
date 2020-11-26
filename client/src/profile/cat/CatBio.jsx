@@ -143,7 +143,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
             await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
                 names: addName
             });
-            document.querySelector('#addNameInput').value  = ""
+            document.querySelector('#addNameInput').value = ""
             fetchCat();
             setShowEditCat(true)
         } catch (e) {
@@ -186,54 +186,56 @@ function CatBio({ cat, setCat, user, fetchCat }) {
     return (
         <Col ref={node}>
             {/* Check if edit button is pressed then show edit form and update button */}
-            {showEditCat ? <div >
-                <InputGroup  >
-                    <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" id="addNameInput"/>
-                    <InputGroup.Append>
-                        <Button variant="outline-secondary" onClick={addButtonName}>Add</Button>
-                    </InputGroup.Append>
-                </InputGroup>
-                {cat.cat.names.length > 1 &&
-                    <div>
-                        <small>Also known as:</small>
+            {showEditCat ?
+                <div >
+                    <InputGroup  >
+                        <Form.Control type="text" placeholder={`Not everyone calls this kitty ${cat.cat.names[0]}`} defaultValue={cat.cat.names[0]} onChange={changeHandler} name="names" aria-describedby="basic-addon2" id="addNameInput" />
+                        <InputGroup.Append>
+                            <Button variant="outline-secondary" onClick={addButtonName}>Add</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    {cat.cat.names.length > 1 &&
                         <div>
-                            {displayOtherNames()}
+                            <small>Also known as:</small>
+                            <div>
+                                {displayOtherNames()}
+                            </div>
+                        </div>
+                    }
+                    <div>
+                        <small>Gender:</small>
+                        <div className="h5">
+                            <Form.Control as="select" type="select" onChange={changeHandler} defaultValue={cat.cat.gender} name="gender">
+                                <option value="">Select One</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Not Sure">Not Sure</option>
+                            </Form.Control>
                         </div>
                     </div>
-                }
-                <div>
-                    <small>Gender:</small>
-                    <div className="h5">
-                        <Form.Control as="select" type="select" onChange={changeHandler} defaultValue={cat.cat.gender} name="gender">
-                            <option value="">Select One</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Not Sure">Not Sure</option>
-                        </Form.Control>
+                    <div>
+                        <small>Breed:</small>
+                        <div className="h5">
+                            <Form.Control type="text" placeholder="Enter breed of cat" onChange={changeHandler} defaultValue={cat.cat.breed} name="breed" />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <small>Breed:</small>
-                    <div className="h5">
-                        <Form.Control type="text" placeholder="Enter breed of cat" onChange={changeHandler} defaultValue={cat.cat.breed} name="breed" />
+                    <div>
+                        <small>Colour:</small>
+                        <div className="h5">
+                            <InputGroup  >
+                                <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colours" aria-describedby="basic-addon2" />
+                                <InputGroup.Append>
+                                    <Button variant="outline-secondary" onClick={addButtonColour}>Add</Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            {displayColours()}
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <small>Colour:</small>
-                    <div className="h5">
-                        <InputGroup  >
-                            <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colours" aria-describedby="basic-addon2" />
-                            <InputGroup.Append>
-                                <Button variant="outline-secondary" onClick={addButtonColour}>Add</Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        {displayColours()}
+                    <div className="d-flex justify-content-between">
+                        <Button variant="outline-secondary" onClick={editCat}>Update</Button>
                     </div>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <Button variant="outline-secondary" onClick={editCat}>Update</Button>
-                </div>
-            </div> : <div>
+                </div> :
+                <div className="text-light">
                     <h1 className="my-2">{cat.cat.names[0]}</h1>
                     {cat.cat.names.length > 1 &&
                         <div>

@@ -67,7 +67,7 @@ function CatProfile() {
                     {cat.cat.fed.slice(0, 3).map((el, index) => (
                         <li key={index}>
                             {`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by `}
-                            <NavLink to={`/profile/${el.byUser._id}`}>{el.byUser && el.byUser.name}</NavLink>
+                            <NavLink className="text-muted text-decoration-none" to={`/profile/${el.byUser._id}`}>{el.byUser && el.byUser.name}</NavLink>
                         </li>
                     ))}
                 </>
@@ -198,12 +198,12 @@ function CatProfile() {
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
                     <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
                 </Modal>
-                <Jumbotron className="jumbotop">
+                <Jumbotron className="jumbocat">
                     <Container>
-                        <Row>
+                        <Row id="cat-holder">
                             {/* Cat main picture and follow button */}
                             <Col>
-                                <img src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
+                                <Image thumbnail src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
                                 {!cat.defaultPhoto &&
                                     <Row xs={1}>
                                         <Col className='text-center py-2'>
@@ -250,7 +250,7 @@ function CatProfile() {
                                             ))}
                                         </div>}
                                         {/* Check if cat description is more than 3 to display show all comments button */}
-                                        {(cat.cat.desc.length) > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                        {(cat.cat.desc.length) > 3 && <Accordion.Toggle className="text-muted" as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                             {eventKey ? 'close' : 'show all comments...'}
                                         </Accordion.Toggle>}
                                     </Card.Header>
@@ -286,7 +286,7 @@ function CatProfile() {
                             <Accordion defaultActiveKey="0">
                                 <Card>
                                     <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        <Accordion.Toggle className="text-muted" as={Button} variant="link" eventKey="0">
                                             More photos
                                     </Accordion.Toggle>
                                     </Card.Header>
