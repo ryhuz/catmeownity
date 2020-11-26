@@ -336,6 +336,16 @@ body {
   border: none;
 }
 
+#btn-search-community {
+  background-color: #463f3a;
+  border: none;
+}
+
+#btn-search-community:hover {
+  background-color: #403d39;
+  border: none;
+}
+
 a.anchor {
   display: block;
   position: relative;

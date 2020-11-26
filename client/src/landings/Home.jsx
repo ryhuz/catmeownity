@@ -15,7 +15,7 @@ function Home() {
                         </p>
                     </Container>
                     <div>
-                        <NavLink to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
+                        <NavLink id="btn-search-community" to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
                     </div>
                 </Col>
             </Jumbotron>
