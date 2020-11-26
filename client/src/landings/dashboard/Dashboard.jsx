@@ -7,7 +7,6 @@ import ConfirmUnfollow from './ConfirmUnfollow';
 import pic from '../../resources/nocatpic.png'
 import noProfilePic from '../../resources/no-profile-pic.png'
 import ConfirmUntrack from './ConfirmUntrack';
-import '../../App.css'
 
 const Dashboard = () => {
   let token = localStorage.getItem('token')
@@ -73,9 +72,9 @@ const Dashboard = () => {
                 <Card.Body>
                   <div>{cat.location.street}</div>
                   <div>
-                    <Button variant="outline-danger" block onClick={() => toConfirmUnfollow(cat.names[0], cat.gender, cat._id)}>
+                    <div id="btn-unfollow" className="btn"  onClick={() => toConfirmUnfollow(cat.names[0], cat.gender, cat._id)}>
                       <i className="fas fa-cat mx-2"></i>Unfollow this cat
-                    </Button>
+                    </div>
                   </div>
                 </Card.Body>
               </Card>
@@ -129,10 +128,10 @@ const Dashboard = () => {
                       <>
                         <Col>
                           <div className="d-flex">
-                            <NavLink to={`/location/${place._id}`} className='btn btn-success btn-block'>
+                            <NavLink id="btn-follow-tracked" to={`/location/${place._id}`} className='btn'>
                               {place.street}
                             </NavLink>
-                            <div className='btn btn-outline-danger d-flex align-items-center' onClick={() => toConfirmUntrack(place.street, place._id)}>
+                            <div id="btn-unfollow-tracked" className='btn d-flex align-items-center' onClick={() => toConfirmUntrack(place.street, place._id)}>
                               <span aria-hidden="true">&times;</span>
                             </div>
                           </div>

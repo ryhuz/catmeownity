@@ -146,10 +146,10 @@ function UserProfile() {
                   </div>}
                 {ownProfile && user.user.image &&
                   <Col xs={11} className="mx-auto d-flex">
-                    <Button block variant="outline-dark" size="sm" className="my-1 mr-1" onClick={() => setUploadingPhoto(true)}>Change Picture</Button>
-                    <Button block variant="outline-danger" size="sm" className="my-1 ml-1" onClick={() => setConfirmDelPhoto(true)}>Remove Picture</Button>
+                    <Button id="btn-change-picture" block variant="outline-dark" size="sm" className="my-1 mr-1" onClick={() => setUploadingPhoto(true)}>Change Picture</Button>
+                    <Button id="btn-remove-picture" block variant="outline-danger" size="sm" className="my-1 ml-1" onClick={() => setConfirmDelPhoto(true)}>Remove Picture</Button>
                   </Col>}
-                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="dark" className="my-1" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></Col>}
+                {ownProfile && <Col xs={11} className="mx-auto"><Button id="btn-edit-profile" block variant="dark" className="my-1" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></Col>}
               </Col>
             </Row>
             <Row className="mt-4">

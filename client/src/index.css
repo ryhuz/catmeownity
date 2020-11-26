@@ -186,3 +186,78 @@ body {
 #register:hover {
   background-color: #FCBF49;
 }
+
+#btn-unfollow {
+  background-color: #e63946;
+  opacity: .85;
+  border-color: none;
+  color: white;
+}
+
+#btn-unfollow:hover {
+  background-color: #e5989b;
+  opacity: .85;
+  border-color: none;
+}
+
+#btn-follow-tracked {
+  margin: 10px;
+  background-color: #02c39a;
+  color: white;
+}
+
+#btn-follow-tracked:hover {
+  background-color: #00a896;
+  color: white;
+}
+
+#btn-unfollow-tracked {
+  margin: 10px;
+  background-color: #e63946;
+  color: white;
+}
+
+#btn-search {
+  background-color: white;
+}
+
+#btn-edit-profile {
+  background-color: #ddbea9;
+  border: none;
+}
+
+#btn-edit-profile:hover {
+  background-color: #f4a261;
+  border: none;
+}
+
+#btn-change-picture {
+  background-color: #e76f51;
+  border: none;
+  color: white;
+}
+
+#btn-change-picture:hover {
+  background-color: #f4a261;
+  border: none;
+}
+
+#btn-remove-picture {
+  background-color: #e63946;
+  color: white;
+  /* border: none; */
+}
+
+#btn-remove-picture:hover {
+  background-color: #e5989b;
+  border: none;
+}
+
+#btn-add-search {
+  background-color: #4ecdc4;
+  border: none;
+}
+#btn-add-search:hover {
+  background-color: #006d77;
+  border: none;
+}
