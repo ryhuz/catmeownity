@@ -37,11 +37,7 @@ const Login = ({ setValid }) => {
       setErr(error.response.data)
     }
   }
-  function handleEnter(e) {
-    if (e.key === 'Enter') {
-      login();
-    }
-  }
+
   function loginForm() {
     return (
       <>
