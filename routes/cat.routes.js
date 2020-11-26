@@ -103,6 +103,7 @@ router.post("/:userID/feed/:catID", async (req, res) => {
         let fed = new Fed({
             foodDescription,
             byUser: req.params.userID,
+            forCat: req.params.catID,
         })
 
         await fed.save()
@@ -116,6 +117,16 @@ router.post("/:userID/feed/:catID", async (req, res) => {
             }
         })
         await cat.save();
+
+        await User.findByIdAndUpdate(req.params.userID, {
+            $push: {
+                fed: {
+                    $each: [fed._id],
+                    $position: 0
+                }
+            }
+        })
+        await user.save();
 
         res.status(201).json({ message: "Successfully updated feeding records" })
     } catch (error) {

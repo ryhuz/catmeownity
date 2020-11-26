@@ -1,29 +1,36 @@
 import React from 'react'
-import { Carousel, Container, Jumbotron } from 'react-bootstrap'
+import { Carousel, Container, Image, Jumbotron } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
+import '../App.css'
 
 function Home() {
     return (
-        <>
-            <Jumbotron className='text-center jumbotop'>
-                <h1>CatMeownity</h1>
-                <p className="text-muted">
-                    Neighbourhood and community cats in an app
-                </p>
-                <Container>
-                    <NavLink to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
-                </Container>
+        <div className="container-bg">
+            <Jumbotron id="jumbo" className='text-center jumbotop'>
+            <Image id="bgtest" src="" />
+                <div id="search-container">
+                    <div id="title-container">
+                        <h1 style={{color: "black"}}>CatMeownity</h1>
+                        <p className="text-dark">
+                            Neighbourhood and community cats in an app
+                        </p>
+                    </div>
+                    <Container id="search-bar">
+                        <NavLink to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
+                    </Container>
+                </div>
             </Jumbotron>
-            <Container>
-                <h3>Learn more about cats</h3>
+            <div className="learn-container">
+                <h4 className="text-center p-4">Learn more about cats</h4>
                 <Carousel>
                     <Carousel.Item>
                         <img
+                            id="trivia1"
                             className="d-block w-100"
                             src="http://placehold.it/800x300"
                             alt="First slide"
                         />
-                        <Carousel.Caption>
+                        <Carousel.Caption bg="dark" className="text-dark">
                             <h3>First Cat Trivia</h3>
                             <p>Cats are awesome</p>
                         </Carousel.Caption>
@@ -53,8 +60,8 @@ function Home() {
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>
-            </Container>
-        </>
+            </div>
+        </div>
     )
 }
 

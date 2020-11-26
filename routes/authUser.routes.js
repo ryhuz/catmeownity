@@ -123,7 +123,10 @@ router.put("/:userID/tracked/:locationID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
-                trackedLocations: req.params.locationID
+                trackedLocations: {
+                    $each: [req.params.locationID],
+                    $position: 0
+                }
             }
         })
         res.status(200).json({ message: "Successfully added tracked location" });
@@ -165,7 +168,10 @@ router.put("/:userID/favourite/:catID", async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.userID, {
             $push: {
-                favourites: req.params.catID
+                favourites: {
+                    $each: [req.params.catID],
+                    $position: 0
+                }
             }
         })
         res.status(200).json({
@@ -213,5 +219,6 @@ router.delete("/:userID", async (req, res) => {
         res.status(400).json({ message: "Trouble finding user" });
     }
 })
+
 
 module.exports = router;

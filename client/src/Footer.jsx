@@ -1,11 +1,12 @@
 import React from 'react'
-import { Jumbotron } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
+import './App.css';
 
 function Footer() {
     return (
-        <Jumbotron className="mt-5 mb-0">
+        <Container id="footerz">
             THIS IS OUR FOOTER
-        </Jumbotron>
+        </Container>
     )
 }
 

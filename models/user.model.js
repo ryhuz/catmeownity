@@ -8,6 +8,7 @@ const userSchema = new Schema({
     trackedLocations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
     favourites: [{ type: Schema.Types.ObjectId, ref: 'Cat' }],
     descForCats: [{type: Schema.Types.ObjectId, ref: 'Desc'}],
+    fed: [{type: Schema.Types.ObjectId, ref: 'Fed'}],
     image: String,
     // userType: 
 });
