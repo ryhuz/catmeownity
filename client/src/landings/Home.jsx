@@ -8,13 +8,17 @@ function Home() {
         <div className="container-bg">
             <Jumbotron id="jumbo" className='text-center jumbotop'>
             <Image id="bgtest" src="" />
-                <h1 style={{color: "white"}}>CatMeownity</h1>
-                <p className="text-muted">
-                    Neighbourhood and community cats in an app
-                </p>
-                <Container>
-                    <NavLink to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
-                </Container>
+                <div id="search-container">
+                    <div id="title-container">
+                        <h1 style={{color: "white"}}>CatMeownity</h1>
+                        <p className="text-light">
+                            Neighbourhood and community cats in an app
+                        </p>
+                    </div>
+                    <Container id="search-bar">
+                        <NavLink to='/search' className='btn btn-block btn-dark btn-lg mt-5'>Search for a community with cats</NavLink>
+                    </Container>
+                </div>
             </Jumbotron>
             <Container className="">
                 <h4 className="text-center p-4">Learn more about cats</h4>

@@ -56,7 +56,8 @@ body {
   }
 }
 
- /* Navbar */
+/* Home */
+/* Navbar */
 
 .logo-nav {
   width: 120%;
@@ -80,6 +81,7 @@ body {
 
 .thewholenavbar {
   background-color: #cb997e;
+  opacity: .85;
 }
 
 #dashie {
@@ -111,11 +113,25 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  opacity: 0.85;
   height: 70vh;
+  margin-bottom: 1em;
 }
 
 .container-bg {
   background-color: #f0efeb;
+}
+
+#title-container {
+  margin-top: 8em;
+}
+
+#search-container {
+  padding: 2em;
+}
+
+#search-bar {
+  margin-top: 1rem;
 }
 
 #footerz {
