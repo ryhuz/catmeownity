@@ -95,6 +95,7 @@ router.get('/:id', async (req, res) => {
                 model: 'Fed',
                 populate: {
                     path: 'forCat',
+                    model: 'Cat',
                     select: 'names',
                 }
             }

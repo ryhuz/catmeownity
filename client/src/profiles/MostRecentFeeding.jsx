@@ -7,7 +7,7 @@ function MostRecentFeeding({ fed }) {
     return (
         <li>
             {`${fed.foodDescription} - `}
-            {/* <NavLink to={`/cat/${fed.forCat._id}`}>{fed.forCat.names[0]}</NavLink> */}
+            <NavLink to={`/cat/${fed.forCat._id}`}>{fed.forCat.names[0]}</NavLink>
             <div>
                 <small className="text-muted">{moment(fed.createdAt).fromNow()}</small>
             </div>
