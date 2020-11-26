@@ -8,7 +8,7 @@ const path = require('path');
 require('./lib/connection');
 
 /* middleware */
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
@@ -22,14 +22,14 @@ app.use("/api/auth/cats", passport.authenticate('jwt', { session: false }), requ
 app.use("/api/auth/user", passport.authenticate('jwt', { session: false }), require("./routes/authUser.routes"));
 app.use("/api/auth/location", passport.authenticate('jwt', { session: false}), require("./routes/authLocation.routes"));
 app.use("/api/auth/comment", passport.authenticate('jwt', { session: false}), require("./routes/comment.routes"));
-
+app.get("/api/*", (req, res) => {
+    res.status(404).json({ message: "Server route not found" });
+});
 app.get('/app', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
-app.get("*", (req, res) => {
-    res.status(404).json({ message: "Server route not found" });
-});
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Connected on ${process.env.PORT}`);
