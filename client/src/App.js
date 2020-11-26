@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
 import { BrowserRouter, Link, NavLink, Route, Switch } from 'react-router-dom'
 import CatProfile from './profiles/CatProfile';
 import UserProfile from './profiles/UserProfile';
@@ -14,6 +14,8 @@ import LogOut from './private/LogOut';
 import { decode } from "jsonwebtoken";
 import RegisterCatContainer from './newcat/RegisterCatContainer';
 import Footer from './Footer';
+import Logo from './resources/favicon-32x32.png'
+import './App.css';
 
 function App() {
   const [valid, setValid] = useState({
@@ -45,15 +47,23 @@ function App() {
   /* show this navbar when logged in */
   function navLoggedIn() {
     return (
-      <Navbar fixed="top" expand="lg" className="topnav py-2">
-        <NavLink className="navbar-brand" to="/">CatMeownity</NavLink>
+      <Navbar fixed="top" expand="lg" className="thewholenavbar topnav py-3">
+        <NavLink id="catmeownity-navbar" className="navbar-brand" to="/">
+        <img className="logo-nav"
+        src={Logo}
+        width="40"
+        // height="40"
+        // className="d-inline-block align-top"
+        alt="CatMeownity"
+        />
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <NavLink to="/dashboard" className="btn btn-light border-info mx-2">Dashboard</NavLink>
-            <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
-            <NavLink to="/logout" className='btn btn-light border-danger mx-2'>Log Out</NavLink>
-            <NavLink to="/" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
+            <NavLink to="/dashboard" id="dashie" className="btn mx-2">Dashboard</NavLink>
+            <NavLink to="/search" id="search" className="btn mx-2">Search</NavLink>
+            <NavLink to="/logout" id="logout" className='btn mx-2'>Log Out</NavLink>
+            <NavLink to="/" className='btn mx-2'><i className="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -62,15 +72,23 @@ function App() {
   /* show this navbar when NOT logged in */
   function navNotLoggedIn() {
     return (
-      <Navbar expand="lg" className="topnav py-2">
-        <NavLink className="navbar-brand" to="/">CatMeownity</NavLink>
+      <Navbar fixed="top" expand="lg" className="thewholenavbar topnav py-2">
+        <NavLink id="catmeownity-navbar" className="navbar-brand" to="/">
+        <img className="logo-nav"
+        src={Logo}
+        width="40"
+        // height="40"
+        // className="d-inline-block align-top"
+        alt="CatMeownity"
+        />
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Link className="mx-2 btn btn-dark" to="/login">Log In</Link>
-            <Link className="mx-2 btn btn-dark" to="/register">Register</Link>
-            <NavLink to="/search" className="btn btn-light border-info mx-2">Search</NavLink>
-            <NavLink to="/" className='btn btn-light border-info mx-2'><i className="fas fa-question-circle"></i></NavLink>
+            <Link id="dashie" to="/login" className="btn mx-2" >Log In</Link>
+            <Link id="search" to="/register" className="btn mx-2" >Register</Link>
+            <NavLink id="logout" to="/search" className="btn mx-2">Search</NavLink>
+            <NavLink to="/" className='btn mx-2'><i className="fas fa-question-circle"></i></NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

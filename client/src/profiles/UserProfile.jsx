@@ -131,7 +131,6 @@ function UserProfile() {
                       </div>
                     </Col>
                   </div>}
-                {/* <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button> */}
               </Col>
             </Row>
             <Row className="mt-4">
@@ -257,9 +256,3 @@ function UserProfile() {
 }
 
 export default UserProfile
-
-//onChange={changeHandler}
-//onClick={addButton}
-//onChange={changeHandler}
-//defaultValue={user.user.name}
-//defaultValue={user.user.email}
