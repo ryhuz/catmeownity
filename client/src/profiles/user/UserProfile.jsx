@@ -9,6 +9,8 @@ import UserTrackedLocations from './UserTrackedLocations';
 import UserFavourites from './UserFavourites';
 import MostRecentComments from './MostRecentComments';
 import MostRecentFeeding from './MostRecentFeeding';
+import ConfirmDeletePhoto from './ConfirmDeletePhoto';
+
 
 /* REDIRECT IF USER NOT FOUND */
 
@@ -28,6 +30,7 @@ function UserProfile() {
   const [form, setForm] = useState({});
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [ownProfile, setOwnProfile] = useState(false);
+  const [confirmDelPhoto, setConfirmDelPhoto] = useState(false);
 
   //fetch user
   useEffect(() => {
@@ -69,9 +72,11 @@ function UserProfile() {
   }
 
   const handleClick = e => {
-    if (node.current.contains(e.target)) {
-      // inside click
-      return;
+    if (node) {
+      if (node.current.contains(e.target)) {
+        // inside click
+        return;
+      }
     }
     // outside click 
     setShowEditProfile(false)
@@ -95,9 +100,15 @@ function UserProfile() {
   function addPhoto() {
     fetchUser();
   }
-
-  console.log(user)
-
+  async function delPhoto() {
+    try {
+      await Axios.delete(`http://localhost:8080/auth/user/delphoto/${user.user._id}`);
+      setConfirmDelPhoto(false);
+      fetchUser();
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
     <>
       {/* My Profile Jumbotron */}
@@ -112,6 +123,9 @@ function UserProfile() {
         <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
           <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={addPhoto} id={id} />
         </Modal>
+        <Modal show={confirmDelPhoto} onHide={() => (setConfirmDelPhoto(false))}>
+          <ConfirmDeletePhoto setConfirmDelPhoto={setConfirmDelPhoto} delPhoto={delPhoto} />
+        </Modal>
         {!showEditProfile ?
           <Container className="d-flex flex-row border">
             <Row className="p-3">
@@ -119,7 +133,6 @@ function UserProfile() {
                 <div>
                   <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
                 </div>
-                {ownProfile && <div><Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></div>}
                 {!user.user.image && ownProfile &&
                   <div>
                     <Col className='text-center py-2'>
@@ -127,10 +140,16 @@ function UserProfile() {
                     </Col>
                     <Col className='text-center'>
                       <div className='btn btn-success' onClick={() => setUploadingPhoto(true)}>
-                        Add their first photo!
+                        Add your first photo!
                       </div>
                     </Col>
                   </div>}
+                {ownProfile && user.user.image &&
+                  <Col xs={11} className="mx-auto d-flex">
+                    <Button block variant="outline-dark" size="sm" className="my-1 mr-1" onClick={() => setUploadingPhoto(true)}>Change Picture</Button>
+                    <Button block variant="outline-danger" size="sm" className="my-1 ml-1" onClick={() => setConfirmDelPhoto(true)}>Remove Picture</Button>
+                  </Col>}
+                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="dark" className="my-1" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></Col>}
               </Col>
             </Row>
             <Row className="mt-4">
@@ -189,7 +208,7 @@ function UserProfile() {
                 <Card.Body>
                   <Card.Title>Most recent favourites</Card.Title>
                   {user.user.favourites.slice(0, 3).map((el) => (
-                    <UserFavourites cat={el} fetchUser={fetchUser} ownProfile={ownProfile}/>
+                    <UserFavourites cat={el} fetchUser={fetchUser} ownProfile={ownProfile} />
                   ))}
                 </Card.Body>
               </Card>
@@ -203,7 +222,7 @@ function UserProfile() {
                 <Card.Body>
                   <Card.Title>Most recent tracked locations</Card.Title>
                   {user.user.trackedLocations.slice(0, 3).map((el) => (
-                    <UserTrackedLocations location={el} fetchUser={fetchUser} ownProfile={ownProfile}/>
+                    <UserTrackedLocations location={el} fetchUser={fetchUser} ownProfile={ownProfile} />
                   ))}
                 </Card.Body>
               </Card>
