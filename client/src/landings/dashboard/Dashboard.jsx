@@ -64,11 +64,11 @@ const Dashboard = () => {
           {profile.profile.favourites.map(cat => (
             <Col key={cat._id}>
               <Card>
-                <NavLink to={`/cat/${cat._id}`}>
+                <NavLink className="text-muted text-decoration-none" to={`/cat/${cat._id}`}>
                   <Image src={showCatPhoto(cat)} width="100%" className="img-thumbnail" />
                 </NavLink>
                 <Card.Header className='h5'>
-                  <NavLink to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
+                  <NavLink className="text-muted text-decoration-none" to={`/cat/${cat._id}`}>{cat.names[0]}</NavLink>
                 </Card.Header>
                 <Card.Body>
                   <div>{cat.location.street}</div>

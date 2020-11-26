@@ -93,7 +93,7 @@ function Help() {
                 <div className="h5">
                     {helpItems.map((item, index) => (
                         <div key={index} className="my-3">
-                            <a href={`#${item.question.split(' ').join('-')}`}><li className="my-2">{item.question}</li></a>
+                            <a className="text-muted" href={`#${item.question.split(' ').join('-')}`}><li className="my-2">{item.question}</li></a>
                         </div>
                     ))}
                 </div>
