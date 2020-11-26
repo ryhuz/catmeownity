@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel, Col, Container, Image, Jumbotron } from 'react-bootstrap'
+import { Carousel, Col, Container, Jumbotron } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import '../App.css'
 
