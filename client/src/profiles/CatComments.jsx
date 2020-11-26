@@ -2,7 +2,7 @@ import React from 'react'
 import Axios from 'axios'
 import { useParams, NavLink } from 'react-router-dom'
 import { decode } from "jsonwebtoken"
-import { ListGroupItem, Modal } from 'react-bootstrap'
+import { Col, ListGroupItem, Modal, Row } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import ConfirmDeleteComment from './ConfirmDeleteComment'
 
@@ -43,25 +43,24 @@ function CatComments({ desc, fetchCat }) {
     return (
         <div>
             <ListGroupItem>
-                <div className="d-flex bd-highlight mb-3">
-                    <div className="font-weight-bold p-2 bd-highlight">
+                <Row>
+                    <Col sm={2} className="p-2">
                         <NavLink exact to={`/profile/${desc.byUser._id}`}>{desc.byUser && desc.byUser.name}</NavLink>
-                    </div>
-                    <div className="font-weight-bold p-2 bd-highlight">
+                    </Col>
+                    <Col className="p-2">
                         {desc.catDescription}
-                    </div>
-                    <div className="d-flex text-muted ml-auto p-2 bd-highlight">
-
+                    </Col>
+                    <Col sm={2} className="d-flex text-muted p-2">
                         <div>{moment(desc.createdAt).fromNow()}</div>
                         <div className="mx-4">
                             {ownComment && <div>
-                                <button type="button" className="close" aria-label="Close" onClick={()=>confirmDelComment(desc._id)}>
+                                <button type="button" className="close" aria-label="Close" onClick={() => confirmDelComment(desc._id)}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>}
                         </div>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </ListGroupItem>
             <Modal show={confirmDel} onHide={() => (setConfirmDel(false))}>
                 <ConfirmDeleteComment setConfirmDel={setConfirmDel} delComment={() => deleteCatDescription(commentIdToDelete)} />
