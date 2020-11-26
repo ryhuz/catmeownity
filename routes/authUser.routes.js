@@ -40,37 +40,29 @@ router.get("/:userID", async (req, res) => {
 // edit user
 router.put("/:userID", async (req, res) => {
     try {
-        let { name, homeLocation, favourites, image } = req.body;
-        console.log(req.body)
-        await User.findByIdAndUpdate(req.params.userID, { name, homeLocation, favourites, image });
+        let { name, email } = req.body;
+        await User.findByIdAndUpdate(req.params.userID, { name, email });
         res.status(200).json({ message: "Successfully updated user profile" });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
     }
 })
 
-// edit user details
-// router.put("/editprofile/:userID", async (req, res) => {
-//     try {
-//         let { name, email } = req.body;
-//         console.log(req.body)
-//         await User.findByIdAndUpdate(req.params.userID, { name, email });
-//         res.status(200).json({ message: "Successfully updated user profile" });
-//     } catch (error) {
-//         res.status(400).json({ message: "Trouble finding user" });
-//     }
-// })
-
-// edit user image
-// router.put("/:userID", async (req, res) => {
-//     try {
-//         let { name, homeLocation, favourites, image } = req.body;
-//         await User.findByIdAndUpdate(req.params.userID, { name, homeLocation, favourites, image });
-//         res.status(200).json({ message: "Successfully updated user profile" });
-//     } catch (error) {
-//         res.status(400).json({ message: "Trouble finding user" });
-//     }
-// })
+//add user photo
+router.put('/addphoto/:userID', async (req, res) => {
+    try {
+        let { image } = req.body;
+        await User.findByIdAndUpdate(req.params.userID, { image })
+        res.status(200).json({ message: "successfully added photo to user" });
+    } catch (error) {
+        if (error.code === 11000) {
+            res.status(400).json({ message: "This email address has already been registered" })
+        } else {
+            console.log(error)
+            res.status(400).json({ message: "Error here!" })
+        }
+    }
+})
 
 //add tracked location
 router.put("/:userID/tracked/:locationID", async (req, res) => {
@@ -85,6 +77,7 @@ router.put("/:userID/tracked/:locationID", async (req, res) => {
         res.status(400).json({ message: "Trouble finding user" });
     }
 })
+
 //remove tracked location
 router.put("/:userID/untrack/:locationID", async (req, res) => {
     try {
@@ -121,13 +114,14 @@ router.put("/:userID/favourite/:catID", async (req, res) => {
                 favourites: req.params.catID
             }
         })
-        res.status(200).json({ 
+        res.status(200).json({
             message: "Successfully added cat to favorites"
         });
     } catch (error) {
         res.status(400).json({ message: "Trouble finding user" });
     }
 })
+
 /* remove favorites */
 router.put("/:userID/unfavourite/:catID", async (req, res) => {
     try {

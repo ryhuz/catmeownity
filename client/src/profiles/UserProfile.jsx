@@ -1,130 +1,165 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Form, InputGroup, Image, Jumbotron, Row, Table } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Button, Card, Col, Container, Form, Image, Jumbotron, Row, Table, Modal } from 'react-bootstrap';
+import pic from '../resources/no-profile-pic.png'
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
+import { decode } from "jsonwebtoken";
+import UserPhotoUpload from '../profiles/UserPhotoUpload';
 
 /* REDIRECT IF USER NOT FOUND */
 
 function UserProfile() {
   let token = localStorage.getItem('token');
   let { id } = useParams();
+  let loggedUser = decode(token)
   Axios.defaults.headers.common['x-auth-token'] = token;
+  const node = useRef()
 
   //Pulls user data
   const [user, setUser] = useState({
     user: null,
     found: false,
   });
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [form, setForm] = useState({});
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [ownProfile, setOwnProfile] = useState(false);
 
+  //fetch user
   useEffect(() => {
-    async function fetchUser() {
-      try {
-        let resp = await Axios.get(`http://localhost:8080/user/${id}`);
-        setUser({ user: resp.data.user, found: true });
-        console.log(resp.data.user)
-      } catch (err) {
-        console.log(err.response)
-      }
-    }
     fetchUser()
   }, [id])
-  
-  const [showEditProfile, setShowEditProfile] = useState(false);
-  const [addName, setAddName] = useState("")
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-  });
+
+  //check if click outside everytime own profile changes
+  useEffect(() => {
+    // add when mounted
+    ownProfile && document.addEventListener("mousedown", handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [ownProfile]);
+
+  //Check if own profile everytime user changes
+  useEffect(() => {
+    if (user.found && token) {
+      if (user.user._id === loggedUser.user._id) {
+        setOwnProfile(true)
+        setForm({
+          name: user.user.name,
+          email: user.user.email,
+        })
+      } else {
+        setOwnProfile(false)
+      }
+    }
+  }, [user])
+
+  async function fetchUser() {
+    try {
+      let resp = await Axios.get(`http://localhost:8080/user/${id}`);
+      setUser({ user: resp.data.user, found: true })
+    } catch (err) {
+      console.log(err.response)
+    }
+  }
+
+  const handleClick = e => {
+    if (node.current.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click 
+    setShowEditProfile(false)
+  };
 
   function changeHandler(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
-    if (e.target.name === "name" || "email") {
-      if (e.target.value !== "") {
-        setAddName(e.target.value)
-      }
-    }
-}
-
-async function editProfile() {
-  try {
-    if (user.user.name.length > 1) {
-      user.user.name.replace(addName);
-      await Axios.put(`http://localhost:8080/auth/user/${id}`, {
-        name: user.user.name,
-        email: user.user.email,
-      }, form);
-      // console.log("hello");
-    } else {
-      await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
-    }
-      setShowEditProfile(false)
-      window.location.reload()
-  } catch (err) {
-      console.log(err.response)
   }
-}
 
-// const [uploadingPhoto, setUploadingPhoto] = useState(false);
-// async function uploadPicture() {
-//   try {
-//     let tempPhoto;
+  async function editProfile() {
+    try {
+      await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
+      setShowEditProfile(false)
+      fetchUser()
 
-//   } catch (error) {
+    } catch (err) {
+      console.log(err.response)
+    }
+  }
 
-//   }
+  function addPhoto() {
+    fetchUser();
+  }
 
-// }
-
+  console.log(user)
+  console.log(ownProfile)
   return (
     <>
-    {/* My Profile Jumbotron */}
-    <Jumbotron className="bg-dark jumbotop">
-      <Container>
-        <h3 className="mt-4 text-white">My Profile</h3>
-      </Container>
-    </Jumbotron>
+      {/* My Profile Jumbotron */}
+      <Jumbotron className="bg-dark jumbotop">
+        <Container>
+          <h3 className="mt-4 text-white">My Profile</h3>
+        </Container>
+      </Jumbotron>
 
-    {/* Start of Profile */}
-      {user.found &&
-        <Container className="d-flex flex-row border">
-          <Row className="p-3">
-            <Col>
-              <div>
-                <Image className="mx-auto p-4" width="100%" src={user.user.image} roundedCircle />
-              </div>
-              <Button className="btn btn-dark btn-block" onClick={() => setShowEditProfile(true)}>Edit Profile</Button>
-              {/* <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button> */}
-            </Col>
-          </Row>
-          <Row className="mt-4">
-            <Col className="m-4">
-              <div>
-                <Table borderless size="lg">
-                  <tbody>
-                    <tr>
-                      <td><strong>Name: </strong></td>
-                      <td> {user.user.name} </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Email: </strong></td>
-                      <td> {user.user.email}  </td>
-                    </tr>
-                  </tbody>
-                </Table>
-          <Row>
-            <Col>
-
-            </Col>
-          </Row>
-              {/* Check if edit button is pressed then show edit form and update button */}
-                {showEditProfile ? <div>
+      {/* Start of Profile */}
+      {user.found && <Col>
+        <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
+          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={addPhoto} id={id} />
+        </Modal>
+        {!showEditProfile ?
+          <Container className="d-flex flex-row border">
+            <Row className="p-3">
+              <Col>
+                <div>
+                  <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
+                </div>
+                {ownProfile && <div><Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></div>}
+                {!user.user.image && ownProfile &&
+                  <div>
+                    <Col className='text-center py-2'>
+                      You don't have a picture yet.
+                    </Col>
+                    <Col className='text-center'>
+                      <div className='btn btn-success' onClick={() => setUploadingPhoto(true)}>
+                        Add their first photo!
+                      </div>
+                    </Col>
+                  </div>}
+                {/* <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button> */}
+              </Col>
+            </Row>
+            <Row className="mt-4">
+              <Col className="m-4">
+                <div>
+                  <Table borderless size="lg">
+                    <tbody>
+                      <tr>
+                        <td><strong>Name: </strong></td>
+                        <td> {user.user.name} </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Email: </strong></td>
+                        <td> {user.user.email}  </td>
+                      </tr>
+                    </tbody>
+                  </Table> </div>
+              </Col>
+            </Row>
+          </Container> : <div>
+            <Container className="d-flex flex-row border">
+              <Row className="p-3">
+                <Col>
+                  <div>
+                    <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
+                  </div>
+                </Col>
+              </Row>
+              <Row className="mt-4" ref={node}>
+                <Col className="m-4">
                   <small>Name:</small>
-                  <InputGroup>
-                    <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="names" aria-describedby="basic-addon2" />
-                      {/* <InputGroup.Append>
-                        <Button variant="outline-secondary" onClick={addButton}>Add</Button>
-                      </InputGroup.Append> */}
-                  </InputGroup>
+                  <Form.Control type="text" placeholder="Enter name" defaultValue={user.user.name} onChange={changeHandler} name="name" aria-describedby="basic-addon2" />
                   <div>
                     <small>Email:</small>
                     <div className="h5">
@@ -132,20 +167,17 @@ async function editProfile() {
                     </div>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <Button variant="dark" onClick={() => setShowEditProfile(false)}>Back</Button>
-                    {/* <Button variant="dark" onClick={() => setShowEditProfile(true)}>Edit</Button> */}
                     <Button variant="dark" onClick={editProfile}>Update</Button>
                   </div>
-                  </div> : <div>
-                </div>}
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      }
-    {/* End of Profile */}
+                </Col>
+              </Row>
+            </Container>
+          </div >}
+      </Col>}
 
-    {/* Start of Container with locations and favorite cats */}
+      {/* End of Profile */}
+
+      {/* Start of Container with locations and favorite cats */}
       <Container className="d-flex border border-dark mt-4 mb-4">
         <Row className="p-3">
           <Col>
@@ -166,19 +198,19 @@ async function editProfile() {
           </Col>
         </Row>
       </Container>
-    {/* End of Container */}
+      {/* End of Container */}
 
-    {/* Start of Footer */}
+      {/* Start of Footer */}
       <Card className="bg-dark text-white p-3 mx-auto">
         <Card.Body>
-        <Form className="text-center">
-          <Form.Label>
-            <Card.Title className="text-center h-5">Kitty stuff</Card.Title>
-          </Form.Label>
-        </Form>
-      </Card.Body>
+          <Form className="text-center">
+            <Form.Label>
+              <Card.Title className="text-center h-5">Kitty stuff</Card.Title>
+            </Form.Label>
+          </Form>
+        </Card.Body>
       </Card>
-    {/* End of Footer */}
+      {/* End of Footer */}
     </>
   )
 }

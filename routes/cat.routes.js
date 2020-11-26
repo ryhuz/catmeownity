@@ -198,6 +198,7 @@ router.put('/addphoto/:catID', async (req, res) => {
         }
     }
 })
+
 /* Del cat photo */
 router.put('/delphoto/:catID', async (req, res) => {
     try {
