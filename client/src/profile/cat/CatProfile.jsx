@@ -322,7 +322,7 @@ function CatProfile() {
                                         </tr>
                                         <tr>
                                             <td>Residing:</td>
-                                            <td>{`${cat.cat.location.district.name},${cat.cat.location.street}`}</td>
+                                            <td>{`${cat.cat.location.district.name}, ${cat.cat.location.street}`}</td>
                                         </tr>
                                         <tr>
                                             <td>
