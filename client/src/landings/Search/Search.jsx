@@ -23,12 +23,14 @@ function Search() {
     }
     return (
         <>
-            <Jumbotron className='bg-secondary jumbotop'>
-                <h1 className='text-center'>Search</h1>
-                <Container>
-                    {showAreaButtons()}
-                </Container>
+            <Jumbotron className='jumboboard'>
+                <div className="ml-5 pl-5 text-white">
+                    <h1>Search</h1>
+                </div>
             </Jumbotron >
+            <Container className="my-5">
+                {showAreaButtons()}
+            </Container>
             {area !== "" &&
                 <AreaResult area={area} />
             }
