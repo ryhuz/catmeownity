@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Col, Container, Form, Image, Jumbotron, Row, Table, Modal } from 'react-bootstrap';
-import pic from '../resources/no-profile-pic.png'
+import pic from '../../resources/no-profile-pic.png'
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { decode } from "jsonwebtoken";
-import UserPhotoUpload from '../profiles/UserPhotoUpload';
+import UserPhotoUpload from './UserPhotoUpload';
 
 /* REDIRECT IF USER NOT FOUND */
 
@@ -88,12 +88,10 @@ function UserProfile() {
     }
   }
 
-  function addPhoto() {
+  function reFetchUser() {
     fetchUser();
   }
 
-  console.log(user)
-  console.log(ownProfile)
   return (
     <>
       {/* My Profile Jumbotron */}
@@ -106,7 +104,7 @@ function UserProfile() {
       {/* Start of Profile */}
       {user.found && <Col>
         <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={addPhoto} id={id} />
+          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={reFetchUser} id={id} addOrChange={user.user.image ? "change" : "add"} />
         </Modal>
         {!showEditProfile ?
           <Container className="d-flex flex-row border">
@@ -115,7 +113,8 @@ function UserProfile() {
                 <div>
                   <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
                 </div>
-                {ownProfile && <div><Button className="btn btn-dark btn-block" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></div>}
+                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="outline-dark" className="my-1" ref={node} onClick={() => setUploadingPhoto(true)}>Change Profile Pic</Button></Col>}
+                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="dark" className="my-1" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></Col>}
                 {!user.user.image && ownProfile &&
                   <div>
                     <Col className='text-center py-2'>

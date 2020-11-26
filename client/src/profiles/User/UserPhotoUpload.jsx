@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, FormFile, Image, InputGroup, Modal, Row } from 'react-bootstrap'
 import Axios from 'axios';
-import Loading from '../Loading'
+import Loading from '../../Loading'
 
-function UserPhotoUpload({ setUploadingPhoto, id, addPhoto }) {
+function UserPhotoUpload({ setUploadingPhoto, id, addPhoto, addOrChange }) {
     const [imageFile, setImageFile] = useState({ file: null, url: null });
     const [err, setErr] = useState({
         photo: "",
         desc: "",
     });
     const [loading, setLoading] = useState(false);
+    let toAdd = addOrChange === 'add';
 
     function imageSelect(e) {
         if (e.target.files[0]) {
@@ -40,19 +41,23 @@ function UserPhotoUpload({ setUploadingPhoto, id, addPhoto }) {
         try {
             const formData = new FormData();
             formData.append('file', imageFile.file);
-            formData.append('upload_preset', 'catmeownity_cat');
+            formData.append('upload_preset', 'catmeownity_user');
 
             const cloudinary = 'https://api.cloudinary.com/v1_1/ryhuz/image/upload';
             const instance = Axios.create();
             instance.defaults.headers.common = {};
-
-
             let img = await instance.post(cloudinary, formData);
             let image = img.data.secure_url;
-            console.log(image)
-            await Axios.put(`http://localhost:8080/auth/user/addphoto/${id}`, {
-                image
-            });
+console.log(toAdd)
+            if (toAdd) {
+                await Axios.put(`http://localhost:8080/auth/user/addphoto/${id}`, {
+                    image
+                });
+            } else {
+                await Axios.put(`http://localhost:8080/auth/user/changephoto/${id}`, {
+                    image
+                });
+            }
             setUploadingPhoto(false);
             setLoading(false);
             addPhoto();
@@ -64,7 +69,11 @@ function UserPhotoUpload({ setUploadingPhoto, id, addPhoto }) {
     return (
         <>
             <Modal.Header closeButton>
-                <Modal.Title>Upload photo of yourself</Modal.Title>
+                <Modal.Title>
+                    {toAdd ? 'Upload photo of yourself' :
+                        'Change your profile picutre'
+                    }
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>Choose a photo and upload!
@@ -80,7 +89,7 @@ function UserPhotoUpload({ setUploadingPhoto, id, addPhoto }) {
                         <InputGroup className="border p-2 justify-content-between">
                             <FormFile type="file" name="image" onChange={imageSelect} />
                             <InputGroup.Append>
-                                {imageFile.file &&
+                                {imageFile.file && !loading &&
                                     <span className="btn pr-3 pt-1 text-danger" onClick={remove}>Remove upload</span>
                                 }
                             </InputGroup.Append>

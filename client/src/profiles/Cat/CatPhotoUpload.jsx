@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, FormControl, FormFile, Image, InputGroup, Modal, Row } from 'react-bootstrap'
 import Axios from 'axios';
-import Loading from '../Loading'
+import Loading from '../../Loading'
 
 function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user }) {
     const [imageFile, setImageFile] = useState({ file: null, url: null });

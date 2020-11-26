@@ -3,6 +3,7 @@ const Cat = require("../models/cats.model");
 const User = require("../models/user.model");
 const Location = require("../models/location.model");
 const District = require("../models/district.model");
+const cloudinary = require('cloudinary').v2;
 
 //get user
 router.get("/:userID", async (req, res) => {
@@ -63,7 +64,33 @@ router.put('/addphoto/:userID', async (req, res) => {
         }
     }
 })
+//change user photo
+router.put('/changephoto/:userID', async (req, res) => {
+    try {
+        let { image } = req.body;
+        let user = await User.findById(req.params.userID);
 
+        let temp = user.image;
+        let start = temp.indexOf('catmeownity');
+        let end = temp.split('').reverse().join('').indexOf('.')
+
+        let publicID = temp.slice(start, temp.length - (end + 1))
+
+        cloudinary.api.delete_resources([publicID],
+            function (error, result) { console.log(result, error); });
+
+        user.image = image;
+        user.save();
+        res.status(200).json({ message: "successfully changed user photo" });
+    } catch (error) {
+        if (error.code === 11000) {
+            res.status(400).json({ message: "This email address has already been registered" })
+        } else {
+            console.log(error)
+            res.status(400).json({ message: "Error here!" })
+        }
+    }
+})
 //add tracked location
 router.put("/:userID/tracked/:locationID", async (req, res) => {
     try {
