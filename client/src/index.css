@@ -214,13 +214,11 @@ a.anchor {
   visibility: hidden;
 }
 a:hover {
-  border-radius: 5px;
-  border-bottom: 3px solid #E5E5E5;
-  border-left: 3px solid #E5E5E5;
+  text-shadow: 1px 1px 2px #4B4B4B;
 }
 
 #uncontrolled-tab-example-tab-comment {
-  color: #B7B7B7;
+  color: #6F6F6F;
 }
 
 #uncontrolled-tab-example-tab-comment.active {
@@ -228,7 +226,7 @@ a:hover {
 }
 
 #uncontrolled-tab-example-tab-photos {
-  color: #B7B7B7;
+  color: #6F6F6F;
 }
 
 #uncontrolled-tab-example-tab-photos.active {
@@ -236,7 +234,7 @@ a:hover {
 }
 
 #uncontrolled-tab-example-tab-feeding {
-  color: #B7B7B7;
+  color: #6F6F6F;
 }
 
 #uncontrolled-tab-example-tab-feeding.active {
