@@ -112,9 +112,11 @@ function UserProfile() {
   return (
     <>
       {/* My Profile Jumbotron */}
-      {user.found && <Jumbotron className="bg-dark jumbotop">
+      {user.found && <Jumbotron className="bg-dark jumbocat">
         <Container>
-          <h3 className="mt-4 text-white">{`${user.user.name}'s Profile`}</h3>
+          <div id="profile-name">
+            <h3 className="mt-4 text-white">{`${user.user.name}'s Profile`}</h3>
+          </div>
         </Container>
       </Jumbotron>}
 
@@ -254,18 +256,6 @@ function UserProfile() {
         </Row>
       </Container>}
       {/* End of Container */}
-
-      {/* Start of Footer */}
-      <Card className="bg-dark text-white p-3 mx-auto">
-        <Card.Body>
-          <Form className="text-center">
-            <Form.Label>
-              <Card.Title className="text-center h-5">Kitty stuff</Card.Title>
-            </Form.Label>
-          </Form>
-        </Card.Body>
-      </Card>
-      {/* End of Footer */}
     </>
   )
 }

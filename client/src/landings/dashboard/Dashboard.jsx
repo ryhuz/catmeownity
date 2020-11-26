@@ -213,7 +213,7 @@ const Dashboard = () => {
       {profile.found &&
         <>
           {/* Header */}
-          <Jumbotron id="jumbo-dashboard" className=''>
+          <Jumbotron className='jumboboard'>
             <h2 className="mb-auto jumbotitledown text-white">Welcome back, {profile.profile.name}!</h2>
             <cite id="cited" className="text-white">“I'm not sure why I like cats so much...</cite>
             <Row id="dash-preview" className="justify-content-center">

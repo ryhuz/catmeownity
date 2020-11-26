@@ -47,16 +47,11 @@ function App() {
   /* show this navbar when logged in */
   function navLoggedIn() {
     return (
-      <Navbar fixed="top" expand="lg" className="thewholenavbar topnav py-3">
+      <Navbar fixed="top" expand="lg" className="thewholenavbar topnav py-2">
         <NavLink id="catmeownity-navbar" className="navbar-brand" to="/">
-        <img className="logo-nav"
-        src={Logo}
-        width="40"
-        // height="40"
-        // className="d-inline-block align-top"
-        alt="CatMeownity"
-        />
+        <img className="logo-nav" src={Logo} width="40" alt="CatMeownity" />
         </NavLink>
+        <h5 className="mt-2 pt-1">CatMeownity</h5>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -74,12 +69,9 @@ function App() {
     return (
       <Navbar fixed="top" expand="lg" className="thewholenavbar topnav py-2">
         <NavLink id="catmeownity-navbar" className="navbar-brand" to="/">
-        <img className="logo-nav"
-        src={Logo}
-        width="40"
-        alt="CatMeownity"
-        />
+        <img className="logo-nav" src={Logo} width="40" alt="CatMeownity" />
         </NavLink>
+        <h5 className="mt-2 pt-1">CatMeownity</h5>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">

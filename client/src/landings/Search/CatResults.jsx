@@ -67,15 +67,15 @@ function CatResults({ validLogIn }) {
     }
     return (
         <>
-            <Jumbotron className='bg-secondary jumbotop'>
-                <div className="ml-5 pl-5">
+            <Jumbotron className='bg-secondary jumboboard'>
+                <div className="ml-5 pl-5 text-white">
                     <h1>Cats in the area</h1>
                     <h4>
-                        {info.street}
+                        ~{info.street}~
                     </h4>
                 </div>
             </Jumbotron>
-            <Container>
+            <Container className="my-5">
                 <Row>
                     {validLogIn.valid &&
                         /* Display add cat if logged in */

@@ -198,12 +198,12 @@ function CatProfile() {
                 <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
                     <CatPhotoUpload setUploadingPhoto={setUploadingPhoto} defaultPhoto={cat.defaultPhoto} addPhoto={addPhoto} id={id} user={user} />
                 </Modal>
-                <Jumbotron className="jumbotop">
+                <Jumbotron className="jumbocat">
                     <Container>
-                        <Row>
+                        <Row id="cat-holder">
                             {/* Cat main picture and follow button */}
                             <Col>
-                                <img src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
+                                <Image thumbnail src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
                                 {!cat.defaultPhoto &&
                                     <Row xs={1}>
                                         <Col className='text-center py-2'>
