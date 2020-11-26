@@ -113,7 +113,7 @@ function LocationResult({ district }) {
                     Do we not have the location you're looking for?
                 </p>
                 <p>
-                    <span className='btn btn-secondary' onClick={addLocation}>Add it here!</span>
+                    <span id="btn-add-search" className='btn btn-secondary' onClick={addLocation}>Add it here!</span>
                 </p>
             </li>
             <Modal show={needToLogIn} onHide={() => (setNeedToLogIn(false))}>

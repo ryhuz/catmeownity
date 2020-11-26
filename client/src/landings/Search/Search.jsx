@@ -11,8 +11,8 @@ function Search() {
         return (
             <Row sm={4} xs={3}>
                 {locality.map((l, index) => (
-                    <Col key={index} className="my-1">
-                        <div className={`btn ${area === l ? 'btn-dark' : 'btn-outline-dark'} btn-block`}
+                    <Col key={index} className="my-2">
+                        <div id="btn-search" className={`btn ${area === l ? 'btn-light' : 'btn-outline-dark'} btn-block`}
                             onClick={() => (setArea(l))}>
                             {l}
                         </div>
