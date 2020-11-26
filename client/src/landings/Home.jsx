@@ -10,8 +10,8 @@ function Home() {
             <Image id="bgtest" src="" />
                 <div id="search-container">
                     <div id="title-container">
-                        <h1 style={{color: "white"}}>CatMeownity</h1>
-                        <p className="text-light">
+                        <h1 style={{color: "black"}}>CatMeownity</h1>
+                        <p className="text-dark">
                             Neighbourhood and community cats in an app
                         </p>
                     </div>
@@ -20,7 +20,7 @@ function Home() {
                     </Container>
                 </div>
             </Jumbotron>
-            <Container className="learn-container">
+            <div className="learn-container">
                 <h4 className="text-center p-4">Learn more about cats</h4>
                 <Carousel>
                     <Carousel.Item>
@@ -60,7 +60,7 @@ function Home() {
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>
-            </Container>
+            </div>
         </div>
     )
 }

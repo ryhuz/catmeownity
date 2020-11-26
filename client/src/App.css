@@ -2,19 +2,17 @@ body {
   height: 100%;
   min-height: 100%;
   position: relative;
-  margin: 0;
-  padding-bottom: 6rem;
-  min-height: 100%;
+  /* margin: 0; */
+  padding-bottom: 3.5rem;
+  /* min-height: 100%; */
 }
 
 .main-container {
   min-height: 100vh;
-  /* will cover the 100% of viewport */
   overflow: hidden;
   display: block;
   position: relative;
   padding-bottom: 200px;
-  /* height of your footer */
 }
 
 .App {
@@ -116,7 +114,7 @@ body {
   background-position: center;
   opacity: 0.85;
   height: 70vh;
-  margin-bottom: 1em;
+  margin-bottom: 0em;
 }
 
 .container-bg {
@@ -125,15 +123,19 @@ body {
 
 #title-container {
   margin-top: 8em;
+  /* background-color: #f2e9e4;
+  opacity: .35;
+  border-radius: 20px; */
 }
 
 #search-container {
   padding: 2em;
 }
 
-/* #learn-container {
-  background-color: #00a896;
-} */
+.learn-container {
+  padding: 2rem;
+  background-color: #e9ecef;
+}
 
 #search-bar {
   margin-top: 1rem;
@@ -146,8 +148,7 @@ body {
   left: 0;
   padding: 1rem;
   text-align: center;
-  /* background-color: #efefef; */
-  /* text-align: center; */
+  background-color: #ffa69e;
 }
 
 /* Dashboard */
@@ -155,20 +156,30 @@ body {
 #jumbo-dashboard {
   margin: 0;
   margin-top: 5em;
-  background-color: #b7b7a4;
+  /* background-color: #b7b7a4; */
   border-radius: 0;
+  background-image: url("https://images.pexels.com/photos/37337/cat-silhouette-cats-silhouette-cat-s-eyes.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.85;
+  height: 30vh;
 }
+
+/* #cited {
+  height: 13%;
+} */
 
 #dash-preview {
   margin: 0;
   padding: 10px;
-  background-color: #fff1e6;
-  border: 10px solid #ffddd2;
+  background-color: #f0efeb;
+  /* border: 10px solid #ffddd2; */
 }
 
 #dash-image {
   margin-right: 0;
-  margin: 1em;
+  /* margin: 1em; */
   border-radius: 10px;
 }
 
@@ -176,7 +187,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 2em;
+  margin: .8em;
   background-color: #02c39a;
 }
 
@@ -185,5 +196,5 @@ body {
 }
 
 .fav-track-dash {
-  background-color: #edf6f9;
+  background-color: #293241;
 }
