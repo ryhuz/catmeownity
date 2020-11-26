@@ -15,6 +15,7 @@ body {
 .logo-nav {
   width: 120%;
 }
+
 @media (prefers-reduced-motion: no-preference) {
   .logo-nav:hover {
     animation: App-logo-spin infinite 0.5s linear;
@@ -25,7 +26,6 @@ body {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
@@ -130,6 +130,7 @@ body {
   background-color: #eddcd2;
   /* padding: 5px 10px; */
 }
+
 #dashie:hover {
   background-color: #fcbf49;
 }
@@ -137,6 +138,7 @@ body {
 #search {
   background-color: #eddcd2;
 }
+
 #search:hover {
   background-color: #fcbf49;
 }
@@ -144,6 +146,7 @@ body {
 #logout {
   background-color: #eddcd2;
 }
+
 #logout:hover {
   background-color: #fcbf49;
 }
@@ -188,22 +191,54 @@ body {
   text-align: center;
   background-color: #ffdab9c2;
 }
+
 #login {
   background-color: #EDDCD2;
 }
+
 #login:hover {
   background-color: #FCBF49;
 }
+
 #register {
   background-color: #EDDCD2;
 }
+
 #register:hover {
   background-color: #FCBF49;
 }
-
 a.anchor {
   display: block;
   position: relative;
   top: -90px;
   visibility: hidden;
+}
+a:hover {
+  border-radius: 5px;
+  border-bottom: 3px solid #E5E5E5;
+  border-left: 3px solid #E5E5E5;
+}
+
+#uncontrolled-tab-example-tab-comment {
+  color: #B7B7B7;
+}
+
+#uncontrolled-tab-example-tab-comment.active {
+  color: #4B4B4B;
+}
+
+#uncontrolled-tab-example-tab-photos {
+  color: #B7B7B7;
+}
+
+#uncontrolled-tab-example-tab-photos.active {
+  color: #4B4B4B;
+}
+
+#uncontrolled-tab-example-tab-feeding {
+  color: #B7B7B7;
+}
+
+#uncontrolled-tab-example-tab-feeding.active {
+  color: #4B4B4B;
 }

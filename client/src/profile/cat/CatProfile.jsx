@@ -67,7 +67,7 @@ function CatProfile() {
                     {cat.cat.fed.slice(0, 3).map((el, index) => (
                         <li key={index}>
                             {`Fed ${el.foodDescription} ${moment(el.createdAt).fromNow()} by `}
-                            <NavLink to={`/profile/${el.byUser._id}`}>{el.byUser && el.byUser.name}</NavLink>
+                            <NavLink className="text-muted text-decoration-none" to={`/profile/${el.byUser._id}`}>{el.byUser && el.byUser.name}</NavLink>
                         </li>
                     ))}
                 </>
@@ -250,7 +250,7 @@ function CatProfile() {
                                             ))}
                                         </div>}
                                         {/* Check if cat description is more than 3 to display show all comments button */}
-                                        {(cat.cat.desc.length) > 3 && <Accordion.Toggle as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
+                                        {(cat.cat.desc.length) > 3 && <Accordion.Toggle className="text-muted" as={Button} variant="link" eventKey="1" onClick={() => setEventKey(!eventKey)}>
                                             {eventKey ? 'close' : 'show all comments...'}
                                         </Accordion.Toggle>}
                                     </Card.Header>
@@ -286,7 +286,7 @@ function CatProfile() {
                             <Accordion defaultActiveKey="0">
                                 <Card>
                                     <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        <Accordion.Toggle className="text-muted" as={Button} variant="link" eventKey="0">
                                             More photos
                                     </Accordion.Toggle>
                                     </Card.Header>

@@ -45,7 +45,7 @@ function CatComments({ desc, fetchCat }) {
             <ListGroupItem>
                 <div className="d-flex bd-highlight mb-3">
                     <div className="font-weight-bold p-2 bd-highlight">
-                        <NavLink exact to={`/profile/${desc.byUser._id}`}>{desc.byUser && desc.byUser.name}</NavLink>
+                        <NavLink className="text-muted text-decoration-none" exact to={`/profile/${desc.byUser._id}`}>{desc.byUser && desc.byUser.name}</NavLink>
                     </div>
                     <div className="font-weight-bold p-2 bd-highlight">
                         {desc.catDescription}
