@@ -4,9 +4,9 @@ import './App.css';
 
 function Footer() {
     return (
-        <Container id="footerz">
+        <div id="footerz">
             THIS IS OUR FOOTER
-        </Container>
+        </div>
     )
 }
 

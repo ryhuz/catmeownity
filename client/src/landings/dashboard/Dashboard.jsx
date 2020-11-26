@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { NavLink } from 'react-router-dom';
 import ConfirmUnfollow from './ConfirmUnfollow';
 import pic from '../../resources/nocatpic.png'
+import noProfilePic from '../../resources/no-profile-pic.png'
 import ConfirmUntrack from './ConfirmUntrack';
 import '../../App.css'
 
@@ -144,7 +145,6 @@ const Dashboard = () => {
             </div>
           ))
           }
-
         </>
       )
     } else {
@@ -216,18 +216,19 @@ const Dashboard = () => {
           <Jumbotron id="jumbo-dashboard" className=''>
             <h2 className="mb-auto jumbotitledown text-white">Welcome back, {profile.profile.name}!</h2>
             <cite id="cited" className="text-white">“I'm not sure why I like cats so much...</cite>
+            <Row id="dash-preview" className="justify-content-center">
+              <Col sm={1}>
+                <Image id="dash-image" src={profile.profile.image ? profile.profile.image : noProfilePic} width="100%" />
+              </Col>
+              <Col sm={2}>
+                <NavLink to={`/profile/${profile.profile._id}`} id="btnprofile" className='btn btn-block btn-success'>
+                  View Your profile
+              </NavLink>
+              </Col>
+            </Row>
           </Jumbotron>
           {/* Profile Preview */}
-          <div id="dash-preview" className="justify-content-center">
-            <Col sm={3}>
-              <Image id="dash-image" src={profile.profile.image} width="100%" />
-            </Col>
-            <Col sm={3}>
-              <NavLink to={`/profile/${profile.profile._id}`} id="btnprofile" className='btn btn-success'>
-                Enter profile
-              </NavLink>
-            </Col>
-          </div>
+
           <div className="fav-track-dash">
             {/* Favourite Cats */}
             <CardGroup className="mx-5 py-4">
