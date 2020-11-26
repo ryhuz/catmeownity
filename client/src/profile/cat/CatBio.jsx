@@ -196,14 +196,14 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                     </InputGroup>
                     {cat.cat.names.length > 1 &&
                         <div>
-                            <small>Also known as:</small>
+                            <small className="text-light">Also known as:</small>
                             <div>
                                 {displayOtherNames()}
                             </div>
                         </div>
                     }
                     <div>
-                        <small>Gender:</small>
+                        <small className="text-light">Gender:</small>
                         <div className="h5">
                             <Form.Control as="select" type="select" onChange={changeHandler} defaultValue={cat.cat.gender} name="gender">
                                 <option value="">Select One</option>
@@ -214,13 +214,13 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                         </div>
                     </div>
                     <div>
-                        <small>Breed:</small>
+                        <small className="text-light">Breed:</small>
                         <div className="h5">
                             <Form.Control type="text" placeholder="Enter breed of cat" onChange={changeHandler} defaultValue={cat.cat.breed} name="breed" />
                         </div>
                     </div>
                     <div>
-                        <small>Colour:</small>
+                        <small className="text-light">Colour:</small>
                         <div className="h5">
                             <InputGroup  >
                                 <Form.Control type="text" placeholder="Enter colour of cat" onChange={changeHandler} defaultValue={cat.cat.colour} name="colours" aria-describedby="basic-addon2" />
