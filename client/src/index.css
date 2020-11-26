@@ -243,7 +243,7 @@ body {
   border: none;
 }
 
-#btn-search-results {
+.btn-search-results {
   background-color: #197278;
   color: white;
   border: none;
@@ -379,4 +379,16 @@ a:hover {
 
 #uncontrolled-tab-example-tab-feeding.active {
   color: #4B4B4B;
+}
+
+@media only screen and (max-width: 600px) {
+  .center-on-mobile {
+    text-align: center;
+  }
+  #title-container {
+    width: 95%;
+  }
+  #help {
+    padding: 0 30px 0 30px;
+  }
 }

@@ -72,7 +72,7 @@ const Dashboard = () => {
                 <Card.Body>
                   <div>{cat.location.street}</div>
                   <div>
-                    <div id="btn-unfollow" className="btn"  onClick={() => toConfirmUnfollow(cat.names[0], cat.gender, cat._id)}>
+                    <div id="btn-unfollow" className="btn" onClick={() => toConfirmUnfollow(cat.names[0], cat.gender, cat._id)}>
                       <i className="fas fa-cat mx-2"></i>Unfollow this cat
                     </div>
                   </div>
@@ -90,7 +90,7 @@ const Dashboard = () => {
               You haven't followed any cats :(
             </Card.Title>
             <Card.Body>
-              Search for one now!
+              <NavLink to='/search'>Search for one now!</NavLink>
             </Card.Body>
           </Card>
         </Col>
@@ -128,7 +128,7 @@ const Dashboard = () => {
                       <>
                         <Col>
                           <div className="d-flex">
-                            <NavLink id="btn-follow-tracked" to={`/location/${place._id}`} className='btn'>
+                            <NavLink id="btn-follow-tracked" to={`/location/${place._id}`} className='btn btn-block'>
                               {place.street}
                             </NavLink>
                             <div id="btn-unfollow-tracked" className='btn d-flex align-items-center' onClick={() => toConfirmUntrack(place.street, place._id)}>
@@ -148,18 +148,16 @@ const Dashboard = () => {
       )
     } else {
       return (
-        /*         <Col>
-                  <Card>
-                    <Card.Title>
-                      You haven't followed any cats :(
-                    </Card.Title>
-                    <Card.Body>
-                      Search for one now!
-                    </Card.Body>
-                  </Card>
-                </Col> */
-        <>
-        </>
+        <Col>
+          <Card>
+            <Card.Title>
+              You haven't tracked any locations :(
+            </Card.Title>
+            <Card.Body>
+              <NavLink to='/search'>Search for one now!</NavLink>
+            </Card.Body>
+          </Card>
+        </Col>
       )
     }
   }
@@ -216,7 +214,7 @@ const Dashboard = () => {
             <h2 className="mb-auto jumbotitledown text-white">Welcome back, {profile.profile.name}!</h2>
             <cite id="cited" className="text-white">“I'm not sure why I like cats so much...</cite>
             <Row id="dash-preview" className="justify-content-center">
-              <Col sm={1}>
+              <Col xs={8} sm={1}>
                 <Image id="dash-image" src={profile.profile.image ? profile.profile.image : noProfilePic} width="100%" />
               </Col>
               <Col sm={2}>
@@ -230,8 +228,8 @@ const Dashboard = () => {
 
           <div className="fav-track-dash">
             {/* Favourite Cats */}
-            <CardGroup className="mx-5 py-4">
-              <Card className="mb-3 mx-5">
+            <CardGroup className="mx-2 py-4">
+              <Card className="mb-3 mx-2">
                 <Card.Body>
                   <Card.Title>Your favourite cats</Card.Title>
                   <Row sm={1} md={1} lg={3}>
@@ -240,7 +238,7 @@ const Dashboard = () => {
                 </Card.Body>
               </Card>
               {/* Tracked locations */}
-              <Card className="mb-3 mx-5">
+              <Card className="mb-3 mx-2">
                 <Card.Body>
                   <Card.Title>Your tracked locations</Card.Title>
                   <div>

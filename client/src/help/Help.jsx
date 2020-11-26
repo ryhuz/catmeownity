@@ -89,7 +89,7 @@ function Help() {
                     Can't figure out how to use CatMeownity?
                 </p>
             </Jumbotron>
-            <Container className="my-5">
+            <Container className="my-5 help">
                 <div className="h5">
                     {helpItems.map((item, index) => (
                         <div key={index} className="my-3">
@@ -99,7 +99,7 @@ function Help() {
                 </div>
             </Container>
             <hr />
-            <Container>
+            <Container className="help">
                 <div>
                     {helpItems.map((item, index) => (
                         <div key={index} className='my-5'>

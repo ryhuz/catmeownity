@@ -200,21 +200,24 @@ function CatProfile() {
                 </Modal>
                 <Jumbotron className="jumbocat">
                     <Container>
-                        <Row id="cat-holder">
+                        <Row id="cat-holder" >
                             {/* Cat main picture and follow button */}
-                            <Col>
-                                <Image thumbnail src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail img-responsive mx-auto d-block " width="70%" />
+                            <Col xs={12} sm={6}>
+                                <div className="mx-auto text-center">
+                                    <Image thumbnail src={cat.defaultPhoto ? cat.defaultPhoto.image : pic} className="rounded thumbnail mx-auto" width="70%" />
+                                </div>
                                 {!cat.defaultPhoto &&
-                                    <Row xs={1}>
-                                        <Col className='text-center py-2'>
+                                    <>
+                                        <div className='text-center py-2'>
                                             {cat.cat.names[0]} doesn't have a picture yet.
-                                        </Col>
-                                        <Col className='text-center'>
+                                        </div>
+                                        <div className='text-center'>
                                             <div className='btn btn-success' onClick={checkLoginForUpload}>
                                                 Add their first photo!
                                             </div>
-                                        </Col>
-                                    </Row>}
+                                        </div>
+                                    </>
+                                }
                                 <div className="text-center h4 mt-3">
                                     {followed() ?
                                         <>
@@ -304,7 +307,7 @@ function CatProfile() {
                                                             </Card.Body>
                                                         </Card>
                                                     </Col>}
-                                                <CatPhotos cat={cat} user={user} fetchCat={fetchCat}/>
+                                                <CatPhotos cat={cat} user={user} fetchCat={fetchCat} />
                                             </Row>
                                         </Card.Body>
                                     </Accordion.Collapse>

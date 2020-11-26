@@ -48,7 +48,7 @@ function Home() {
     return (
         <>
             <Jumbotron id="jumbo" className='text-center jumbotop'>
-                <Col xs={5} className="mx-auto">
+                <Col xs={12} sm={5} className="mx-auto">
                     <Container id="title-container" className="py-2">
                         <h1 className="text-black my-3">CatMeownity</h1>
                         <p className="text-dark">

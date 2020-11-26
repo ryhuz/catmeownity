@@ -14,7 +14,7 @@ const RegisterContainer = ({ setValid }) => {
     return (
         <>
             <Jumbotron className='jumboacc'>
-                <div className="ml-5 pl-5 jumboheader">
+                <div className="text-center jumboheader">
                     <h1>Register page</h1>
                 </div>
             </Jumbotron>

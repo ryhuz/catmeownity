@@ -25,7 +25,7 @@ app.use("/api/auth/comment", passport.authenticate('jwt', { session: false}), re
 app.get("/api/*", (req, res) => {
     res.status(404).json({ message: "Server route not found" });
 });
-app.get('/app', function (req, res) {
+app.get('/app/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 

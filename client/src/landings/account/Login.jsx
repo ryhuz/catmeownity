@@ -107,7 +107,7 @@ const Login = ({ setValid }) => {
   return (
     <>
       <Jumbotron className='jumboacc'>
-        <div className="ml-5 pl-5 jumboheader">
+        <div className="text-center jumboheader">
           <h1>Login</h1>
         </div>
       </Jumbotron>

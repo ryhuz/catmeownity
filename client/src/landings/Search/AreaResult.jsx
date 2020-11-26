@@ -40,16 +40,16 @@ function AreaResult({ area }) {
                 /* display each district */
                 return (
                     <>
-                        {districts.districts.map(district => (
-                            <Row key={district._id}>
-                                <Col className="p-1" xs={8}>
-                                    <div id="btn-search-results" className={`btn btn-block ${selectedDistrict === district._id ? 'btn-success' : 'btn-outline-secondary'}`}
+                        <Row >
+                            {districts.districts.map(district => (
+                                <Col className="p-1" xs={4} sm={8} key={district._id}>
+                                    <div className={`btn-search-results btn btn-block ${selectedDistrict === district._id ? 'btn-success' : 'btn-outline-secondary'}`}
                                         onClick={() => { setSelectedDistrict({ id: district._id, name: district.name }) }}>
                                         {district.name}
                                     </div>
                                 </Col>
-                            </Row>
-                        ))}
+                            ))}
+                        </Row>
                     </>
                 )
             }
@@ -61,7 +61,7 @@ function AreaResult({ area }) {
             <h1>{area}</h1>
             <hr />
             <Row className="justify-content-center">
-                <Col md={3}>
+                <Col xs={12} md={3} className="mb-3">
                     <h3>Districts</h3>
                     <hr />
                     {showDistricts()}

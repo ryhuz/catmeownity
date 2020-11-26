@@ -235,7 +235,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                         <Button variant="outline-secondary" onClick={editCat}>Update</Button>
                     </div>
                 </div> :
-                <div className="text-light">
+                <div className="text-light center-on-mobile">
                     <h1 className="my-2">{cat.cat.names[0]}</h1>
                     {cat.cat.names.length > 1 &&
                         <div>
