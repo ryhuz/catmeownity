@@ -72,9 +72,32 @@ router.get('/:id', async (req, res) => {
             },
         ).populate(
             {
-                path: 'desc',
+                path: 'descForCats',
                 model: 'Desc',
-                select: 'catDescription',
+                populate: {
+                    path: 'forCat',
+                    select: 'names',
+                }
+            }
+        ).populate(
+            {
+                path: 'trackedLocations',
+                model: 'Location',
+                select: 'street',
+                populate: {
+                    path: 'district',
+                    select: 'name locality',
+                }
+            }
+        ).populate(
+            {
+                path: 'fed',
+                model: 'Fed',
+                populate: {
+                    path: 'forCat',
+                    model: 'Cat',
+                    select: 'names',
+                }
             }
         )
 
