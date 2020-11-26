@@ -7,7 +7,7 @@ import ConfirmUnfollow from '../landings/dashboard/ConfirmUnfollow';
 import pic from '../resources/nocatpic.png';
 
 
-function UserFavourites({ cat, fetchUser }) {
+function UserFavourites({ cat, fetchUser, ownProfile }) {
     let token = localStorage.getItem('token');
     let { id } = useParams();
     let user = decode(token)
@@ -58,11 +58,11 @@ function UserFavourites({ cat, fetchUser }) {
                 </Card.Header>
                 <Card.Body>
                     <div>{cat.location.street}</div>
-                    <div>
+                    {ownProfile && <div>
                         <Button variant="outline-danger" block onClick={() => toConfirmUnfollow(cat.names[0], cat.gender, cat._id)}>
                             <i className="fas fa-cat mx-2"></i>Unfollow this cat
                     </Button>
-                    </div>
+                    </div>}
                 </Card.Body>
             </Card>
         </Col>

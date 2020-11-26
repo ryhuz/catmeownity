@@ -5,7 +5,7 @@ import { decode } from "jsonwebtoken";
 import Axios from 'axios';
 import ConfirmUntrack from '../landings/dashboard/ConfirmUntrack';
 
-function UserTrackedLocations({ location, fetchUser }) {
+function UserTrackedLocations({ location, fetchUser, ownProfile }) {
     let token = localStorage.getItem('token');
     let { id } = useParams();
     let user = decode(token)
@@ -41,9 +41,9 @@ function UserTrackedLocations({ location, fetchUser }) {
                 <NavLink to={`/location/${location._id}`} className='btn btn-success btn-block'>
                     {location.street}
                 </NavLink>
-                <div className='btn btn-outline-danger d-flex align-items-center' onClick={() => toConfirmUntrack(location.street, location._id)}>
+                {ownProfile && <div className='btn btn-outline-danger d-flex align-items-center' onClick={() => toConfirmUntrack(location.street, location._id)}>
                     <span aria-hidden="true">&times;</span>
-                </div>
+                </div>}
             </div>
         </Col>
     )

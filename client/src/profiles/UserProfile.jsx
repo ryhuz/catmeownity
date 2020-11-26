@@ -190,7 +190,7 @@ function UserProfile() {
                 <Card.Body>
                   <Card.Title>Most recent favourites</Card.Title>
                   {user.user.favourites.slice(0, 3).map((el) => (
-                    <UserFavourites cat={el} fetchUser={fetchUser} />
+                    <UserFavourites cat={el} fetchUser={fetchUser} ownProfile={ownProfile}/>
                   ))}
                 </Card.Body>
               </Card>
@@ -204,7 +204,7 @@ function UserProfile() {
                 <Card.Body>
                   <Card.Title>Most recent tracked locations</Card.Title>
                   {user.user.trackedLocations.slice(0, 3).map((el) => (
-                    <UserTrackedLocations location={el} fetchUser={fetchUser} />
+                    <UserTrackedLocations location={el} fetchUser={fetchUser} ownProfile={ownProfile}/>
                   ))}
                 </Card.Body>
               </Card>
