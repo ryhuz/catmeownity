@@ -5,6 +5,10 @@ import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { decode } from "jsonwebtoken";
 import UserPhotoUpload from '../profiles/UserPhotoUpload';
+import UserTrackedLocations from '../profiles/UserTrackedLocations';
+import UserFavourites from '../profiles/UserFavourites';
+import MostRecentComments from '../profiles/MostRecentComments';
+import MostRecentFeeding from '../profiles/MostRecentFeeding';
 
 /* REDIRECT IF USER NOT FOUND */
 
@@ -93,15 +97,15 @@ function UserProfile() {
   }
 
   console.log(user)
-  console.log(ownProfile)
+
   return (
     <>
       {/* My Profile Jumbotron */}
-      <Jumbotron className="bg-dark jumbotop">
+      {user.found && <Jumbotron className="bg-dark jumbotop">
         <Container>
-          <h3 className="mt-4 text-white">My Profile</h3>
+          <h3 className="mt-4 text-white">{`${user.user.name}'s Profile`}</h3>
         </Container>
-      </Jumbotron>
+      </Jumbotron>}
 
       {/* Start of Profile */}
       {user.found && <Col>
@@ -178,26 +182,63 @@ function UserProfile() {
       {/* End of Profile */}
 
       {/* Start of Container with locations and favorite cats */}
-      <Container className="d-flex border border-dark mt-4 mb-4">
-        <Row className="p-3">
-          <Col>
-            <div className="borderless">
-              <Col>
-                <div>
-                  <h6><strong>Tracked locations: </strong></h6>
-                  <small>One cat just leads to another...</small>
-                </div>
-                <br />
-                <br />
-                <div>
-                  <h6><strong>Favorite Cats: </strong></h6>
-                  <small>Hmm... Looks like you haven't favorited any cats yet.</small>
-                </div>
-              </Col>
-            </div>
-          </Col>
+      {user.found && <Container className="d-flex border border-dark mt-4 mb-4 justify-content-between bd-highlight">
+        <Row className="p-3 w-50 bd-highlight">
+          <div className="borderless">
+            <Col>
+              <Card className="mb-3 mx-5">
+                <Card.Body>
+                  <Card.Title>Most recent favourites</Card.Title>
+                  {user.user.favourites.slice(0, 3).map((el) => (
+                    <UserFavourites cat={el} fetchUser={fetchUser} />
+                  ))}
+                </Card.Body>
+              </Card>
+            </Col>
+          </div>
         </Row>
-      </Container>
+        <Row className="p-3">
+          <div className="borderless">
+            <Col>
+              <Card className="mb-3 mx-5">
+                <Card.Body>
+                  <Card.Title>Most recent tracked locations</Card.Title>
+                  {user.user.trackedLocations.slice(0, 3).map((el) => (
+                    <UserTrackedLocations location={el} fetchUser={fetchUser} />
+                  ))}
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col>
+              <Card className="mb-3 mx-5">
+                <Card.Body>
+                  <Card.Title>Most recent cativities</Card.Title>
+                  <Card>
+                    <Card.Body>
+                      Most recent comments
+                      <ul>
+                        {user.user.descForCats.slice(0, 3).map((el) => (
+                          <MostRecentComments comment={el} />
+                        ))}
+                      </ul>
+                    </Card.Body>
+                  </Card>
+                  <Card>
+                    <Card.Body>
+                      Most recent feeding
+                      <ul>
+                        {user.user.fed.slice(0, 3).map((el) => (
+                          <MostRecentFeeding fed={el} />
+                        ))}
+                      </ul>
+                    </Card.Body>
+                  </Card>
+                </Card.Body>
+              </Card>
+            </Col>
+          </div>
+        </Row>
+      </Container>}
       {/* End of Container */}
 
       {/* Start of Footer */}
