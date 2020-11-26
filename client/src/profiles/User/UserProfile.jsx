@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { decode } from "jsonwebtoken";
 import UserPhotoUpload from './UserPhotoUpload';
+import ConfirmDeletePhoto from './ConfirmDeleltePhoto';
 
 /* REDIRECT IF USER NOT FOUND */
 
@@ -24,6 +25,7 @@ function UserProfile() {
   const [form, setForm] = useState({});
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [ownProfile, setOwnProfile] = useState(false);
+  const [confirmDelPhoto, setConfirmDelPhoto] = useState(false);
 
   //fetch user
   useEffect(() => {
@@ -88,8 +90,14 @@ function UserProfile() {
     }
   }
 
-  function reFetchUser() {
-    fetchUser();
+  async function delPhoto() {
+    try {
+      await Axios.delete(`http://localhost:8080/auth/user/delphoto/${user.user._id}`);
+      setConfirmDelPhoto(false);
+      fetchUser();
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -104,7 +112,10 @@ function UserProfile() {
       {/* Start of Profile */}
       {user.found && <Col>
         <Modal show={uploadingPhoto} onHide={() => (setUploadingPhoto(false))} size="lg">
-          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={reFetchUser} id={id} addOrChange={user.user.image ? "change" : "add"} />
+          <UserPhotoUpload setUploadingPhoto={setUploadingPhoto} addPhoto={fetchUser} id={id} addOrChange={user.user.image ? "change" : "add"} />
+        </Modal>
+        <Modal show={confirmDelPhoto} onHide={() => (setConfirmDelPhoto(false))}>
+          <ConfirmDeletePhoto setConfirmDelPhoto={setConfirmDelPhoto} delPhoto={delPhoto} />
         </Modal>
         {!showEditProfile ?
           <Container className="d-flex flex-row border">
@@ -113,8 +124,6 @@ function UserProfile() {
                 <div>
                   <Image className="mx-auto p-4" src={user.user.image ? user.user.image : pic} roundedCircle />
                 </div>
-                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="outline-dark" className="my-1" ref={node} onClick={() => setUploadingPhoto(true)}>Change Profile Pic</Button></Col>}
-                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="dark" className="my-1" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></Col>}
                 {!user.user.image && ownProfile &&
                   <div>
                     <Col className='text-center py-2'>
@@ -126,7 +135,12 @@ function UserProfile() {
                       </div>
                     </Col>
                   </div>}
-                {/* <Button className="btn btn-dark btn-block" onClick={() => setShowEditPicture(true)}>Edit Profile Picture</Button> */}
+                {ownProfile && user.user.image &&
+                  <Col xs={11} className="mx-auto d-flex">
+                    <Button block variant="outline-dark" size="sm" className="my-1 mr-1" ref={node} onClick={() => setUploadingPhoto(true)}>Change Picture</Button>
+                    <Button block variant="outline-danger" size="sm" className="my-1 ml-1" ref={node} onClick={() => setConfirmDelPhoto(true)}>Remove Picture</Button>
+                  </Col>}
+                {ownProfile && <Col xs={11} className="mx-auto"><Button block variant="dark" className="my-1" ref={node} onClick={() => setShowEditProfile(true)}>Edit Profile</Button></Col>}
               </Col>
             </Row>
             <Row className="mt-4">
