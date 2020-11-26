@@ -4,9 +4,9 @@ import Axios from 'axios'
 import { useParams, useLocation, NavLink } from 'react-router-dom';
 import CatBio from './CatBio';
 import { decode } from "jsonwebtoken";
-import NotLoggedIn from '../private/NotLoggedIn';
-import CatComments from '../profiles/CatComments';
-import pic from '../resources/nocatpic.png'
+import NotLoggedIn from '../../private/NotLoggedIn';
+import CatComments from './CatComments';
+import pic from '../../resources/nocatpic.png'
 import CatPhotoUpload from './CatPhotoUpload';
 import CatPhotos from './CatPhotos';
 
