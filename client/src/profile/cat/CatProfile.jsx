@@ -33,7 +33,7 @@ function CatProfile() {
     useEffect(() => {
         async function fetchFavourites() {
             try {
-                let resp = await Axios.get(`http://localhost:8080/auth/user/get-favourites/${user.user._id}`);
+                let resp = await Axios.get(`/api/auth/user/get-favourites/${user.user._id}`);
                 setFavourites(resp.data.favourites);
             } catch (e) {
                 // setError(e.response.data.message);
@@ -48,7 +48,7 @@ function CatProfile() {
     }, [id])
     async function fetchCat() {
         try {
-            let resp = await Axios.get(`http://localhost:8080/public/cat/${id}`);
+            let resp = await Axios.get(`/api/public/cat/${id}`);
             let tempPhoto;
             if (resp.data.cat.photos.length > 0) {
                 tempPhoto = resp.data.cat.photos.find(photo => photo.isDefault)
@@ -107,13 +107,13 @@ function CatProfile() {
             return;
         }
         if (favourites.includes(id)) {
-            await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`);
+            await Axios.put(`/api/auth/user/${user.user._id}/unfavourite/${id}`);
             let temp = [...favourites];
             temp.splice(temp.indexOf(id), 1);
             setFavourites(temp);
         } else {
             try {
-                await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/favourite/${id}`);
+                await Axios.put(`/api/auth/user/${user.user._id}/favourite/${id}`);
                 setFavourites([...favourites, id])
             } catch (e) {
                 console.log(e.response)
@@ -126,7 +126,7 @@ function CatProfile() {
             return;
         }
         try {
-            await Axios.post(`http://localhost:8080/auth/comment/${id}/desc/${user.user._id}`, catDescription)
+            await Axios.post(`/api/auth/comment/${id}/desc/${user.user._id}`, catDescription)
             document.querySelector('#catDescriptionInput').value = ""
             fetchCat();
         } catch (error) {
@@ -145,7 +145,7 @@ function CatProfile() {
             return;
         }
         try {
-            await Axios.post(`http://localhost:8080/auth/cats/${user.user._id}/feed/${id}`, feedingDescription)
+            await Axios.post(`/api/auth/cats/${user.user._id}/feed/${id}`, feedingDescription)
             fetchCat();
             document.querySelector('#overlaybtn').click()
         } catch (error) {

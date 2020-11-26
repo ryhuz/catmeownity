@@ -21,7 +21,7 @@ function NewLocation({ district, setNewLocation, fetchLocation }) {
     async function newLocation() {
         setLoading(true);
         try {
-            await Axios.post(`http://localhost:8080/auth/location/${district.id}`, input);
+            await Axios.post(`/api/auth/location/${district.id}`, input);
 
             setLoading(false);
             setNewLocation(false);

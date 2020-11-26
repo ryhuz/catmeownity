@@ -30,7 +30,7 @@ function RegisterCatForm({ locationID, setAdding, user, adding, setNewCatError }
             try {
                 let data = { name }
 
-                let exists = await Axios.post(`http://localhost:8080/public/same/${locationID}/`, data);
+                let exists = await Axios.post(`/api/public/same/${locationID}/`, data);
                 if (exists.data.found) {
                     setSameName(exists.data.similarCats)
                     setLoading(false);
@@ -74,7 +74,7 @@ function RegisterCatForm({ locationID, setAdding, user, adding, setNewCatError }
 
                 catData.image = imageURL;
             }
-            let resp = await Axios.post("http://localhost:8080/auth/cats/add", catData);
+            let resp = await Axios.post("/api/auth/cats/add", catData);
             setAdding({
                 adding: false,
                 added: true,

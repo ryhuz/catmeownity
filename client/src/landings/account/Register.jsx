@@ -5,7 +5,7 @@ import load from '../../resources/loading.gif'
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-function Register({ changeHandler, nextSection, setFormData}) {
+function Register({ nextSection, setFormData}) {
   const [loading, setLoading] = useState(false);
   const [emailExists, setEmailExists] = useState("");
 
@@ -13,7 +13,7 @@ function Register({ changeHandler, nextSection, setFormData}) {
     setLoading(true);
     if (email !== "") {
       try {
-        let exists = await Axios.get(`http://localhost:8080/user/check/${email}`);
+        let exists = await Axios.get(`/api/user/check/${email}`);
         if (exists.data.found) {
           setEmailExists("This email is already registered");
         } else {

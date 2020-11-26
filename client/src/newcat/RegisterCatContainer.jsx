@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Col, Container, Form, FormFile, Image, InputGroup, Jumbotron, Modal, Row } from 'react-bootstrap'
+import { Container, Form, Jumbotron, Modal } from 'react-bootstrap'
 import { NavLink, Redirect, useParams } from 'react-router-dom';
 import RegisterCatForm from './RegisterCatForm';
 import Axios from 'axios'
@@ -27,7 +27,7 @@ function RegisterCatContainer() {
     useEffect(() => {
         async function fetchLocation() {
             try {
-                let resp = await Axios.get(`http://localhost:8080/public/where/${locationID}`);
+                let resp = await Axios.get(`/api/public/where/${locationID}`);
                 setBreadCrumb({
                     street: resp.data.location.street,
                     district: resp.data.location.district.name,

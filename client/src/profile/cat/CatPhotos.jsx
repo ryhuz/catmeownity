@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Card, Col, Image, Modal } from 'react-bootstrap'
 import Axios from 'axios'
 import ConfirmDeletePhoto from './ConfirmDeletePhoto';
@@ -10,7 +10,7 @@ function CatPhotos({ cat, user, fetchCat }) {
     async function delPhoto(image) {
         let id = cat.cat._id;
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/delphoto/${id}`, { image });
+            await Axios.put(`/api/auth/cats/delphoto/${id}`, { image });
             setConfirmDel(false);
             fetchCat();
         } catch (e) {
