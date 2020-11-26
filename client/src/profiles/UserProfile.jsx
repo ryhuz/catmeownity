@@ -25,10 +25,12 @@ function UserProfile() {
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [ownProfile, setOwnProfile] = useState(false);
 
+  //fetch user
   useEffect(() => {
     fetchUser()
   }, [id])
 
+  //check if click outside everytime own profile changes
   useEffect(() => {
     // add when mounted
     ownProfile && document.addEventListener("mousedown", handleClick);
@@ -38,16 +40,21 @@ function UserProfile() {
     };
   }, [ownProfile]);
 
+  //Check if own profile everytime user changes
   useEffect(() => {
     if (user.found && token) {
       if (user.user._id === loggedUser.user._id) {
         setOwnProfile(true)
+        setForm({
+          name: user.user.name,
+          email: user.user.email,
+        })
       } else {
         setOwnProfile(false)
       }
     }
   }, [user])
-  
+
   async function fetchUser() {
     try {
       let resp = await Axios.get(`http://localhost:8080/user/${id}`);
