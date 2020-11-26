@@ -26,7 +26,7 @@ function LocationResult({ district }) {
 
     async function fetchUserTrackedLocations() {
         try {
-            let resp = await Axios.get(`http://localhost:8080/auth/user/tracked/${user.user._id}`);
+            let resp = await Axios.get(`/api/auth/user/tracked/${user.user._id}`);
             setTrackedLocations(resp.data.tracked);
         } catch (e) {
             console.log(e.response)
@@ -34,7 +34,7 @@ function LocationResult({ district }) {
     }
     async function fetchLocation() {
         try {
-            let resp = await Axios.get(`http://localhost:8080/public/location/${district.id}`);
+            let resp = await Axios.get(`/api/public/location/${district.id}`);
             setLocations({ locations: resp.data.locations, found: true });
         } catch (e) {
             console.log(e.response)
@@ -97,7 +97,7 @@ function LocationResult({ district }) {
     }
     async function trackLocation(location, addOrDel) {
         try {
-            await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/${addOrDel ? 'tracked' : 'untrack'}/${location}`);
+            await Axios.put(`/api/auth/user/${user.user._id}/${addOrDel ? 'tracked' : 'untrack'}/${location}`);
             fetchUserTrackedLocations();
         } catch (e) {
             console.log(e.response)

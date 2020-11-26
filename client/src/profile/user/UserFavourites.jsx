@@ -30,7 +30,7 @@ function UserFavourites({ cat, fetchUser, ownProfile }) {
     }
 
     async function unfollow(id) {
-        await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`);
+        await Axios.put(`/api/auth/user/${user.user._id}/unfavourite/${id}`);
         setConfirmUnfollow(false);
         fetchUser();
     }

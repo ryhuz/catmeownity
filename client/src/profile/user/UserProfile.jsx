@@ -64,7 +64,7 @@ function UserProfile() {
 
   async function fetchUser() {
     try {
-      let resp = await Axios.get(`http://localhost:8080/user/${id}`);
+      let resp = await Axios.get(`/api/user/${id}`);
       setUser({ user: resp.data.user, found: true })
     } catch (err) {
       console.log(err.response)
@@ -88,7 +88,7 @@ function UserProfile() {
 
   async function editProfile() {
     try {
-      await Axios.put(`http://localhost:8080/auth/user/${id}`, form);
+      await Axios.put(`/api/auth/user/${id}`, form);
       setShowEditProfile(false)
       fetchUser()
 
@@ -102,7 +102,7 @@ function UserProfile() {
   }
   async function delPhoto() {
     try {
-      await Axios.delete(`http://localhost:8080/auth/user/delphoto/${user.user._id}`);
+      await Axios.delete(`/api/auth/user/delphoto/${user.user._id}`);
       setConfirmDelPhoto(false);
       fetchUser();
     } catch (e) {

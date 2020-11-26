@@ -61,7 +61,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
             if (cat.cat.names.length > 1) {
                 cat.cat.names.shift();
                 cat.cat.names.unshift(addName);
-                await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
+                await Axios.put(`/api/auth/cats/${id}`, {
                     names: cat.cat.names,
                     gender: form.gender,
                     breed: form.breed,
@@ -70,14 +70,14 @@ function CatBio({ cat, setCat, user, fetchCat }) {
             } else if (cat.cat.colours.length > 1) {
                 cat.cat.colours.shift();
                 cat.cat.colours.unshift(addColour);
-                await Axios.put(`http://localhost:8080/auth/cats/${id}`, {
+                await Axios.put(`/api/auth/cats/${id}`, {
                     names: cat.cat.names,
                     gender: form.gender,
                     breed: form.breed,
                     colour: cat.cat.colours,
                 });
             } else {
-                await Axios.put(`http://localhost:8080/auth/cats/${id}`, form);
+                await Axios.put(`/api/auth/cats/${id}`, form);
             }
             setShowEditCat(false)
             fetchCat();
@@ -96,7 +96,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                         {user && showEditCat && <button type="button" className="close" aria-label="Close" onClick={() => {
                             (async () => {
                                 let delName = cat.cat.names[index + 1];
-                                await Axios.put(`http://localhost:8080/auth/cats/delname/${id}`, {
+                                await Axios.put(`/api/auth/cats/delname/${id}`, {
                                     names: delName
                                 });
                                 setShowEditCat(true)
@@ -122,7 +122,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
                         {user && showEditCat && <button type="button" className="close" aria-label="Close" onClick={() => {
                             (async () => {
                                 let delcolour = cat.cat.colours[index];
-                                await Axios.put(`http://localhost:8080/auth/cats/delcolour/${id}`, {
+                                await Axios.put(`/api/auth/cats/delcolour/${id}`, {
                                     colours: delcolour
                                 });
                                 setShowEditCat(true)
@@ -140,7 +140,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
 
     async function addButtonName() {
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/name/${id}`, {
+            await Axios.put(`/api/auth/cats/name/${id}`, {
                 names: addName
             });
             document.querySelector('#addNameInput').value = ""
@@ -153,7 +153,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
 
     async function addButtonColour() {
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/colour/${id}`, {
+            await Axios.put(`/api/auth/cats/colour/${id}`, {
                 colours: addColour
             });
             fetchCat();
@@ -165,7 +165,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
 
     async function missing() {
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/${id}/missing`);
+            await Axios.put(`/api/auth/cats/${id}/missing`);
             fetchCat();
         } catch (error) {
             console.log(error)
@@ -175,7 +175,7 @@ function CatBio({ cat, setCat, user, fetchCat }) {
 
     async function found() {
         try {
-            await Axios.put(`http://localhost:8080/auth/cats/${id}/found`);
+            await Axios.put(`/api/auth/cats/${id}/found`);
             fetchCat();
         } catch (error) {
             console.log(error)

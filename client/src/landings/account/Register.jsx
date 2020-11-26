@@ -13,7 +13,7 @@ function Register({ changeHandler, nextSection, setFormData}) {
     setLoading(true);
     if (email !== "") {
       try {
-        let exists = await Axios.get(`http://localhost:8080/user/check/${email}`);
+        let exists = await Axios.get(`/api/user/check/${email}`);
         if (exists.data.found) {
           setEmailExists("This email is already registered");
         } else {

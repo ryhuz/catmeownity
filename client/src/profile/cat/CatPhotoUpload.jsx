@@ -78,7 +78,7 @@ function CatPhotoUpload({ setUploadingPhoto, defaultPhoto, id, addPhoto, user })
                 desc,
                 uploadedBy: user.user._id
             }
-            await Axios.put(`http://localhost:8080/auth/cats/addphoto/${id}`, photo);
+            await Axios.put(`/api/auth/cats/addphoto/${id}`, photo);
             setUploadingPhoto(false);
             setLoading(false);
             addPhoto();

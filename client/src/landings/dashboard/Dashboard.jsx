@@ -29,7 +29,7 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        let resp = await Axios.get(`http://localhost:8080/auth/user/${user.user._id}`);
+        let resp = await Axios.get(`/api/auth/user/${user.user._id}`);
         setProfile({
           profile: resp.data.user,
           found: true
@@ -164,7 +164,7 @@ const Dashboard = () => {
     }
   }
   async function unfollow(id) {
-    await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/unfavourite/${id}`, {
+    await Axios.put(`/api/auth/user/${user.user._id}/unfavourite/${id}`, {
       headers: {
         "x-auth-token": token,
       },
@@ -179,7 +179,7 @@ const Dashboard = () => {
   }
 
   async function untrack(id) {
-    await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/untrack/${id}`, {
+    await Axios.put(`/api/auth/user/${user.user._id}/untrack/${id}`, {
       headers: {
         "x-auth-token": token,
       },

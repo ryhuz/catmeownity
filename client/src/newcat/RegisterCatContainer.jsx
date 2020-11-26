@@ -27,7 +27,7 @@ function RegisterCatContainer() {
     useEffect(() => {
         async function fetchLocation() {
             try {
-                let resp = await Axios.get(`http://localhost:8080/public/where/${locationID}`);
+                let resp = await Axios.get(`/api/public/where/${locationID}`);
                 setBreadCrumb({
                     street: resp.data.location.street,
                     district: resp.data.location.district.name,

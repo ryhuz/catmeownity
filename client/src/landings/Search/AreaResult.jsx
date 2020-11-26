@@ -14,7 +14,7 @@ function AreaResult({ area }) {
         setSelectedDistrict("");
         async function fetchDistrict() {
             try {
-                let resp = await Axios.get(`http://localhost:8080/public/district/${area}`);
+                let resp = await Axios.get(`/api/public/district/${area}`);
                 setDistricts({ districts: resp.data.districts, found: true });
             } catch (e) {
                 console.log(e.response)

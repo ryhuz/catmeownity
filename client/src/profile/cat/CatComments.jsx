@@ -24,7 +24,7 @@ function CatComments({ desc, fetchCat }) {
 
     async function deleteCatDescription() {
         try {
-            await Axios.delete(`http://localhost:8080/auth/comment/${desc._id}/${user.user._id}/${id}`);
+            await Axios.delete(`/api/auth/comment/${desc._id}/${user.user._id}/${id}`);
             fetchCat()
         } catch (error) {
             console.log(error)

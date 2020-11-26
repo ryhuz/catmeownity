@@ -14,7 +14,7 @@ function CatResults({ validLogIn }) {
     useEffect(() => {
         async function fetchCats() {
             try {
-                let resp = await Axios.get(`http://localhost:8080/public/cats/${locationID}`);
+                let resp = await Axios.get(`/api/public/cats/${locationID}`);
                 setInfo({ cats: resp.data.cats, street: resp.data.location, found: true });
             } catch (e) {
                 // setError(e.response.data.message);

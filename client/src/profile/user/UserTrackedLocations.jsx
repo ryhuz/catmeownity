@@ -19,7 +19,7 @@ function UserTrackedLocations({ location, fetchUser, ownProfile }) {
       });
 
     async function untrack(id) {
-        await Axios.put(`http://localhost:8080/auth/user/${user.user._id}/untrack/${id}`);
+        await Axios.put(`/api/auth/user/${user.user._id}/untrack/${id}`);
         fetchUser()
         setConfirmUntrack(false);
     }

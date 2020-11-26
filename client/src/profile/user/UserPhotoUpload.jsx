@@ -50,7 +50,7 @@ function UserPhotoUpload({ setUploadingPhoto, id, addPhoto }) {
             let img = await instance.post(cloudinary, formData);
             let image = img.data.secure_url;
             console.log(image)
-            await Axios.put(`http://localhost:8080/auth/user/addphoto/${id}`, {
+            await Axios.put(`/api/auth/user/addphoto/${id}`, {
                 image
             });
             setUploadingPhoto(false);
