@@ -1,5 +1,9 @@
 # CatMeownity
 
+*This repo was originally hosted on my GA account*
+
+*You can view this app at https://catmeownity.herokuapp.com/*
+
 A Cat neighbourhood community app!
 
 ## Description
@@ -16,6 +20,13 @@ Add your community cats to the site to share the joy they bring with your neighb
 
 ## Planning
 ### Wireframes
+
+|Home page|Login|Dashboard|
+|---------|------|--------|
+|![Home Page](https://github.com/ryhuz/catmeownity/blob/master/Wireframes/Wireframes%20-%20Landing.PNG)|![Login](https://github.com/ryhuz/catmeownity/blob/master/Wireframes/Wireframes%20-%20Login.PNG)|![Dashboard](https://github.com/ryhuz/catmeownity/blob/master/Wireframes/Wireframes%20-%20Dashboard.PNG)|
+|Search|User Profile|Cat Profile|
+|------|------------|-----------|
+|![Search](https://github.comryhuz/catmeownity/blob/master/Wireframes/Wireframes%20-%20Search.PNG)|![User Profile](https://github.com/ryhuz/catmeownity/blob/master/Wireframes/Wireframes%20-%20User%20profile.PNG)|![Cat Profile](https://github.com/ryhuz/catmeownity/blob/master/Wireframes/Wireframes%20-%20Cat%20Profile.PNG)|
 
 ## Acknowledgements
 To my team, Hafiz and Saiful, who helped built it to my vision - and very well.
